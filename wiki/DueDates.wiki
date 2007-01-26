@@ -1,3 +1,4 @@
+#summary Due Dates for Comp 523 Development Team
 
 ===Monday===
   * Website
@@ -8,5 +9,4 @@
 
 ===Wednesday===
   * Project Schedule
-
 
