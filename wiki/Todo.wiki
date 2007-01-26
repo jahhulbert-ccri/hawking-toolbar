@@ -1,0 +1,8 @@
+===High Priority===
+  * Team Rools
+  * Functional Specs
+  * Project Schedule
+  * Draft Contract
+
+===Medium Priority===
+  * Signed Contract Due
