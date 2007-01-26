@@ -1,3 +1,5 @@
+#summary Todo List for Comp 523 Development Team
+
 ===High Priority===
   * Team Rules
   * Functional Specs
