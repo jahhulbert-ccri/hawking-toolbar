@@ -9,7 +9,8 @@
 ===Medium Priority===
   * Signed Contract Due
 
-===Website  (hasuob : temp)=== 
+===Web Site===
+_hasuob (temp)_
   * Project Description
   * Contact Information
   * Contract
@@ -21,3 +22,4 @@
   * Test Plan
   * Journal of Meetings and Decisions
   * Related Links
+
