@@ -1,4 +1,9 @@
 ===High Priority===
+  * Update Public Description
+  * Add Email address
+  * Contact Information in the description
+  * Project Plan
+  * 
   * Team Rules
   * Functional Specs
   * Project Schedule
@@ -6,3 +11,4 @@
 
 ===Medium Priority===
   * Signed Contract Due
+  * Add contract to website
