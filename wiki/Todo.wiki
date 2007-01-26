@@ -1,5 +1,5 @@
 ===High Priority===
-  * Team Rools
+  * Team Rules
   * Functional Specs
   * Project Schedule
   * Draft Contract
