@@ -5,8 +5,7 @@
   * Team Rules
 
 ===Tuesday===
-  * Functional Spec
+  * Functional Spec (jahhulbert - draft)
 
 ===Wednesday===
   * Project Schedule
-
