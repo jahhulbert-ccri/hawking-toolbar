@@ -1,11 +1,18 @@
 #summary Due Dates for Comp 523 Development Team
 
+==Jan 28 - Feb 3==
 ===Monday===
-  * Website
-  * Team Rules
+  * Website (hasuob - lead)
+  * Team Rules 
 
 ===Tuesday===
   * Functional Spec (jahhulbert - draft)
 
 ===Wednesday===
-  * Project Schedule
+  * Project Schedule (blouden00)
+
+===Thursday===
+  * 
+
+===Friday===
+  * Draft Contract Due (blouden00 - temp)
