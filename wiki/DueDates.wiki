@@ -1,11 +1,12 @@
-#summary One-sentence summary of this page.
 
-  * *Monday* - Website
-  * *Monday* - Team Rules
+===Monday===
+  * Website
+  * Team Rules
 
-  * *Tuesday* - Functional Spec
+===Tuesday===
+  * Functional Spec
 
-  * *Wednesday* - Project Schedule
-
+===Wednesday===
+  * Project Schedule
 
 
