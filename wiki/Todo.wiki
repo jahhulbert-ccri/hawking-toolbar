@@ -2,14 +2,14 @@
 
 ===High Priority===
   * Team Rules
-  * Functional Specs
-  * Project Schedule
-  * Draft Contract
+  * Functional Specs (jahhulbert)
+  * Project Schedule (blouden00)
+  * Draft Contract (blouden00)
 
 ===Medium Priority===
   * Signed Contract Due
 
-===Website===
+===Website - (hasuob:temp)=== 
   * Project Description
   * Contact Information
   * Contract
