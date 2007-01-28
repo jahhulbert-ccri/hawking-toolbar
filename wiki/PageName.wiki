@@ -1,6 +1,6 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+  *bold* = Introduction =
 
 Add your content here.
 
