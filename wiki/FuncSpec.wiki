@@ -46,6 +46,7 @@
 User
   # Auto Iteration of Hyperlinks
   # Manual Iteration of Hyperlinks
+  # Selection of Hyperlink
   # Page Scrolling
   # Toggling between Manual and Auto Iteration Mode
 
@@ -57,4 +58,19 @@ Administrator
   # Change the auto iteration speed
 
 ==Use Case Details==
-===U1: Auto Iteration of Hyperlinks===
+_These use case details describe the functionality of the toolbar_
+
+*U1: Auto Iteration of Hyperlinks*
+  Auto Iteration of Hyperlinks will step through the links of a page and highlite them for the user. A timing setting will be important here to be customized by the administrator so that it matches the user's reaction time needs. Auto Iteration will do this without any input from the user.
+
+*U2: Manual Iteration of Hyperlinks*
+  Manual Iteration or manual stepping of hyperlinks allows the user to provide input via a control switch mapped to a keyboard key that will highlight each member of an Enumeration of all the links of a page in order.
+
+*U3: Selection of Hyperlink*
+  Once a user highlights a hyperlink using auto or manual iteration, the use of a control switch shall allow them to select this hyperlink as if they clicked on it with a mouse in order to navigate to that page.
+
+*U4: Page Scrolling*
+  Page scrolling allows the user to scroll down a page without Hyperlinks using one or more control switches. If the user has only one control switch, then page scrolling will scroll a defined screen width each time until the bottom is reached, at which time the next press of the switch returns them to the top of the page. Users with two switches may pick up the added functionality of scrolling up and down with the switches.
+
+U5: Pausing Auto Iteration Mode
+  There will be functionality that allows the user to pause the auto iteration of links. This allows the user to stop iterating through links and view the content of the page. When the user wants to resume, some input mechanism will unpause the iteration.
