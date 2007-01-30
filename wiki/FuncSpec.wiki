@@ -1,6 +1,46 @@
 #summary Functional Specification of Hawking Toolbar
 
-= Primary Functions / Objectives= 
+==Primary Functions and Objectives==
   * Provide a simple, limited-input navigation mechanism between linked web pages based on document hyperlinks
   * Provide a simple, limited-input mechanism for viewing all the content on web pages\
+
+==General Design Principles==
+  * Creation of two types of toolbars:
+    *A simple toolbar for highly disabled users that navigates proprietary fixed size pages based on two input keys
+    * An advanced toolbar that has added functionality to allow navigation of normal Internet pages based on 1-3 input keys
+  * Visually accessible highlighting and selection of hyperlinks on screen
+  * Easily accessible mechanism for walking through all the hyperlinks of a web document
+  * Simple mechanism for selecting a highlighted link to navigate to.
+  * Toggle mechanism for activating the stepping through links mechanism during a page visit.
+  * Create a way for advanced toolbar users to scroll through the document and read it even if there are no hyperlinks.
+  * Create a mechanism for discovering and displaying Cascading Style Sheet hyperlinks and hidden visibility hyperlinks to display to the user.
+  * There should be a preferences and settings menu from which a non-disabled user can customize the toolbar to fit the individual needs of the disabled user. The preferences and settings menu should allow the customization of:
+    * Hyperlink highlighting (visual nature of how the link will be displayed)
+    * Whether or not the links are automatically stepped through when the page is loaded
+    * Customizing the input keys corresponding to all actions needed to navigate or view a page.
+    * Stepping speed of hyperlink selection (how fast it goes to the next link)
+    * Overall should really be focused on trying to customize the toolbar for anyone’s reaction and or usage abilities
+  * An intuitive design, user interface, and input mechanism
+
+==Requirements (prioritized)==
+  # usage method as defined by disabled users
+  # Functionality with limited input (1-3 keys)
+  # Simple, intuitive interface
+
+==User Types==
+  * Highly Disabled 
+  * Disabled
+  * Instructor / Teacher / Setup user
+
+==Toolbar Layouts and Design==
+  * Simple Toolbar
+    * Purpose:
+    * Design Goal:
+  * Advanced Toolbar
+    * Purpose:
+    * Design Goal:
+
+==Use Cases==
+
+
 
