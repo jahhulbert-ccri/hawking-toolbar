@@ -37,10 +37,12 @@
   * Simple Toolbar
     * Purpose:
     * Design Goal:
+Create a trapping function which will disallow clicking links which take you out of the
+current domain as a trapping feature
+
   * Advanced Toolbar
     * Purpose:
     * Design Goal:
 
 ==Use Cases==
-
 
