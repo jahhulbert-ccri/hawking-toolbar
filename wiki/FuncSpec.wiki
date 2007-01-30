@@ -51,3 +51,5 @@ Disabled User
 
 Administrator
   # Turn off auto-iteration
+  # Change the Link Highlight Color
+  # 
