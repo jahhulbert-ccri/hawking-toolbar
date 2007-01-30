@@ -76,17 +76,17 @@ _These use case details describe the functionality of the toolbar_
 *U5: Pausing Auto Iteration Mode*
   There will be functionality that allows the user to pause the auto iteration of links. This allows the user to stop iterating through links and view the content of the page. When the user wants to resume, some input mechanism will unpause the iteration.
 
-*Activate or Deactivate the toolbar*
+*A1: Activate or Deactivate the toolbar*
   In the preferences popup menu, there will be a "General" tab that has a check box to activate or deactivate the toolbar. Deactivating the toolbar will disable scanning of hyperlinks while saving the user configuration and not forcing  a restart of firefox to disable the system.
 
-*Toggle between Manual and Auto Scanning*
+*A1: Toggle between Manual and Auto Scanning*
   On the "Scanning" tab in the preferences menu, there will be an option to choose between Manual and Auto Scanning or Iteration of hyperlinks.
 
-*Change the Link Appearance*
+*A3: Change the Link Appearance*
   On the "Appearance" tab in the user preferences menu, the administrator can choose the highlight color and width and the border color and width for the box that will highlight links on the page. Also, the administrator can turn off highlighting or bordering.
 
-*Map keys to toolbar/navigation actions*
+*A4: Map keys to toolbar/navigation actions*
   The User often uses special hardware called "switches" that emulate keystrokes. The "Switch Configuration" tab will allow the administrator to map keystrokes to certain actions on the toolbar to set up this special hardware.
 
-*Change the auto iteration speed*
+*A5: Change the auto iteration speed*
   On the "Scanning" tab, the administrator can change the speed that the plug-in iterates through the links on a page in either milliseconds or seconds.
