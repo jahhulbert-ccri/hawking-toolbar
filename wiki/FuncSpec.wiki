@@ -1,0 +1,6 @@
+#summary Functional Specification of Hawking Toolbar
+
+= Primary Functions / Objectives= 
+  * Provide a simple, limited-input navigation mechanism between linked web pages based on document hyperlinks
+  * Provide a simple, limited-input mechanism for viewing all the content on web pages\
+
