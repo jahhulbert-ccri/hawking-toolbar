@@ -2,7 +2,7 @@
 
 ==Primary Functions and Objectives==
   * Provide a simple, limited-input navigation mechanism between linked web pages based on document hyperlinks
-  * Provide a simple, limited-input mechanism for viewing all the content on web pages\
+  * Provide a simple, limited-input mechanism for viewing all the content on web pages
 
 ==General Design Principles==
   * Creation of two types of toolbars:
@@ -24,7 +24,7 @@
   * An intuitive design, user interface, and input mechanism
 
 ==Requirements (prioritized)==
-  # usage method as defined by disabled users
+  # Logical Usage method as defined by disabled users
   # Functionality with limited input (1-3 keys)
   # Simple, intuitive interface
 
