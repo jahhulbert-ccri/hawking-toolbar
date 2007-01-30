@@ -14,7 +14,7 @@
   * Toggle mechanism for activating the stepping through links mechanism during a page visit.
   * Create a way for advanced toolbar users to scroll through the document and read it even if there are no hyperlinks.
   * Create a mechanism for discovering and displaying Cascading Style Sheet hyperlinks and hidden visibility hyperlinks to display to the user.
-  * Use a trapping feature that allows the user to dissallow 
+  * Create a trapping function which will disallow clicking links which take you out of the current domain as a trapping feature
   * There should be a preferences and settings menu from which a non-disabled user can customize the toolbar to fit the individual needs of the disabled user. The preferences and settings menu should allow the customization of:
     * Hyperlink highlighting (visual nature of how the link will be displayed)
     * Whether or not the links are automatically stepped through when the page is loaded
@@ -37,12 +37,9 @@
   * Simple Toolbar
     * Purpose:
     * Design Goal:
-Create a trapping function which will disallow clicking links which take you out of the
-current domain as a trapping feature
 
   * Advanced Toolbar
     * Purpose:
     * Design Goal:
 
 ==Use Cases==
-
