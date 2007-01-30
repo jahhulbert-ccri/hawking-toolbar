@@ -43,13 +43,18 @@
     * Design Goal:
 
 ==Use Cases==
-Disabled User
+User
   # Auto Iteration of Hyperlinks
   # Manual Iteration of Hyperlinks
   # Page Scrolling
   # Toggling between Manual and Auto Iteration Mode
 
 Administrator
+  # Activate or Deactivate the toolbar
   # Turn off auto-iteration
-  # Change the Link Highlight Color
-  # 
+  # Change the Link Appearance
+  # Map keys to toolbar/navigation actions
+  # Change the auto iteration speed
+
+==Use Case Details==
+===U1: Auto Iteration of Hyperlinks===
