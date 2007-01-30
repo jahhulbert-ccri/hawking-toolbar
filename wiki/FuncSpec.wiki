@@ -34,13 +34,14 @@
   * Administrator
 
 ==Toolbar Layouts and Design==
+_Two types of toolbars will be created in this project, a simple and an advanced toolbar._
   * Simple Toolbar
-    * Purpose:
-    * Design Goal:
+    * Purpose: To provide the most disabled users with the simplest functionality toolbar.
+    * Design Goal: Make the toolbar have only two or three buttons. No scrolling functionality is needed here. The user will be trapped within a page that fits their browser and will only need to navigate between 2-3 links. The user may only have one switch for input and thus the iteration of loops should reflect this.
 
   * Advanced Toolbar
-    * Purpose:
-    * Design Goal:
+    * Purpose: To provide moderately disabled users with more functionality and scrolling capabilities.
+    * Design Goal: Implement more features such as scrolling and possibly text size changing or printing options that emulate a more robust browser experience. The user may have 2-3 switches that they can use to operate the computer and thus can experience more functionality from the toolbar.
 
 ==Use Cases==
 User
@@ -74,3 +75,18 @@ _These use case details describe the functionality of the toolbar_
 
 *U5: Pausing Auto Iteration Mode*
   There will be functionality that allows the user to pause the auto iteration of links. This allows the user to stop iterating through links and view the content of the page. When the user wants to resume, some input mechanism will unpause the iteration.
+
+*Activate or Deactivate the toolbar*
+  In the preferences popup menu, there will be a "General" tab that has a check box to activate or deactivate the toolbar. Deactivating the toolbar will disable scanning of hyperlinks while saving the user configuration and not forcing  a restart of firefox to disable the system.
+
+*Toggle between Manual and Auto Scanning*
+  On the "Scanning" tab in the preferences menu, there will be an option to choose between Manual and Auto Scanning or Iteration of hyperlinks.
+
+*Change the Link Appearance*
+  On the "Appearance" tab in the user preferences menu, the administrator can choose the highlight color and width and the border color and width for the box that will highlight links on the page. Also, the administrator can turn off highlighting or bordering.
+
+*Map keys to toolbar/navigation actions*
+  The User often uses special hardware called "switches" that emulate keystrokes. The "Switch Configuration" tab will allow the administrator to map keystrokes to certain actions on the toolbar to set up this special hardware.
+
+*Change the auto iteration speed*
+  On the "Scanning" tab, the administrator can change the speed that the plug-in iterates through the links on a page in either milliseconds or seconds.
