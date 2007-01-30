@@ -31,7 +31,7 @@
 ==User Types==
   * Highly Disabled 
   * Disabled
-  * Instructor / Teacher / Setup user
+  * Administrator
 
 ==Toolbar Layouts and Design==
   * Simple Toolbar
@@ -43,3 +43,14 @@
     * Design Goal:
 
 ==Use Cases==
+Disabled User
+  1. Auto Iteration of Hyperlinks
+  2. Manual Iteration of Hyperlinks
+  3. Page Scrolling
+  4. Toggling between Manual and Auto Iteration
+  5. 
+
+Administrator
+  Turn off auto-iteration
+
+
