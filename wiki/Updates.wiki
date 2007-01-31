@@ -1,0 +1,6 @@
+#summary Keep the group up to date on your progress
+
+= Wednesday 1/31/06 =
+-First Functional Plugin available in downloads
+
+Hasuob put up a working "Hello World" toolbar plugin. It alerts "Hello World!" when you press the button next to the picture of the world, and the other button redirects you to our website.
