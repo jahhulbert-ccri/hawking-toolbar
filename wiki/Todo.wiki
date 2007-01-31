@@ -2,9 +2,6 @@
 
 ===High Priority===
   * Team Rules
-  * Get webspace + develop own website
-  * Functional Specs (jahhulbert) *Use it and email jahhulbert comments*
-  * Project Schedule (blouden00)
   * Draft Contract (blouden00)
 
 ===Medium Priority===
