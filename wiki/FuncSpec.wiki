@@ -8,14 +8,7 @@
   * Creation of two types of toolbars:
     *A simple toolbar for highly disabled users that navigates proprietary fixed size pages based on two input keys
     * An advanced toolbar that has added functionality to allow navigation of normal Internet pages based on 1-3 input keys
-  * Toggle mechanism for activating the stepping through links mechanism during a page visit.
-  * Create a mechanism for discovering and displaying Cascading Style Sheet hyperlinks and hidden visibility hyperlinks to display to the user.
-  * There should be a preferences and settings menu from which a non-disabled user can customize the toolbar to fit the individual needs of the disabled user. The preferences and settings menu should allow the customization of:
-    * Hyperlink highlighting (visual nature of how the link will be displayed)
-    * Whether or not the links are automatically stepped through when the page is loaded
-    * Customizing the input keys corresponding to all actions needed to navigate or view a page.
-    * Stepping speed of hyperlink selection (how fast it goes to the next link)
-    * Overall should really be focused on trying to customize the toolbar for anyone’s reaction and or usage abilities
+
 
 ==Requirements (prioritized)==
   # Easily accessible mechanism for iterating through all the hyperlinks of a web document
@@ -24,14 +17,21 @@
   # Functionality with limited input (1-3 keys)
   # Logical usage and input sequences based on limited input ability
   # A simple, intuitive design, user interface, and interaction
+  # Implement a mechanism to toggle auto iteration of links on and off
   # Functionality allowing the user to scroll through and read a page even if there are no links on the page.
   # Ability of the user to access browser history such as back, foward, homepage, favorites, etc.
   # Implement trapping functionality, where trapping is defined as limiting the user to accessing only the hyperlinks in a page and not the additional toolbar functionality. Thus, the user is "trapped" in the page to navigate and does not access functionality such as the browser history, homepage, etc.
   # Have the ability to parse these types of links (Prioritized):
-    # HTML <a href=""> tags
-    # Access <div>, <img> tags and other html elements with onClick properties
-    # Access buttons with onClick properties
-    # Access
+    # <a href=""> tags surrounding text or <img> tags
+    # <div> tags and other html elements with onClick properties
+    # Buttons with onClick properties
+    # Any other objects/elements with clickable properties where CSS may affect the display attribute of the object.
+  # There should be a preferences and settings menu from which a non-disabled user can customize the toolbar to fit the individual needs of the disabled user. The preferences and settings menu should allow the customization of:
+    * Hyperlink highlighting (visual nature of how the link will be displayed)
+    * Whether or not the links are automatically stepped through when the page is loaded
+    * Customizing mapping of input keys corresponding to all actions needed to navigate or view a page.
+    * Stepping speed of hyperlink selection (how fast it goes to the next link)
+    * Overall should really be focused on trying to customize the toolbar for anyone’s reaction and or usage abilities
 
 
 
