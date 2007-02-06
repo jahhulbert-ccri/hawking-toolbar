@@ -1,10 +1,13 @@
-#summary Functional Specification of Hawking Toolbar
+#summary Functional Specification of the Hawking Toolbar
 
 ==Primary Functions and Objectives==
   * Provide a simple, limited-input navigation mechanism between linked web pages based on document hyperlinks
   * Provide a simple, limited-input mechanism for viewing all the content on web pages
 
 ==General Design Principles==
+  * Visual Accessibility
+    * When links are highlighted, they should be easily seen while not disturbing the content of the page.
+    * Consider color schemes, blinking, etc. to meet visual accesibility needs of users
   * Creation of two types of toolbars:
     *A simple toolbar for highly disabled users that navigates proprietary fixed size pages based on two input keys
     * An advanced toolbar that has added functionality to allow navigation of normal Internet pages based on 1-3 input keys
@@ -17,8 +20,9 @@
   # Functionality with limited input (1-3 keys)
   # Logical usage and input sequences based on limited input ability
   # A simple, intuitive design, user interface, and interaction
-  # Implement a mechanism to toggle auto iteration of links on and off
-  # Functionality allowing the user to scroll through and read a page even if there are no links on the page.
+  # Implement an "auto iteration" mode that automatically iterates through the links of a page when the page is loaded
+  # Functionality allowing the user to scroll through and read a page even if there are no links on the page defined as "scrolling mode"
+  # Implement a mechanism to toggle between auto iteration and scrolling mode where scrolling mode is simply activated by turning auto iteration mode off
   # Ability of the user to access browser history such as back, foward, homepage, favorites, etc.
   # Implement trapping functionality, where trapping is defined as limiting the user to accessing only the hyperlinks in a page and not the additional toolbar functionality. Thus, the user is "trapped" in the page to navigate and does not access functionality such as the browser history, homepage, etc.
   # Have the ability to parse these types of links (Prioritized):
@@ -32,6 +36,7 @@
     * Customizing mapping of input keys corresponding to all actions needed to navigate or view a page.
     * Stepping speed of hyperlink selection (how fast it goes to the next link)
     * Overall should really be focused on trying to customize the toolbar for anyone’s reaction and or usage abilities
+  # Allow the administrator to customize the number of input switches needed to use the toolbar (this may require additional logic scenarios).
 
 
 
