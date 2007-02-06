@@ -45,27 +45,23 @@ _Two types of toolbars will be created in this project, a simple and an advanced
 
 ==Use Cases==
 User
-  # Auto Iteration of Hyperlinks
-  # Manual Iteration of Hyperlinks
+  # Toggle between Auto/Manual Iteration Mode
   # Selection of Hyperlink
   # Page Scrolling
-  # Toggling between Manual and Auto Iteration Mode
 
 Administrator
-  # Activate or Deactivate the toolbar
-  # Turn off auto-iteration
+  # Setup
+  # Activate or deactivate the toolbar
+  # Change the auto iteration speed
+  # Turn off auto-iteration mode
   # Change the Link Appearance
   # Map keys to toolbar/navigation actions
-  # Change the auto iteration speed
 
 ==Use Case Details==
 _These use case details describe the functionality of the toolbar_
 
-*U1: Auto Iteration of Hyperlinks*
-  Auto Iteration of Hyperlinks will step through the links of a page and highlite them for the user. A timing setting will be important here to be customized by the administrator so that it matches the user's reaction time needs. Auto Iteration will do this without any input from the user.
-
-*U2: Manual Iteration of Hyperlinks*
-  Manual Iteration or manual stepping of hyperlinks allows the user to provide input via a control switch mapped to a keyboard key that will highlight each member of an Enumeration of all the links of a page in order.
+*U1: Toggle between Auto/Manual Iteration Mode
+  Through a well defined method, the user will be able to turn off automatic iteration mode in order to enter manual iteration mode. Likewise, the user shall be able to enable automatic iteration mode while in manual mode.
 
 *U3: Selection of Hyperlink*
   Once a user highlights a hyperlink using auto or manual iteration, the use of a control switch shall allow them to select this hyperlink as if they clicked on it with a mouse in order to navigate to that page.
