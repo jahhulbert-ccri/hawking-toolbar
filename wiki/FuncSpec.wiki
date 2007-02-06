@@ -29,8 +29,8 @@
   # Simple, intuitive interface
 
 ==User Types==
-  * Highly Disabled 
-  * Disabled
+  * UNC Literacy Center User
+  * Disabled User
   * Administrator
 
 ==Toolbar Layouts and Design==
@@ -63,14 +63,11 @@ _These use case details describe the functionality of the toolbar_
 *U1: Toggle between Auto/Manual Iteration Mode
   Through a well defined method, the user will be able to turn off automatic iteration mode in order to enter manual iteration mode. Likewise, the user shall be able to enable automatic iteration mode while in manual mode.
 
-*U3: Selection of Hyperlink*
+*U2: Selection of Hyperlink*
   Once a user highlights a hyperlink using auto or manual iteration, the use of a control switch shall allow them to select this hyperlink as if they clicked on it with a mouse in order to navigate to that page.
 
-*U4: Page Scrolling*
+*U3: Page Scrolling*
   Page scrolling allows the user to scroll down a page without Hyperlinks using one or more control switches. If the user has only one control switch, then page scrolling will scroll a defined screen width each time until the bottom is reached, at which time the next press of the switch returns them to the top of the page. Users with two switches may pick up the added functionality of scrolling up and down with the switches.
-
-*U5: Pausing Auto Iteration Mode*
-  There will be functionality that allows the user to pause the auto iteration of links. This allows the user to stop iterating through links and view the content of the page. When the user wants to resume, some input mechanism will unpause the iteration.
 
 *A1: Activate or Deactivate the toolbar*
   In the preferences popup menu, there will be a "General" tab that has a check box to activate or deactivate the toolbar. Deactivating the toolbar will disable scanning of hyperlinks while saving the user configuration and not forcing  a restart of firefox to disable the system.
