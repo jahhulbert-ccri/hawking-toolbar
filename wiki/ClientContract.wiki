@@ -1,0 +1,61 @@
+_This is the contract stating all requirements that will be met by the completion of this project._
+
+= Client Contract: Hawking Toolbar =
+=== General Description: ===
+The Hawking Toolbar Project's goal is to design a firefox plugin which will enable users to navigate websites using a limited interface. This will allow users with disabilities to interact with a simple interface customized to best suit their abilities. This project hopes to achieve a plugin with two styles: a basic, limited interface for literacy teaching to people with disabilities, and a robust toolbar which will allow interfacing not only with the website, but also the browser history, (back, forward, and refresh). The plugin should not only recognize links <a href> tags but also form buttons and any object on the page with javascript onClick event capturing. The selection of links should be easily recognizable and customizable to the abilities of the end user.
+
+=== Participants: ===
+  * *Client:* Gary Bishop
+  * *Consultants:* Route 66 Literacy and Disability Studies
+  * *Developers:*
+    * Brian Louden
+    * Andrew Hulbert
+    * John Foushee
+
+=== Requirements: ===
+  * *Primary Requirements:*  
+    * Provide a simple, limited-input navigation mechanism between linked web pages based on document hyperlinks
+    * Provide a simple, limited-input mechanism for viewing all the content on web pages
+  * *Secondary Requirements:*
+    *  
+
+=== Constraints: ===
+The Hawking Toolbar is constrained by the following factors:
+  * User’s input ability – This is the main reason for the toolbar.  
+  * Browser plugin api
+  * Javascript language
+  * Web page content (Flash and Applets)
+  * Other Classes
+  * Time
+  * Extra Circular Activities
+
+=== Deliverables: ===
+  * Literacy toolbar
+  * Advanced toolbar 
+  * User Manual
+  * Admin Manual
+  * Demo Web Page (For install and use)
+
+=== Resources Required: ===
+  * Multi OS testing environments
+  * The Time of all participants
+
+=== Contractor and Client Obligations: ===
+The developers are expecting the following from the Client.
+  * The original source code.
+  * Communication between the developers and the users.
+    * Access to users to test the product.
+    * Opinions about development decisions
+    * Access to the consultants.
+
+=== Risks: ===
+  * Compatibility with Firefox upgrades
+  * Tired, Overworked, Student programmers
+  * Growth of feature set
+  * Lack of structured javascript development environment
+  * Changes in web technology
+  * Failures in user input technology
+
+=== Milestones: ===
+  * March 2nd – Beta of Literacy Center Toolbar
+  * May 3rd – Finial Version of Toolbar
