@@ -13,11 +13,34 @@ The Hawking Toolbar Project's goal is to design a firefox plugin which will enab
     * John Foushee
 
 === Requirements: ===
-  * *Primary Requirements:*  
-    * Provide a simple, limited-input navigation mechanism between linked web pages based on document hyperlinks
-    * Provide a simple, limited-input mechanism for viewing all the content on web pages
-  * *Secondary Requirements:*
-    *  
+*Primary Requirements*
+  # Easily accessible mechanism for iterating through all the hyperlinks of a web document
+  # Visually accessible highlighting of hyperlinks on screen
+  # Simple mechanism for selecting a highlighted link to "click" on
+  # Functionality with limited input (1 or 2 keys)
+  # Logical usage and input sequences based on limited input ability (1 or 2 keys)
+  # A simple, intuitive design, user interface, and interaction
+  # Implement an "auto iteration" mode that automatically iterates through the links of a page when the page is loaded
+  # Implement a mechanism to toggle between auto iteration and manual iteration of links.
+  # Implement trapping functionality, where trapping is defined as limiting the user to accessing only the hyperlinks in a page and not the additional toolbar functionality. Thus, the user is "trapped" in the page to navigate and does not access functionality such as the browser history, homepage, etc.
+  # Have the ability to parse these types of links (Prioritized):
+    # <a href=""> tags surrounding text or <img> tags
+    # <div> tags and other html elements with onClick properties
+    # Buttons with onClick properties
+    # Any other objects/elements with clickable properties where CSS may affect the display attribute of the object. 
+  # There should be a preferences and settings menu from which a non-disabled user can customize the toolbar to fit the individual needs of the disabled user. The preferences and settings menu should allow the customization of:
+    * Hyperlink highlighting (visual nature of how the link will be displayed)
+    * Whether or not the links are automatically stepped through when the page is loaded
+    * Customizing mapping of input keys corresponding to all actions needed to navigate or view a page.
+    * Stepping speed of hyperlink selection (how fast it goes to the next link)
+    * Overall should really be focused on trying to customize the toolbar for anyone’s reaction and or usage abilities 
+  # Allow the administrator to customize the number of input switches needed to use the toolbar (this may require additional logic scenarios). 
+
+*Secondary Requirements*
+
+  # Functionality allowing the user to scroll through and read a page even if there are no links on the page defined as "scrolling mode"
+  # Ability of the user to access browser history such as back, foward, homepage, favorites, etc.
+  # Implement a mechanism to toggle between auto iteration and scrolling mode where scrolling mode is simply activated by turning auto iteration mode off 
 
 === Constraints: ===
 The Hawking Toolbar is constrained by the following factors:
@@ -59,3 +82,4 @@ The developers are expecting the following from the Client.
 === Milestones: ===
   * March 2nd – Beta of Literacy Center Toolbar
   * May 3rd – Finial Version of Toolbar
+
