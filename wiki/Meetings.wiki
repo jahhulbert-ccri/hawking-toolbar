@@ -7,3 +7,6 @@ Discuss Functional Spec and Project Schedule
 
 =Confirmed Weekly Meetings=
 Thursday 8:00 AM - Weekly Meeting with Diane in Sitterson
+
+==Past Meetings==
+  * *Tues, Feb 6* - Update Functional Spec, Revise client contract, look at code, functionality of toolbar (1.5 hr)
