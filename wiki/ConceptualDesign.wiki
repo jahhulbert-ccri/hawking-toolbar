@@ -1,7 +1,7 @@
 #summary This page includes the conceptual design of the Hawking Toolbar in terms of the toolbar components and user interaction.
 
-==Architecture Notes==
-The basic architecture of
+==Conceptual Architecture Notes==
+The basic conceptual architecture of Hawking Tool is an event/input driven model. This model follows from the fact that the approach to building the Hawking Toolbar is a User Action Approach. Since the user's actions and ability to perform actions guide the basic design and implementation, the conceptual design approach is taken from the same angle.
 
 ==Input Mechanisms==
 The basic Hawking Toolbar input mechanism will consist of two main input switches mapped two keyboard keys as specified by the user and/or the hardware devices. These two switches will support 
