@@ -14,54 +14,34 @@ The Hawking Toolbar Project's goal is to design a firefox plugin which will enab
 
 === Requirements: ===
 *Primary Requirements*
-  # Easily accessible mechanism for iterating through all the hyperlinks of a web document
-  # Visually accessible highlighting of hyperlinks on screen
-  # Simple mechanism for selecting a highlighted link to "click" on
-  # Functionality with limited input (1 or 2 keys)
-  # Logical usage and input sequences based on limited input ability (1 or 2 keys)
-  # A simple, intuitive design, user interface, and interaction
-  # Implement an "auto iteration" mode that automatically iterates through the links of a page when the page is loaded
-  # Implement a mechanism to toggle between auto iteration and manual iteration of links.
-  # Implement trapping functionality, where trapping is defined as limiting the user to accessing only the hyperlinks in a page and not the additional toolbar functionality. Thus, the user is "trapped" in the page to navigate and does not access functionality such as the browser history, homepage, etc.
-  # Have the ability to parse these types of links (Prioritized):
-    # <a href=""> tags surrounding text or <img> tags
-    # <div> tags and other html elements with onClick properties
-    # Buttons with onClick properties
-    # Any other objects/elements with clickable properties where CSS may affect the display attribute of the object. 
-  # There should be a preferences and settings menu from which a non-disabled user can customize the toolbar to fit the individual needs of the disabled user. The preferences and settings menu should allow the customization of:
-    * Hyperlink highlighting (visual nature of how the link will be displayed)
-    * Whether or not the links are automatically stepped through when the page is loaded
-    * Customizing mapping of input keys corresponding to all actions needed to navigate or view a page.
-    * Stepping speed of hyperlink selection (how fast it goes to the next link)
-    * Overall should really be focused on trying to customize the toolbar for anyone’s reaction and or usage abilities 
-  # Allow the administrator to customize the number of input switches needed to use the toolbar (this may require additional logic scenarios). 
-
+  # Navigate the Web (html, javascript, css)
+  # Visually appealing (Simplicity)
+  # Easy to use and understand
+  # Input limited to 1 or 2 keys
+ 
 *Secondary Requirements*
-
-  # Functionality allowing the user to scroll through and read a page even if there are no links on the page defined as "scrolling mode"
-  # Ability of the user to access browser history such as back, foward, homepage, favorites, etc.
-  # Implement a mechanism to toggle between auto iteration and scrolling mode where scrolling mode is simply activated by turning auto iteration mode off 
+  # Extendible to modules, allowing user customization
+    # Scrolling through a page with no links
+    # Access navigation (back, forward, home) and favorites
+    # Auto itteration mode
+    # Increase font size
 
 === Constraints: ===
 The Hawking Toolbar is constrained by the following factors:
   * User’s input ability – This is the main reason for the toolbar.  
-  * Browser plugin api
-  * Javascript language
+  * Firefox Browser plug-in api
   * Web page content (Flash and Applets)
-  * Other Classes
-  * Time
-  * Extra Circular Activities
 
 === Deliverables: ===
-  * Literacy toolbar
   * Advanced toolbar 
-  * User Manual
+  * Modules
+  * Design Documentation
   * Admin Manual
-  * Demo Web Page (For install and use)
+  * Demo or Help Web Page
+  * Make project avalible on sourceforge
 
 === Resources Required: ===
   * Multi OS testing environments
-  * The Time of all participants
 
 === Contractor and Client Obligations: ===
 The developers are expecting the following from the Client.
@@ -73,13 +53,11 @@ The developers are expecting the following from the Client.
 
 === Risks: ===
   * Compatibility with Firefox upgrades
-  * Tired, Overworked, Student programmers
-  * Growth of feature set
-  * Lack of structured javascript development environment
-  * Changes in web technology
+  * Variability in web technology
   * Failures in user input technology
+  * Usability
 
 === Milestones: ===
   * March 2nd – Beta of Literacy Center Toolbar
+  * April 5th - Toolbar without extensive modules
   * May 3rd – Finial Version of Toolbar
-
