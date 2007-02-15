@@ -1,4 +1,16 @@
 #summary This page includes the conceptual design of the Hawking Toolbar in terms of the toolbar components and user interaction.
 
+==Architecture Notes==
+The basic architecture of
+
 ==Input Mechanisms==
-The basic Hawking Toolbar input mechanism will consist of two main
+The basic Hawking Toolbar input mechanism will consist of two main input switches mapped two keyboard keys as specified by the user and/or the hardware devices. These two switches will support 
+
+*Move* - The move switch will allow the user to move from the currently selected hyperlink, button, or feature to the next in order.
+*Engage* - The engage switch allows the user to select the currently highlighted hyperlink, button, or feature as if clicking on it to prompt an action event to occur.
+
+
+*The Module Requirements are:*
+  # The module must be logically and easily navigable by using Move and Engage input switches.
+  # The module must have a visual component that can be placed on the Hawking Toolbar. This visual button/component may be one or more buttons that perform actions with the user presses the Engage switch.
+  # If the module must have an easy Exit mechanism that the user can access using the Move and Engage switches that returns them to the main Hawking Toolbar.
