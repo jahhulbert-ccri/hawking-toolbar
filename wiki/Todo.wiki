@@ -1,22 +1,7 @@
 #summary Todo List for Comp 523 Development Team
 
 ===High Priority===
-  * Team Rules
-  * Draft Contract (blouden00)
-
-===Medium Priority===
   * Signed Contract Due
 
-===Web Site===
-_hasuob (temp)_
-  * Project Description
-  * Contact Information
-  * Contract
-  * Project Plan
-  * Schedule for Meetings
-  * Functional Spec
-  * Design Documents
-  * User Manuals
-  * Test Plan
-  * Journal of Meetings and Decisions
-  * Related Links
+===Medium Priority===
+  * Continue working on code updates.
