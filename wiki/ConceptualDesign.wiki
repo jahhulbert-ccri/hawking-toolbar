@@ -1,0 +1,4 @@
+#summary This page includes the conceptual design of the Hawking Toolbar in terms of the toolbar components and user interaction.
+
+==Input Mechanisms==
+The basic Hawking Toolbar input mechanism will consist of two main
