@@ -50,14 +50,14 @@ _The Secondary Requirements are those necessary to implement the Advanced Hawkin
   * Administrator
 
 ==Toolbar Layouts and Design==
-_Two types of toolbars will be created in this project, a simple and an advanced toolbar._
-  * Simple Toolbar
-    * Purpose: To provide the most disabled users with the simplest functionality toolbar with an extremely simple (3 buttons or less) user interface to the toolbar.
-    * Design Goal: Make the toolbar have only two or three buttons. No scrolling functionality is needed here. The user will be trapped within a page that fits their browser and will only need to navigate between 2-3 links. The user may only have one switch for input and thus the iteration of loops should reflect this.
+_Two types of toolbars will be created in this project:_
+  * Literacy Center Toolbar
+    * Purpose: To provide UNC Literacy Center Users with the simplest functionality toolbar with an extremely simple 2 button input interface to the toolbar.
+    * Design Goal: Make the toolbar have only able to iterate through the hyperlinks on the page. No scrolling functionality is needed here. The user will be trapped within a page that fits their browser and will only need to navigate between 2-3 links. The toolbar would also support the user only haveing one switch for input which could be acheived via auto iteration.
 
-  * Advanced Toolbar
-    * Purpose: To provide moderately disabled users with more functionality and scrolling capabilities with a more advanced yet still intuitive button set on the toolbar.
-    * Design Goal: Implement more features such as scrolling and possibly text size changing or printing options that emulate a more robust browser experience. The user may have 2-3 switches that they can use to operate the computer and thus can experience more functionality from the toolbar.
+  * Hawking Toolbar
+    * Purpose: To provide disabled users with more functionality and scrolling capabilities with a more advanced yet still intuitive button set on the toolbar.
+    * Design Goal: Implement more features such as scrolling and text size changing or printing options that emulate a more robust browser experience. The user will still be using two input switches to operate the toolbar but the design will include a more extensive feature set to allow for a richer browsing experience. It should enable them to get out on the web and explore.
 
 ==Use Cases==
 User
