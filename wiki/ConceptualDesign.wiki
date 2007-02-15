@@ -7,6 +7,7 @@ The basic conceptual architecture of Hawking Tool is an event/input driven model
 The basic Hawking Toolbar input mechanism will consist of two main input switches mapped two keyboard keys as specified by the user and/or the hardware devices. These two switches will support 
 
 *Move* - The move switch will allow the user to move from the currently selected hyperlink, button, or feature to the next in order.
+
 *Engage* - The engage switch allows the user to select the currently highlighted hyperlink, button, or feature as if clicking on it to prompt an action event to occur.
 
 
