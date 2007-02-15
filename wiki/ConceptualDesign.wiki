@@ -26,4 +26,3 @@ In order to implement these and other modules, they must be build in an easily n
   # The module must be logically and easily navigable by using Move and Engage input switches.
   # The module must have a visual component that can be placed on the Hawking Toolbar. This visual button/component may be one or more buttons that perform actions with the user presses the Engage switch.
   # If the module must have an easy Exit mechanism that the user can access using the Move and Engage switches that returns them to the main Hawking Toolbar.
-
