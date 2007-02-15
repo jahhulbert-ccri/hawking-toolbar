@@ -10,10 +10,20 @@ The basic Hawking Toolbar input mechanism will consist of two main input switche
 
 *Engage* - The engage switch allows the user to select the currently highlighted hyperlink, button, or feature as if clicking on it to prompt an action event to occur.
 
+==Feature Modules==
+The Hawking Toolbar will implement a module interface that supports the creation of new code/feature modules that can easily be added to the toolbar. A few of the basic modules are:
+  # *Move To Page Hyperlinks* - Allows the user to move down into the page from the toolbar to begin iterating through hyperlinks
+  # *Scrolling* - Supports user scrolling
+  # *Navigation* - Supports using Foward, Back, Refresh, Stop, Homepage, etc. buttons
+  # *Toggle Auto Iteration* - Toggle auto iteration on and off
+  # *Favorites* - Allows user to have bookmarked favorites
+  # *Text Size* - Allows user to change page Text Size
+  # *Help* - Takes the user to a local HTML Help page
+
+In order to implement these and other modules, they must be build in an easily navigable way much like a heirachical menu in a cell phone but more user friendly and limited to only two input mechanism. Thus, basic module requirements have been made. The basic idea is that the Hawking Toolbar is the "home base" for the user. From there, he or she can move to access features as well as view and interact with page content.
 
 *The Module Requirements are:*
   # The module must be logically and easily navigable by using Move and Engage input switches.
   # The module must have a visual component that can be placed on the Hawking Toolbar. This visual button/component may be one or more buttons that perform actions with the user presses the Engage switch.
   # If the module must have an easy Exit mechanism that the user can access using the Move and Engage switches that returns them to the main Hawking Toolbar.
-
 
