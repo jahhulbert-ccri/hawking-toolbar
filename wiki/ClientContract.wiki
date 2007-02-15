@@ -1,5 +1,4 @@
-#summary Explicity statement of all requirements.
-_This is the contract stating all requirements that will be met by the completion of this project._
+#summary _This is the contract stating all requirements that will be met by the completion of this project._
 
 = Client Contract: Hawking Toolbar =
 === General Description: ===
