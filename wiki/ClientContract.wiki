@@ -14,17 +14,17 @@ The Hawking Toolbar Project's goal is to design a firefox plugin which will enab
 
 === Requirements: ===
 *Primary Requirements*
-  # Navigate the Web (html, javascript, css)
-  # Visually appealing (Simplicity)
-  # Easy to use and understand
-  # Input limited to 1 or 2 keys
+  * Navigate the Web. (html, javascript, css)
+  * Visually appealing (Simplicity)
+  * Easy to use and understand
+  * Input limited to 1 or 2 keys
  
 *Secondary Requirements*
-  # Extendible to modules, allowing user customization
-    # Scrolling through a page with no links
-    # Access navigation (back, forward, home) and favorites
-    # Auto itteration mode
-    # Increase font size
+  * Extendible to modules, allowing user customization
+    * Scrolling through a page with no links
+    * Access navigation (back, forward, home) and favorites
+    * Auto itteration mode
+    * Increase font size
 
 === Constraints: ===
 The Hawking Toolbar is constrained by the following factors:
