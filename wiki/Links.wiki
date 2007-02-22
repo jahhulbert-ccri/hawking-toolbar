@@ -1,12 +1,4 @@
 #summary Contains links to Hawking Toolbar and Comp 523 Related Documents
 #labels links
 
-= Introduction =
-
-Content
-
-
-= Details =
-
-yipeee
-
+*see ResourcesAndInfo wiki*
