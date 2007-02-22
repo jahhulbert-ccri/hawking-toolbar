@@ -1,4 +1,4 @@
-#list of resources we should use to complete this project
+#summary List of resources we should use to complete this project
 
 This is an excellent tutorial on making a toolbar. Comprehensive an concise 
   * [http://www.borngeek.com/firefox/toolbar-tutorial/ Born Geek Toolbar Tutorial]
