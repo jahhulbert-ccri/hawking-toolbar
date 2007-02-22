@@ -1,5 +1,8 @@
 #summary Keep the group up to date on your progress
 
+==See LiveJournal for new updates==
+http://thehawks.livejournal.com/
+
 ==Wednesday 2/14/07==
 The Conceptual Design, basic module structure, and feature set has been decided upon and documented. Currently looking into possibility of implementing all the features we desire.
 
