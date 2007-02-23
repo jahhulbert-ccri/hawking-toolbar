@@ -6,7 +6,7 @@ The Hawking Toolbar Project's goal is to design a firefox plug-in which will ena
 
 === Participants: ===
   * *Client:* Gary Bishop
-  * *Consultants:* Route 66 Literacy and Disability Studies
+  * *Consultants:* Center of Literacy Disability Studies
   * *Developers:*
     * Brian Louden
     * Andrew Hulbert
