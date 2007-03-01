@@ -1,6 +1,6 @@
 #summary Todo List for Comp 523 Development Team
 
-===Modules to Write===
+==Modules to Write==
   * Scrolling
   * Bookmarks
   * Navigation
