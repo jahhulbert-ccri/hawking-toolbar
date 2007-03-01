@@ -1,5 +1,8 @@
 #summary Todo List for Comp 523 Development Team
 
+==High Priority==
+  * Develop graphics, implement styles (mouseover,etc) for 1st Deliverable (due March 2)
+
 ==Modules to Write==
   * Scrolling
   * Bookmarks
