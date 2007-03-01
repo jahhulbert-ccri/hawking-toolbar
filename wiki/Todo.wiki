@@ -1,7 +1,5 @@
 #summary Todo List for Comp 523 Development Team
 
-===High Priority===
-  * Signed Contract Due - Brian is meeting with Gary on Feb 23 @ 9am
-
-===Medium Priority===
-  * Continue working on code updates.
+===Modules to Write===
+  * Scrolling
+  * Bookmarks
