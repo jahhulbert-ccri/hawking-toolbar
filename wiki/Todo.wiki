@@ -3,3 +3,13 @@
 ===Modules to Write===
   * Scrolling
   * Bookmarks
+  * Navigation
+  * Text Size
+
+==Primary Additional Features==
+  * Auto Iteration
+  * Help Page / HTML Tutorial
+
+==Secondary Additional Features==
+  * Printing
+  * 
