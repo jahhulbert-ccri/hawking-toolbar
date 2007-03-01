@@ -12,3 +12,8 @@
 
 ==Secondary Additional Features==
   * Printing
+
+==Other ToDo's==
+  * Read over code / Debug / Test
+  * Test usability with clients
+  * 
