@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<overlay id="hawkingPrefsOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<!-- Merge with the BrowserPreferences Window -->
+	<prefwindow id="BrowserPreferences">
+	  <!-- Create a new pane (tab) for HP Scheduler. -->
+		<prefpane id="hawkingPrefPane" label="Hawking Prefs" onpaneload="populateHawkingPrefs" image="chrome://hawkingbar/content/images/prefs.png">
+
+<!-- Intermediary between GUI and preferences system -->
+                <preferences>
+                   <!-- see the next section for more information -->
+                </preferences>
+    
+                <!-- GUI Elements... -->
+
+	  </prefpane>
+	</prefwindow>
+</overlay> 

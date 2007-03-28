@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://hawkingbar/skin/hawkingbar.css" type="text/css"?>
+<overlay id="TutTB-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />         
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" /> 
+    	<toolbox id="navigator-toolbox">
+    
+        	<toolbar id="HawkingToolBar" toolbarname="HawkingToolBar" accesskey="H"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="false">
+
+					<toolbarbutton id="HawkingIntoPage" tooltiptext="Go Into Page"
+                               label="Link Navigation" onclick="Scope('HawkingSBPageNav')" />
+					<toolbarseparator />
+<!-- leave out for demo
+					<toolbarbutton id="HawkingNavBar" tooltiptext="Go Into Page"
+                               label="Navigation Toolbar" onclick="HawkingToggleXulHidden('nav-bar');" />
+-->
+					<toolbarseparator />
+                	<toolbarbutton id="HawkingScrollPage" tooltiptext="Scroll Page"
+                               label="Scroll" onclick="Scope('HawkingSBScroll')" />
+                	<toolbarbutton id="HawkingBarHome" tooltiptext="Hawking Developers Home"
+                               label="Go to HawkingBar Home" onclick="HawkingBarGoHome()" />
+                	<toolbarseparator />
+                	<toolbarbutton id="HawkingBarPrefs" tooltiptext="Prefs"
+                               label="Activity" oncommand="hawkingDisableCapture()" />
+        	</toolbar>
+        	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="true">
+			<image src='chrome://hawkingbar/skin/intoPage_n.png' />
+                	<toolbarbutton id="HawkingPageNext" tooltiptext="Go to the next link"
+                               onclick="HawkingPageNext()" />
+                	<toolbarseparator />
+					<toolbarbutton id="HawkingPageClick" tooltiptext="Click the current link"
+								label="Click Link" onclick="HawkingPageClick()" />
+					<toolbarseparator />
+					<toolbarbutton id="HawkingPagePrev" tooltiptext="Go to the previous link"
+                               onclick="HawkingPagePrev()" />
+					<toolbarseparator />
+
+					<toolbarbutton id="HawkingPageExit" tooltiptext="Exit"
+								onclick="UnScope()" />
+        	</toolbar>
+        	<toolbar id="HawkingSBScroll" toolbarname="HawkingScroll" accesskey="S"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="true">
+			<image src='chrome://hawkingbar/skin/scroll_n.png' />
+                	<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
+                               label="Down" onclick="HawkingScrollDown()" />
+                	<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
+                               label="Up" onclick="HawkingScrollUp()" />
+                	<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="HawkingScrollRight()" />
+                	<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="HawkingScrollLeft()" />
+                	<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
+                               onclick="UnScope()" />
+        	</toolbar>
+
+    	</toolbox>
+</overlay>
