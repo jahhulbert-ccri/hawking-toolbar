@@ -28,8 +28,6 @@
                 	<toolbarseparator />
                 	<toolbarbutton id="HawkingBarPrefs" tooltiptext="Prefs"
                                label="Activity" oncommand="hawkingDisableCapture()" />
-                	<toolbarbutton id="HawkingBarSimple" tooltiptext="Turn on Literacy Center Toolbar"
-                               label="Literacy Center" oncommand="htbEnableLiteracy()" />
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
