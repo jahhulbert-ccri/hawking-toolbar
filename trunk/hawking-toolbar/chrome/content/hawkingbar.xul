@@ -29,8 +29,11 @@
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
-			<image src='chrome://hawkingbar/skin/intoPage_n.png' />
-                	<toolbarbutton id="HawkingPageNext" tooltiptext="Go to the next link"
+				<image src='chrome://hawkingbar/skin/intoPage_n.png' />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarbutton id="HawkingPageNext" tooltiptext="Go to the next link"
                                onclick="HawkingPageNext()" />
                 	<toolbarseparator />
 					<toolbarbutton id="HawkingPageClick" tooltiptext="Click the current link"
@@ -46,7 +49,10 @@
         	<toolbar id="HawkingSBScroll" toolbarname="HawkingScroll" accesskey="S"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
-			<image src='chrome://hawkingbar/skin/scroll_n.png' />
+				<image src='chrome://hawkingbar/skin/scroll_n.png' />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarseparator />
                 	<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
                                label="Down" onclick="HawkingScrollDown()" />
                 	<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
