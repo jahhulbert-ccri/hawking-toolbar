@@ -1,50 +1,3 @@
-//window onloads
-//addEvent(window,"load",hideNavBar,true);
-
-const htbPrefPrefix = "extensions.hawking.";
-function htbGetPrefs() {
-	return 
-}
-
-function htbSetPref(name,value,type){
-	var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-	if(!prefs) return;
-	if(type=='Int')
-		prefs.setIntPref(htbPrefPrefix+name,value);
-	else if(type=='Bool')
-		prefs.setBoolPref(htbPrefPrefix+name,value);
-	else if(type=='Char')
-		prefs.setCharPref(htbPrefPrefix+name,value);
-}
-
-function htbGetPref(name){
-	var prefix = htbPrefPrefix;
-	var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-	if(!prefs) return;
-	var gotten = "";
-	if (prefs.getPrefType(prefix+name) == prefs.PREF_STRING){
-		gotten = prefs.getCharPref(prefix+name);
-	}
-	else if (prefs.getPrefType(prefix+name) == prefs.PREF_BOOL){
-		gotten = prefs.getBoolPref(prefix+name);
-	}
-	else if (prefs.getPrefType(prefix+name) == prefs.PREF_INT){
-		gotten = prefs.getIntPref(prefix+name);
-	}
-	return gotten;
-}
-
-function hideNavBar(){
-	var nav = document.getElementById('nav-bar');
-	if(nav)
-		nav.hidden=true;
-}
-
-function HawkingToggleXulHidden(id){
-	var comp = document.getElementById(id);
-	if(comp)
-		comp.hidden = !(comp.hidden);
-}
 
 
 //this is probably the better way to go.
@@ -177,31 +130,14 @@ function FindLinks(node, arr){
 //		alert("this node is valid: "+node.nodeName);
 //		return;
 	}
-	else{
+/*	else{
 	 try{
       if(typeof node.onclick =='function')
 	     arr.push(node);
 	 }
 	 catch(e){}
 	}
-	/*
-  We are still missing some objects with events added by javascript
-  using the addEvent(object, function ...) function. This does not show up
-  as an "onclick" attribute. I was hopeful the following might work, but no.
-    -Hasuob	
-
-	try{
-    if(node["onclick"] && node["onclick"].length>0){
-      alert("stolen look worked for onclick!");
-      return;
-    }  
-  }
-  catch(exception){
-    alert("error: "+exception.description);
-    return;
-  }
 */
-
 	//check inside  frames and iframes
   if(node.nodeName=="FRAME" || node.nodeName=="IFRAME"){
     try{
@@ -226,31 +162,31 @@ function FindLinks(node, arr){
 	}
 }
 var ContextManager;
-addEvent(window, "load", function(){
-	HawkingTrackerSetup(0);
-}, true);
-function HawkingTrackerSetup(times){
-	if(this.done){
-		htbButtonHover(ContextManager.getCurrent());
-		return;
-	}
-	if(!times)
-		times = 0;
-	else
-		times++;
-	if(times>10){
-	//if we retried 10 times
-		alert("Error: Unable to locate the Hawking Toolbar");
-		return;
-	}
+addEvent(window, "load", HawkingTrackerSetup, true);
+//used to be called on page load		htbButtonHover(ContextManager.getCurrent());
+//this is the setup function which determines how the toolbar starts up
+function HawkingTrackerSetup(){
 	var tb = document.getElementById("HawkingToolBar");
 	if(!tb){
-		setTimeout("HawkingTrackerSetup("+times+")", 1000);
+		setTimeout("HawkingTrackerSetup()", 1000); //not ready, wait 1 second
 		return;
 	}
 	//this should only be called once
 	this.done = true;
 	ContextManager = new HawkingToolbarTracker(tb);
+	htbButtonHover(ContextManager.getCurrent());
+	//transforms window events into move and engage
+	var simple = htbGetPref("literacybar");
+	if(simple){
+		//simple toolbar, hide the htb
+		tb.hidden = true;
+		var mItem = document.getElementById("htbLiteracyMenuItem");
+		if(mItem)
+			mItem.setAttribute("checked", "true");
+	}
+	addEvent(window, "keydown", htbActionTransform, true);
+	//removes the event from window.onload so it is not called every time
+	window.removeEventListener("load", HawkingTrackerSetup, true);
 }
 function UnScope(){
 	if(!ContextManager)
@@ -281,34 +217,93 @@ function ReLight(times){
 		return;
 	setTimeout("ReLight("+parseInt(times+1)+")", 100);
 }
-
-window.onkeydown = htbActionTransform;
+//window.onkeydown = htbActionTransform;
 function htbActionTransform(ev){
 	//this function captures key presses
 	//and translates them into clicks
 	var dis = htbGetPref("disabled");
 	if(dis==false){
-		return true;
+		return true; //toolbar disabled, normal action allowed
 	}
 
 	var ev = ev || window.event;
-	if(!ev || !ev.which) return;
-	if (String.fromCharCode(ev.which) == '1') {
+	if(!ev) return;
+//	alert("transforming action");
+	if (htbIsEventClick(ev)) {
 	//engage
-		ClickObject(ContextManager.getCurrent());
+		var simple = htbGetPref("literacybar");
+		if(simple){
+			HawkingPageClick();
+		}
+		else{
+			ClickObject(ContextManager.getCurrent());
+		}
 		if(ev.preventDefault)
 			ev.preventDefault();
 		ev.returnValue = false;
 		return false;
 	}
-	else if(String.fromCharCode(ev.which) == '2'){
+	else if(htbIsEventMove(ev)){
 	//move
-		ContextManager.next();
+		var simple = htbGetPref("literacybar");
+		if(simple){
+			HawkingPageNext();
+		}
+		else{
+			ContextManager.next();
+		}
 		if(ev.preventDefault)
 			ev.preventDefault();
 		ev.returnValue = false;
 		return false;
 	}
+}
+
+function htbSimpleActionTransform(ev){
+	//this function captures key presses
+	//and translates them into next link or click link
+	//specific for the literacy website
+	var dis = htbGetPref("disabled");
+	if(dis==false){
+		return true; //toolbar disabled, normal action allowed
+	}
+
+	var ev = ev || window.event;
+	if(!ev) return;
+//	alert("transforming event");
+	if (htbIsEventClick(ev)) {
+	//engage
+//		ClickObject(ContextManager.getCurrent());
+		HawkingPageClick();
+		if(ev.preventDefault)
+			ev.preventDefault();
+		ev.returnValue = false;
+		return false;
+	}
+	else if(htbIsEventMove(ev)){
+	//move
+//		ContextManager.next();
+		HawkingPageNext();
+		if(ev.preventDefault)
+			ev.preventDefault();
+		ev.returnValue = false;
+		return false;
+	}
+}
+
+function htbIsEventMove(ev){
+//takes in an event object and determines if it matches
+//the move characteristic of an event
+
+	if(!ev || !ev.which) return false;
+	return (String.fromCharCode(ev.which) == '2');
+}
+
+function htbIsEventClick(ev){
+//takes in an event object and determines if it matches
+//the click characteristic of an event
+	if(!ev || !ev.which) return;
+	return (String.fromCharCode(ev.which) == '1');
 }
 
 function ObjectIsVisible(obj){
@@ -494,6 +489,33 @@ function hawkingDisableCapture(){
 		button.label = "Disable";
 		else
 		alert("activated");
+	}
+}
+
+function htbEnableLiteracy(){
+	htbSetPref("literacybar", true, "Bool");
+	alert("You must restart FireFox for the changes to take effect");
+}
+
+function htbToggleLiteracy(){
+	var lbar = htbGetPref("literacybar");
+	var mItem = document.getElementById("htbLiteracyMenuItem");
+	var tb = document.getElementById("HawkingToolBar");
+	if(lbar){
+		//go back to full feature set
+		htbSetPref("literacybar", false, "Bool");
+		if(tb)
+			tb.hidden = false;
+		if(mItem)
+			mItem.setAttribute("checked", "false");
+	}
+	else{
+		//reduce to literacy center feature
+		htbSetPref("literacybar", true, "Bool");
+		if(tb)
+			tb.hidden = true;
+		if(mItem)
+			mItem.setAttribute("checked", "true");
 	}
 }
 
