@@ -358,26 +358,38 @@ function ClickObject(object){
 }
 
 function Highlight(obj){
-  if(!obj){
-    alert("I tried to highlight, but you gave me nothing");
-    return;
-  }
-	if(obj.nodeName=="A" && obj.parentNode && obj.parentNode.childNodes.length==1){
-		/*  if the <a> is in something all by itself, highlight that instead;
-		    this is to counteract the annoying "no-highlight" bug when we find an
-		    <a> tag inside a <div> with an id so it appears as a clickable logo
-		*/
-		Highlight(obj.parentNode);
-		obj.focus();
+	if(!obj){
+		alert("I tried to highlight, but you gave me nothing");
 		return;
 	}
+  	if(obj.nodeName=="A"){
+		alert("in here");
+		if(obj.childNodes && obj.childNodes.length==1 && obj.childNodes[0].nodeName=="IMG"){
+	  		alert("highlight the image the a surround");
+	  		Highlight(obj.childNodes[0]);
+	  		obj.focus();
+	  		return;
+	  	}
+		if(obj.parentNode && obj.parentNode.childNodes.length==1){
+			alert("highlight the parent of the a");
+			/*  if the <a> is in something all by itself, highlight that instead;
+			    this is to counteract the annoying "no-highlight" bug when we find an
+			    <a> tag inside a <div> with an id so it appears as a clickable logo
+			*/
+			Highlight(obj.parentNode);
+			obj.focus();
+			return;
+		}
+		if(!obj.nextSibling && !obj.previousSibling)
+			alert("only one");
+	}
+//  	alert("looking at: "+obj.nodeName);
 	var oStyle = "";
 	if(obj.style && obj.style.border)
 		oStyle = obj.style.border;
 	obj.style.border = "solid #f00 5px";
-	obj.setAttribute("OLD_STYLE", oStyle);
-//	alert(obj.nodeName+" - "+obj.label);
-//	obj.focus();
+	obj.setAttribute("old_style", oStyle);
+	obj.focus();
 }
 
 function unHighlight(obj){
@@ -390,8 +402,8 @@ function unHighlight(obj){
 	}
 
 	var oStyle = "";
-	if(obj.getAttribute("OLD_STYLE"))
-		oStyle = obj.getAttribute("OLD_STYLE");
+	if(obj.getAttribute("old_style"))
+		oStyle = obj.getAttribute("old_style");
 	if(obj.style && obj.style.border)
 		obj.style.border = oStyle;	
 }
