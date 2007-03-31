@@ -39,3 +39,24 @@ function knackerEvent(eventObject) {
 function cancelEventSafari() {
     return false;        
 }
+
+function htbCountRealChildren(parent){
+	var count = 0;
+	if(parent && parent.childNodes){
+		for(var i=0; i<parent.childNodes.length; i++){
+			if(parent.childNodes[i].nodeName!="#text" && parent.childNodes[i].nodeName!="#comment")
+				count++;
+		}
+	}
+	return count;
+}
+
+function htbGetFirstRealChild(parent){
+	if(parent && parent.childNodes){
+		for(var i=0; i<parent.childNodes.length; i++){
+			if(parent.childNodes[i].nodeName!="#text" && parent.childNodes[i].nodeName!="#comment")
+				return parent.childNodes[i];
+		}
+	}
+	return false;
+}

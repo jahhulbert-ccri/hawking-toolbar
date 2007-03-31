@@ -17,7 +17,7 @@ function htbSetPref(name,value,type){
 function htbGetPref(name){
 	var prefix = htbPrefPrefix;
 	var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-	if(!prefs) return;
+	if(!prefs) return "";
 	var gotten = "";
 	if (prefs.getPrefType(prefix+name) == prefs.PREF_STRING){
 		gotten = prefs.getCharPref(prefix+name);
