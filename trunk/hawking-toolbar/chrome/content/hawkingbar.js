@@ -226,8 +226,8 @@ function htbActionTransform(ev){
 		return true; //toolbar disabled, normal action allowed
 	}
 
-	var ev = ev || window.event;
-	if(!ev) return;
+//	var ev = ev || window.event;
+	if(!ev) return false;
 //	alert("transforming action");
 	if (htbIsEventClick(ev)) {
 	//engage
@@ -257,8 +257,9 @@ function htbActionTransform(ev){
 		ev.returnValue = false;
 		return false;
 	}
+	return true;
 }
-
+/*
 function htbSimpleActionTransform(ev){
 	//this function captures key presses
 	//and translates them into next link or click link
@@ -290,7 +291,7 @@ function htbSimpleActionTransform(ev){
 		return false;
 	}
 }
-
+*/
 function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
@@ -302,7 +303,7 @@ function htbIsEventMove(ev){
 function htbIsEventClick(ev){
 //takes in an event object and determines if it matches
 //the click characteristic of an event
-	if(!ev || !ev.which) return;
+	if(!ev || !ev.which) return false;
 	return (String.fromCharCode(ev.which) == '1');
 }
 
@@ -357,31 +358,34 @@ function ClickObject(object){
 	}
 }
 
-function Highlight(obj){
+function htbFindRealHighlight(obj){
 	if(!obj){
-		alert("I tried to highlight, but you gave me nothing");
-		return;
+		return null;
 	}
   	if(obj.nodeName=="A"){
-		alert("in here");
-		if(obj.childNodes && obj.childNodes.length==1 && obj.childNodes[0].nodeName=="IMG"){
-	  		alert("highlight the image the a surround");
-	  		Highlight(obj.childNodes[0]);
-	  		obj.focus();
-	  		return;
+		if(obj.childNodes && htbCountRealChildren(obj)==1){
+			var nobj = htbGetFirstRealChild(obj);
+			if(nobj && nobj.nodeName=="IMG"){
+	  			return nobj;
+	  		}
 	  	}
-		if(obj.parentNode && obj.parentNode.childNodes.length==1){
-			alert("highlight the parent of the a");
+		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
 			/*  if the <a> is in something all by itself, highlight that instead;
 			    this is to counteract the annoying "no-highlight" bug when we find an
 			    <a> tag inside a <div> with an id so it appears as a clickable logo
 			*/
-			Highlight(obj.parentNode);
-			obj.focus();
-			return;
+			return obj.parentNode;
 		}
-		if(!obj.nextSibling && !obj.previousSibling)
-			alert("only one");
+	}
+	return obj;
+}
+
+
+function Highlight(realObj){
+	var obj = htbFindRealHighlight(realObj);
+	if(!obj){
+		alert("I tried to highlight, but you gave me nothing");
+		return;
 	}
 //  	alert("looking at: "+obj.nodeName);
 	var oStyle = "";
@@ -392,15 +396,11 @@ function Highlight(obj){
 	obj.focus();
 }
 
-function unHighlight(obj){
+function unHighlight(realObj){
+	var obj = htbFindRealHighlight(realObj);
 	if(!obj){ //nothing to unhighlight
 		return;
 	}
-	if(obj.nodeName=="A" && obj.parentNode && obj.parentNode.childNodes.length==1){
-		unHighlight(obj.parentNode);
-		return;
-	}
-
 	var oStyle = "";
 	if(obj.getAttribute("old_style"))
 		oStyle = obj.getAttribute("old_style");
