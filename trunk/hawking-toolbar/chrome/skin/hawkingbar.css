@@ -66,3 +66,11 @@
 #HawkingScrollLeft.over {
 	list-style-image: url("chrome://hawkingbar/skin/back_s.png");
 }
+
+toolbarbutton{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom:0px;
+
+}
