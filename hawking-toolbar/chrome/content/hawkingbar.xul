@@ -13,7 +13,7 @@
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="false">
 
-					<toolbarbutton id="HawkingIntoPage" tooltiptext="Go Into Page"
+					<toolbarbutton class="hawking" id="HawkingIntoPage" tooltiptext="Go Into Page"
                                label="Link Navigation" onclick="Scope('HawkingSBPageNav')" />
 					<toolbarseparator />
 <!-- leave out for demo
@@ -21,12 +21,12 @@
                                label="Navigation Toolbar" onclick="HawkingToggleXulHidden('nav-bar');" />
 -->
 					<toolbarseparator />
-                	<toolbarbutton id="HawkingScrollPage" tooltiptext="Scroll Page"
+                	<toolbarbutton class="hawking" id="HawkingScrollPage" tooltiptext="Scroll Page"
                                label="Scroll" onclick="Scope('HawkingSBScroll')" />
-                	<toolbarbutton id="HawkingBarHome" tooltiptext="Hawking Developers Home"
+                	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
                                label="Go to HawkingBar Home" onclick="HawkingBarGoHome()" />
                 	<toolbarseparator />
-                	<toolbarbutton id="HawkingBarPrefs" tooltiptext="Prefs"
+                	<toolbarbutton class="hawking" id="HawkingBarPrefs" tooltiptext="Prefs"
                                label="Activity" oncommand="hawkingDisableCapture()" />
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
