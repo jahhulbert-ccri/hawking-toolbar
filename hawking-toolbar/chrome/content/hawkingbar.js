@@ -295,9 +295,9 @@ function ObjectIsVisible(obj){
         return false;
       }
   
-//      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
-//        break;
-//      }
+      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
+        break;
+      }
       
       obj = obj.parentNode;
     }
