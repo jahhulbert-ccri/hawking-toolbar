@@ -148,7 +148,6 @@ function FindLinks(node, arr){
     }
     catch(exception){
       //sometimes weird stuff happens, nothing we can do, just skip whatever was in that iframe
-      alert("I take exception to such behaviour!");
     }
 //    alert("made it");
     return;
@@ -291,9 +290,9 @@ function ObjectIsVisible(obj){
         return false;
       }
   
-      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
-        break;
-      }
+//      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
+//        break;
+//      }
       
       obj = obj.parentNode;
     }
