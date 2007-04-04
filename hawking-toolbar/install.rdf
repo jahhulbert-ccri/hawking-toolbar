@@ -7,8 +7,8 @@
 
         <!-- Required Items -->
         <em:id>HawkingBar@google.com</em:id>
-        <em:name>Hawking Link Counter</em:name>
-        <em:version>1.0</em:version>
+        <em:name>Hawking Toolbar</em:name>
+        <em:version>2.0</em:version>
 
         <em:targetApplication>
             <Description>
@@ -20,7 +20,7 @@
 
         <!-- Optional Items -->
         <em:creator>John Foushee, Andrew Hulbert, Briand Louden</em:creator>
-        <em:description>Counts your bookmarks</em:description>
+        <em:description>Utility for disabled users to access the internet</em:description>
         <em:homepageURL>http://code.google.com/p/hawking-toolbar</em:homepageURL>
 
     </Description>
