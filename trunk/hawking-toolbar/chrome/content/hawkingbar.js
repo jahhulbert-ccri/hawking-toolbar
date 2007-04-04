@@ -71,9 +71,10 @@ ContextList.prototype.next = function(){
   //moves pointer to the next clickable and highlights, returns nothing
 	if(this.ContextLinks.length==0 || this.ContextPosition<0 || this.ContextPosition>this.ContextLinks.length){
 		this.Setup();
+		this.ContextPosition = this.ContextLinks.length; //sets it to one past the end.
 //		alert("done with setup "+this.ContextLinks.length);
 	}
-	else{
+//	else{
 		var iterations = 0;
 		do{
 			if(iterations>this.ContextLinks.length)
@@ -84,13 +85,15 @@ ContextList.prototype.next = function(){
   		  	this.ContextPosition = 0;
 		}
 		while(!ObjectIsVisible(this.getCurrent()));
-	}
+//	}
 }
 ContextList.prototype.prev = function(){
   //move pointer to previous clickable
-	if(this.ContextLinks.length==0 || this.ContextPosition<0)
+	if(this.ContextLinks.length==0 || this.ContextPosition<0){
 		this.Setup();
-	else{
+		this.ContextPosition = 1;
+	}
+//	else{
 		var iterations = 0;
 		do{
 			if(iterations>this.ContextLinks.length)
@@ -100,7 +103,7 @@ ContextList.prototype.prev = function(){
   			if(this.ContextPosition<0)
   		  		this.ContextPosition = this.ContextLinks.length-1;
   		}while(!ObjectIsVisible(this.getCurrent()));
-	}
+//	}
 }
 ContextList.prototype.Setup = function(){
   //find all the clickables in this.ContextRoot to this.ContextLinks
@@ -259,39 +262,7 @@ function htbActionTransform(ev){
 	}
 	return true;
 }
-/*
-function htbSimpleActionTransform(ev){
-	//this function captures key presses
-	//and translates them into next link or click link
-	//specific for the literacy website
-	var dis = htbGetPref("disabled");
-	if(dis==false){
-		return true; //toolbar disabled, normal action allowed
-	}
 
-	var ev = ev || window.event;
-	if(!ev) return;
-//	alert("transforming event");
-	if (htbIsEventClick(ev)) {
-	//engage
-//		ClickObject(ContextManager.getCurrent());
-		HawkingPageClick();
-		if(ev.preventDefault)
-			ev.preventDefault();
-		ev.returnValue = false;
-		return false;
-	}
-	else if(htbIsEventMove(ev)){
-	//move
-//		ContextManager.next();
-		HawkingPageNext();
-		if(ev.preventDefault)
-			ev.preventDefault();
-		ev.returnValue = false;
-		return false;
-	}
-}
-*/
 function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
@@ -308,46 +279,37 @@ function htbIsEventClick(ev){
 }
 
 function ObjectIsVisible(obj){
-//consider using getComputedStyle instead of style
-//also may want to check here: http://dean.edwards.name/my/cssQuery/
-
-/*
-        var offsetParent = element.offsetParent;
-        if (!offsetParent)
-            return;
-
-        var parentStyle = window.getComputedStyle(offsetParent, "");
-        if(parentStyle.display == "none' || parentStyle.visibility =="none")
-          return false; //it's hidden
-*/
-	if(!obj) return false;
-	while(obj){
-    var style = window.getComputedStyle(obj, "");
-    if(style && (style.display=="none" || style.visibility=="hidden"))
-      return false;
-    obj = obj.offsetParent;
+//obj.style.display is not sufficient due to
+//style sheets having display: none; properties
+//which the .style function does not detect.
+  if(!obj) return false;
+  try{
+  	while(obj){
+      var disp = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("display");
+      var vis = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("visibility");
+      if(disp=="none" || vis=="hidden"){
+        return false;
+      }
+  
+      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
+        break;
+      }
+      
+      obj = obj.parentNode;
+    }
+  }
+  catch(e){
+    return false;
   }
   return true;
-/*
-actual method
-	if(!obj) return false;
-	while(obj){
-		if(obj.style && (obj.style.display=="none" || obj.style.visibility=="hidden")){
-//			alert("it's hidden");
-			return false;
-		}
-		obj = obj.parentNode;
-	}
-//	alert("it's visible");
-	return true;
-*/
 }
+
 function ClickObject(object){
 	//pass this function the object you want to click
 	if(!object){
     		alert("you clicked, but i saw no object");
     		return;
-  	}
+  }
 	if(object.getAttribute("oncommand")){
 		object.doCommand();
 	}
