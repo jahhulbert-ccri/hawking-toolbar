@@ -70,7 +70,9 @@
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
 
-					
+					<toolbarbutton id="HawkingLiteracyName" tooltiptext="Literacy Center Bar" label="Literacy Center Toolbar" />
+					<toolbarseparator />
+					<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Standard Hawking Toolbar" label="Return to Standard Hawking Toolbar" />
 				 
         	</toolbar>
 
