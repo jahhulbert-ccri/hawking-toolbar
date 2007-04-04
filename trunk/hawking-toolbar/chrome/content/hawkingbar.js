@@ -182,6 +182,11 @@ function HawkingTrackerSetup(){
 	if(simple){
 		//simple toolbar, hide the htb
 		tb.hidden = true;
+		//show the subbar for the literacy center simple toolbar
+		var literacyTB = document.getElementById("HawkingSBLiteracy");
+		if(literacyTB) {
+			literacyTB.hidden = false;		
+		}
 		var mItem = document.getElementById("htbLiteracyMenuItem");
 		if(mItem)
 			mItem.setAttribute("checked", "true");
