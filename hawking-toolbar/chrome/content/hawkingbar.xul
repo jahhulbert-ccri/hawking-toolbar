@@ -65,6 +65,13 @@
                 	<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
                                onclick="UnScope()" />
         	</toolbar>
+			<toolbar id="HawkingSBLiteracy" toolbarname="Literacy" accesskey="S"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="true">
+
+				 
+				 
+        	</toolbar>
 
     	</toolbox>
 </overlay>
