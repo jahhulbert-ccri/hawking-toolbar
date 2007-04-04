@@ -50,26 +50,27 @@
 								onclick="UnScope()" />
         	</toolbar>
         	<toolbar id="HawkingSBScroll" toolbarname="HawkingScroll" accesskey="S"
-                 class="chromeclass-toolbar" context="toolbar-context-menu" 
-                 hidden="true">
+	                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+	                 hidden="true">
 				<image src='chrome://hawkingbar/skin/scroll_n.png' />
 				<toolbarseparator />
 				<toolbarseparator />
 				<toolbarseparator />
-                	<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
-                               label="Down" onclick="HawkingScrollDown()" />
-                	<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
-                               label="Up" onclick="HawkingScrollUp()" />
-                	<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="HawkingScrollRight()" />
-                	<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="HawkingScrollLeft()" />
-                	<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
-                               onclick="UnScope()" />
+				<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
+						   label="Down" onclick="HawkingScrollDown()" />
+				<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
+						   label="Up" onclick="HawkingScrollUp()" />
+				<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="HawkingScrollRight()" />
+				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="HawkingScrollLeft()" />
+				<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
+						   onclick="UnScope()" />
         	</toolbar>
+			
 			<toolbar id="HawkingSBLiteracy" toolbarname="Literacy" accesskey="S"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
 
-				 
+					
 				 
         	</toolbar>
 
