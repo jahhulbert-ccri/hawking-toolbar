@@ -15,8 +15,10 @@
                 <preferences>
 				
 				<!-- General tab -->
-				<preference id="extensions.hawking.literacybar"   name="extensions.hawking.literacybar"   type="bool"/>
-				<preference id="extensions.hawking.borderHighlightColor"   name="extensions.hawking.borderHighlightColor"   type="string"/>
+				<preference id="extensions.hawking.literacybar" name="extensions.hawking.literacybar" type="bool"/>
+				<preference id="extensions.hawking.borderHighlightColor" name="extensions.hawking.borderHighlightColor" type="string"/>
+				<preference id="extensions.hawking.borderHighlightWidth" name="extensions.hawking.borderHighlightWidth" type="int"/>
+				<preference id="extensions.hawking.disabled" name="extensions.hawking.disabled" type="bool"/>
 				
                 <!-- see the next section for more information -->
                 </preferences>
@@ -35,13 +37,21 @@
 
 					<tabpanels flex="1">
 						<tabpanel id="generalPanel" orient="vertical">
+						
+							<groupbox id="generalConfigBox" align="start">
+								<caption label="General Configuration" />
+								<hbox>
+									<checkbox id="prefDisabledBox"
+										label="Disable Hawking Toolbar on Startup"
+										preference="extensions.hawking.disabled" />
+								</hbox>
+							</groupbox>
 							<groupbox id="simplifiedModeBox" align="start">
 					            <caption label="Simplified Mode"/>
 								<hbox>
-					            <checkbox id="useSimplifiedMode"
-					                    label="Use Simplified Mode on Startup"
-					                    preference="extensions.hawking.literacybar"/>
-								<button label="Toggle Simplified Mode" oncommand="htbToggleLiteracy()" />
+						            <checkbox id="useSimplifiedMode"
+						                    label="Use Simplified Mode on Startup"
+						                    preference="extensions.hawking.literacybar"/>
 								</hbox>
 							</groupbox>
 								
@@ -68,9 +78,29 @@
 									<label>Border Color: </label>
 									<colorpicker type="button" id="borderColor" palettename="standard"
 										preference="extensions.hawking.borderHighlightColor" />
-									<button id="as" label="click" oncommand="classHawkingPane.test()" />
 								</hbox>
-						
+								<hbox>
+									<label>Border Width (pixels): </label>
+										<menulist id="borderWidthList" preference="extensions.hawking.borderHighlightWidth">
+											<menupopup>
+												<menuitem value="1" label="1"/>
+												<menuitem value="2" label="2"/>
+												<menuitem value="3" label="3"/>
+												<menuitem value="4" label="4"/>
+												<menuitem value="5" label="5"/>
+												<menuitem value="6" label="6"/>
+												<menuitem value="7" label="7"/>
+												<menuitem value="8" label="8"/>
+												<menuitem value="9" label="9"/>
+												<menuitem value="10" label="10"/>
+												<menuitem value="11" label="11"/>
+												<menuitem value="12" label="12"/>
+												<menuitem value="13" label="13"/>
+												<menuitem value="14" label="14"/>
+												<menuitem value="15" label="15"/>
+											</menupopup>
+										</menulist>
+								</hbox>
 							</groupbox>
 							
 				        </tabpanel>
@@ -79,4 +109,4 @@
 				</tabbox>
              </prefpane>
         </prefwindow>
-	</overlay> 
+	</overlay>
