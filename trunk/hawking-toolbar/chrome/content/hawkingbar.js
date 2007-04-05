@@ -187,6 +187,7 @@ function HawkingTrackerSetup(){
 		if(literacyTB) {
 			literacyTB.hidden = false;		
 		}
+		//set attribute
 		var mItem = document.getElementById("htbLiteracyMenuItem");
 		if(mItem)
 			mItem.setAttribute("checked", "true");
@@ -359,7 +360,10 @@ function Highlight(realObj){
 		oStyle = obj.style.border;
 	obj.style.border = "solid #f00 5px";
 	obj.setAttribute("old_style", oStyle);
-	obj.focus();
+	//obj.focus();
+	
+	if(obj.scrollIntoView)
+		obj.scrollIntoView();
 }
 
 function unHighlight(realObj){
@@ -451,7 +455,7 @@ function htbButtonBlur(obj){
 //		alert("changed to "+obj.getAttribute("high"));
 }
 
-function hawkingDisableCapture(){
+function htbToggleCapture(){
 	var dis = htbGetPref("disabled");
 	var button = document.getElementById("HawkingBarPrefs");
 	if(dis==true){
@@ -470,15 +474,12 @@ function hawkingDisableCapture(){
 	}
 }
 
-function htbEnableLiteracy(){
-	htbSetPref("literacybar", true, "Bool");
-	alert("You must restart FireFox for the changes to take effect");
-}
 
 function htbToggleLiteracy(){
 	var lbar = htbGetPref("literacybar");
 	var mItem = document.getElementById("htbLiteracyMenuItem");
 	var tb = document.getElementById("HawkingToolBar");
+	var literacyTB = document.getElementById("HawkingSBLiteracy");
 	if(lbar){
 		//go back to full feature set
 		htbSetPref("literacybar", false, "Bool");
@@ -486,6 +487,8 @@ function htbToggleLiteracy(){
 			tb.hidden = false;
 		if(mItem)
 			mItem.setAttribute("checked", "false");
+		if(literacyTB)
+			literacyTB.hidden=true;
 	}
 	else{
 		//reduce to literacy center feature
@@ -494,6 +497,8 @@ function htbToggleLiteracy(){
 			tb.hidden = true;
 		if(mItem)
 			mItem.setAttribute("checked", "true");
+		if(literacyTB)
+			literacyTB.hidden=false;
 	}
 }
 
