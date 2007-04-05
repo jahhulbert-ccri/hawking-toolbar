@@ -26,8 +26,11 @@
                 	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
                                label="Go to HawkingBar Home" onclick="HawkingBarGoHome()" />
                 	<toolbarseparator />
-                	<toolbarbutton class="hawking" id="HawkingBarPrefs" tooltiptext="Prefs"
-                               label="Activity" oncommand="hawkingDisableCapture()" />
+                	<toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
+                               label="Activity" oncommand="htbToggleCapture()" />
+					<toolbarseparator />
+					<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
+                               label="Literacy Mode" oncommand="htbToggleLiteracy()" />
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
@@ -70,9 +73,11 @@
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
 
-					<toolbarbutton id="HawkingLiteracyName" tooltiptext="Literacy Center Bar" label="Literacy Center Toolbar" />
+					<toolbarbutton id="HawkingLiteracyName" tooltiptext="Literacy Center Simplified Toolbar" 
+							label="Literacy Center Toolbar" />
 					<toolbarseparator />
-					<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Standard Hawking Toolbar" label="Return to Standard Hawking Toolbar" />
+					<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Standard Hawking Toolbar" 
+							label="Return to Standard Hawking Toolbar" onclick="htbToggleLiteracy()" />
 				 
         	</toolbar>
 
