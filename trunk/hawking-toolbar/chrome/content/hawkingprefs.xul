@@ -38,8 +38,9 @@
             <caption label="Simplified Mode"/>
 
             <checkbox id="useSimplifiedMode"
-                      label="Use Simplified Mode"
-                      preference="extensions.hawking.literacybar"/>
+                    label="Use Simplified Mode"
+                    preference="extensions.hawking.literacybar"/>
+					  
           </groupbox>
 
         </tabpanel>
