@@ -1,3 +1,5 @@
+<!--
+
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -32,6 +34,8 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
+ -->
 
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://hawkingbar/skin/hawkingbar.css" type="text/css"?>
