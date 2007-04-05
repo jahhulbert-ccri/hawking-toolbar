@@ -1,17 +1,58 @@
 <?xml version="1.0"?>
-<overlay id="hawkingPrefsOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-<!-- Merge with the BrowserPreferences Window -->
-	<prefwindow id="BrowserPreferences">
-	  <!-- Create a new pane (tab) for HP Scheduler. -->
-		<prefpane id="hawkingPrefPane" label="Hawking Prefs" onpaneload="populateHawkingPrefs" image="chrome://hawkingbar/content/images/prefs.png">
 
-<!-- Intermediary between GUI and preferences system -->
+          <overlay id="hawkingPrefOverlay"
+                   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+            <!-- Merge with the BrowserPreferences Window -->
+            <prefwindow id="BrowserPreferences">
+
+              <!-- Create a new pane (tab) for HP Scheduler. -->
+              <prefpane id="hawkingPane" label="Hawking"
+                        onpaneload="classHawkingPane.init()" 
+                        image="chrome://hawkingbar/content/images/prefs.png">
+
+                <!-- Intermediary between GUI and preferences system -->
                 <preferences>
+				
+				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
                    <!-- see the next section for more information -->
                 </preferences>
+				
+				
     
                 <!-- GUI Elements... -->
+				
+				<tabbox id="advancedPrefs" flex="1"
+            onselect="gAdvancedPane.tabSelectionChanged();">
 
-	  </prefpane>
-	</prefwindow>
-</overlay> 
+      <tabs id="tabsElement">
+        <tab id="generalTab" label="General" />
+        <tab id="highlightingTab" label="Highlighting" />
+      </tabs>
+
+      <tabpanels flex="1">
+
+ 
+        <tabpanel id="generalPanel" orient="vertical">
+			<groupbox id="simplifiedModeBox" align="start">
+            <caption label="Simplified Mode"/>
+
+            <checkbox id="useSimplifiedMode"
+                      label="Use Simplified Mode"
+                      preference="extensions.hawking.literacybar"/>
+          </groupbox>
+
+        </tabpanel>
+
+       <!--highlighting-->
+        <tabpanel id="highlightingPanel" orient="vertical" align="start">
+
+        </tabpanel>
+
+
+
+      </tabpanels>
+    </tabbox>
+              </prefpane>
+            </prefwindow>
+          </overlay> 
