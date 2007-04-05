@@ -30,3 +30,18 @@ function htbGetPref(name){
 	}
 	return gotten;
 }
+
+//@line 38 "/cygdrive/c/builds/tinderbox/Fx-Mozilla1.8-release/WINNT_5.2_Depend/mozilla/browser/components/preferences/security.js"
+
+var classHawkingPane = {
+  _pane: null,
+
+  //init function called by XUL file upon pane load
+  init : function() {
+    this._pane = document.getElementById("paneHawking");
+	//this._populatePrefPane();
+	alert("hawking pane loaded");
+  },
+  
+};
+
