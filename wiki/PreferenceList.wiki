@@ -1,1 +1,12 @@
 #summary list of preferences for Hawking Toolbar
+
+  * General
+    * Use Simplified Mode
+    * Input (key events, set events boxes)
+
+  * Highlighting
+    * Set Border Width and Color (change tracker function, all over to pref based)
+    * ?Ability to change from box to border
+    * 
+
+  
