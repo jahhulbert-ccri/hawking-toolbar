@@ -14,11 +14,14 @@
                 <!-- Intermediary between GUI and preferences system -->
                 <preferences>
 				
-				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
+				<!-- General tab -->
+				<preference id="extensions.hawking.literacybar"   name="extensions.hawking.literacybar"   type="bool"/>
+				
                    <!-- see the next section for more information -->
                 </preferences>
 				
-				
+				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
+				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
     
                 <!-- GUI Elements... -->
 				
@@ -39,7 +42,7 @@
 
             <checkbox id="useSimplifiedMode"
                     label="Use Simplified Mode"
-                    preference="extensions.hawking.literacybar"/>
+                    preference="extensions.hawking.literacybar" onclick="htbToggleLiteracy()" />
 					  
           </groupbox>
 
