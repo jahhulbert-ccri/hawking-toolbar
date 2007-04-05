@@ -40,7 +40,7 @@ var classHawkingPane = {
   init : function() {
     this._pane = document.getElementById("paneHawking");
 	//this._populatePrefPane();
-	alert("hawking pane loaded");
+	//alert("hawking pane loaded");
   },
   
 };
