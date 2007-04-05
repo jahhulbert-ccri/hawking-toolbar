@@ -42,6 +42,12 @@ var classHawkingPane = {
 	//this._populatePrefPane();
 	//alert("hawking pane loaded");
   },
-  
+
+  test:function(){
+	var pref= htbGetPref("borderHighlightColor");
+	alert(pref);
+  },
 };
+
+
 

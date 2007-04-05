@@ -16,47 +16,67 @@
 				
 				<!-- General tab -->
 				<preference id="extensions.hawking.literacybar"   name="extensions.hawking.literacybar"   type="bool"/>
+				<preference id="extensions.hawking.borderHighlightColor"   name="extensions.hawking.borderHighlightColor"   type="string"/>
 				
-                   <!-- see the next section for more information -->
+                <!-- see the next section for more information -->
                 </preferences>
 				
 				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
 				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
-    
-                <!-- GUI Elements... -->
-				
-				<tabbox id="advancedPrefs" flex="1"
-            onselect="gAdvancedPane.tabSelectionChanged();">
 
-      <tabs id="tabsElement">
-        <tab id="generalTab" label="General" />
-        <tab id="highlightingTab" label="Highlighting" />
-      </tabs>
+				<!-- GUI Elements... -->
+				<tabbox id="something" flex="1"
+						onselect="gAdvancedPane.tabSelectionChanged();">
 
-      <tabpanels flex="1">
+					<tabs id="tabsElement">
+				        <tab id="generalTab" label="General" />
+				        <tab id="highlightingTab" label="Highlighting" />
+					</tabs>
 
- 
-        <tabpanel id="generalPanel" orient="vertical">
-			<groupbox id="simplifiedModeBox" align="start">
-            <caption label="Simplified Mode"/>
+					<tabpanels flex="1">
+						<tabpanel id="generalPanel" orient="vertical">
+							<groupbox id="simplifiedModeBox" align="start">
+					            <caption label="Simplified Mode"/>
+								<hbox>
+					            <checkbox id="useSimplifiedMode"
+					                    label="Use Simplified Mode on Startup"
+					                    preference="extensions.hawking.literacybar"/>
+								<button label="Toggle Simplified Mode" oncommand="htbToggleLiteracy()" />
+								</hbox>
+							</groupbox>
+								
+							<groupbox>
+								<caption label="Input Switch Configuration" />
+								<hbox>
+									<label>Move Input Action: </label>
+									<textbox id="moveInputText" size="11" />
+								</hbox>
+								<hbox>
+									<label>Engage Input Action: </label>
+									<textbox id="engageInputText" size="11" />
+								</hbox>
+							</groupbox>
 
-            <checkbox id="useSimplifiedMode"
-                    label="Use Simplified Mode"
-                    preference="extensions.hawking.literacybar" onclick="htbToggleLiteracy()" />
-					  
-          </groupbox>
+				        </tabpanel>
 
-        </tabpanel>
-
-       <!--highlighting-->
-        <tabpanel id="highlightingPanel" orient="vertical" align="start">
-
-        </tabpanel>
-
-
-
-      </tabpanels>
-    </tabbox>
-              </prefpane>
-            </prefwindow>
-          </overlay> 
+						<!--highlighting-->
+						<tabpanel id="highlightingPanel" orient="vertical">
+						
+							<groupbox id="lasdlgasdlg" align="start">
+								<caption label="Highlight Box Preferences" />
+								<hbox>
+									<label>Border Color: </label>
+									<colorpicker type="button" id="borderColor" palettename="standard"
+										preference="extensions.hawking.borderHighlightColor" />
+									<button id="as" label="click" oncommand="classHawkingPane.test()" />
+								</hbox>
+						
+							</groupbox>
+							
+				        </tabpanel>
+				        
+				    </tabpanels>
+				</tabbox>
+             </prefpane>
+        </prefwindow>
+	</overlay> 
