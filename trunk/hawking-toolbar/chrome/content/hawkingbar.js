@@ -196,6 +196,7 @@ function FindLinks(node, arr){
 		FindLinks(node.childNodes[i], arr);
 	}
 }
+
 var ContextManager;
 addEvent(window, "load", HawkingTrackerSetup, true);
 //used to be called on page load		htbButtonHover(ContextManager.getCurrent());
@@ -391,7 +392,16 @@ function Highlight(realObj){
 	var oStyle = "";
 	if(obj.style && obj.style.border)
 		oStyle = obj.style.border;
-	obj.style.border = "solid #f00 5px";
+	
+	//get border color and width from preferences and set defaults in case of failure
+	var borderColor = htbGetPref("borderHighlightColor");
+	if(!borderColor)
+		borderColor="#f00";
+	var borderWidth = htbGetPref("borderHighlightWidth");
+	if(!borderWidth)
+		borderWidth="5";
+	
+	obj.style.border = "solid "+borderColor+" "+borderWidth+"px";
 	obj.setAttribute("old_style", oStyle);
 	//obj.focus();
 	
