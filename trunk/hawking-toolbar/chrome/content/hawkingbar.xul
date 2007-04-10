@@ -95,14 +95,15 @@
 	                 hidden="true">
 				<image src='chrome://hawkingbar/skin/scroll_n.png' />
 				<toolbarseparator />
-				<toolbarseparator />
-				<toolbarseparator />
+
 				<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
-						   label="Down" onclick="HawkingScrollDown()" />
+						   onclick="HawkingScrollDown()" />
 				<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
-						   label="Up" onclick="HawkingScrollUp()" />
+						    onclick="HawkingScrollUp()" />
+							<toolbarseparator />
 				<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="HawkingScrollRight()" />
 				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="HawkingScrollLeft()" />
+				<toolbarseparator />
 				<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
 						   onclick="UnScope()" />
         	</toolbar>

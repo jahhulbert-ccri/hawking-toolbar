@@ -59,6 +59,21 @@
 #HawkingScrollRight.over {
 	list-style-image: url("chrome://hawkingbar/skin/forward_s.png");
 }
+#HawkingScrollUp{
+	list-style-image: url("chrome://hawkingbar/skin/up_n.png");
+}
+
+#HawkingScrollUp.over {
+	list-style-image: url("chrome://hawkingbar/skin/up_s.png");
+}
+#HawkingScrollDown{
+	list-style-image: url("chrome://hawkingbar/skin/down_n.png");
+}
+
+#HawkingScrollDown.over {
+	list-style-image: url("chrome://hawkingbar/skin/down_s.png");
+}
+
 
 #HawkingScrollLeft{
 	list-style-image: url("chrome://hawkingbar/skin/back_n.png");
