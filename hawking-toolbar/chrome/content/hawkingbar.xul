@@ -81,7 +81,7 @@
                                onclick="HawkingPageNext()" />
                 	<toolbarseparator />
 					<toolbarbutton id="HawkingPageClick" tooltiptext="Click the current link"
-								label="Click Link" onclick="HawkingPageClick()" />
+								 onclick="HawkingPageClick()" />
 					<toolbarseparator />
 					<toolbarbutton id="HawkingPagePrev" tooltiptext="Go to the previous link"
                                onclick="HawkingPagePrev()" />
