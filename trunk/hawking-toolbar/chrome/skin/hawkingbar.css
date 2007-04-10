@@ -5,6 +5,14 @@
 #HawkingPageNext.over {
 	list-style-image: url("chrome://hawkingbar/skin/forward_s.png");
 }
+#HawkingPageClick{
+	list-style-image: url("chrome://hawkingbar/skin/click_n.png");
+}
+
+#HawkingPageClick.over {
+	list-style-image: url("chrome://hawkingbar/skin/click_s.png");
+}
+
 
 #HawkingPagePrev{
 	list-style-image: url("chrome://hawkingbar/skin/back_n.png");
