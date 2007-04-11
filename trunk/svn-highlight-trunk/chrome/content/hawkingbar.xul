@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!--
+
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Initial Developer of the Original Code is Parakey Inc.
+ *
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *     Joe Hewitt <joe@joehewitt.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+ 
+ -->
+<?xml-stylesheet href="chrome://hawkingbar/skin/hawkingbar.css" type="text/css"?>
+<overlay id="TutTB-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/xpcom.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/chrome.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/lib.js"/>
+    
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/domplate.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/sourceCache.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/insideOutBox.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/tabWatcher.js"/>
+
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/firebug.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/tabContext.js"/>
+
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/reps.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/editor.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/infotip.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/commandLine.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/search.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/inspector.js"/>
+
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/plugin.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/console.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/html.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/css.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/layout.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/debugger.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/dom.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/net.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/profiler.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/errors.js"/>    
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/spy.js"/>
+
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/consoleAPI.js"/>
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/commandLineAPI.js"/>
+	
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />         
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
+	
+	<menupopup id="menu_ToolsPopup">
+		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Literacy Center" accesskey="L" oncommand="htbToggleLiteracy()" />
+	</menupopup>
+    	<toolbox id="navigator-toolbox">
+    
+        	<toolbar id="HawkingToolBar" toolbarname="HawkingToolBar" accesskey="H"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="false">
+
+					<toolbarbutton class="hawking" id="HawkingIntoPage" tooltiptext="Go Into Page"
+                               label="Link Navigation" onclick="Scope('HawkingSBPageNav')" />
+					<toolbarseparator />
+<!-- leave out for demo
+					<toolbarbutton id="HawkingNavBar" tooltiptext="Go Into Page"
+                               label="Navigation Toolbar" onclick="HawkingToggleXulHidden('nav-bar');" />
+-->
+					<toolbarseparator />
+                	<toolbarbutton class="hawking" id="HawkingScrollPage" tooltiptext="Scroll Page"
+                               label="Scroll" onclick="Scope('HawkingSBScroll')" />
+                	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
+                               label="Go to HawkingBar Home" onclick="HawkingBarGoHome()" />
+                	<toolbarseparator />
+                	<toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
+                               label="Activity" oncommand="htbToggleCapture()" />
+					<toolbarseparator />
+					<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
+                               label="Literacy Mode" oncommand="htbToggleLiteracy()" />
+        	</toolbar>
+        	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="true">
+				<image src='chrome://hawkingbar/skin/intoPage_n.png' />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarbutton id="HawkingPageNext" tooltiptext="Go to the next link"
+                               onclick="HawkingPageNext()" />
+                	<toolbarseparator />
+					<toolbarbutton id="HawkingPageClick" tooltiptext="Click the current link"
+								label="Click Link" onclick="HawkingPageClick()" />
+					<toolbarseparator />
+					<toolbarbutton id="HawkingPagePrev" tooltiptext="Go to the previous link"
+                               onclick="HawkingPagePrev()" />
+					<toolbarseparator />
+
+					<toolbarbutton id="HawkingPageExit" tooltiptext="Exit"
+								onclick="UnScope()" />
+        	</toolbar>
+        	<toolbar id="HawkingSBScroll" toolbarname="HawkingScroll" accesskey="S"
+	                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+	                 hidden="true">
+				<image src='chrome://hawkingbar/skin/scroll_n.png' />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarseparator />
+				<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
+						   label="Down" onclick="HawkingScrollDown()" />
+				<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
+						   label="Up" onclick="HawkingScrollUp()" />
+				<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="HawkingScrollRight()" />
+				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="HawkingScrollLeft()" />
+				<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
+						   onclick="UnScope()" />
+        	</toolbar>
+			
+			<toolbar id="HawkingSBLiteracy" toolbarname="Literacy" accesskey="S"
+                 class="chromeclass-toolbar" context="toolbar-context-menu" 
+                 hidden="true">
+
+					<toolbarbutton id="HawkingLiteracyName" tooltiptext="Literacy Center Simplified Toolbar" 
+							label="Literacy Center Toolbar" />
+					<toolbarseparator />
+					<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Standard Hawking Toolbar" 
+							label="Return to Standard Hawking Toolbar" onclick="htbToggleLiteracy()" />
+				 
+        	</toolbar>
+
+    	</toolbox>
+</overlay>

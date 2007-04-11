@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+
+          <overlay id="hawkingPrefOverlay"
+                   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+            <!-- Merge with the BrowserPreferences Window -->
+            <prefwindow id="BrowserPreferences">
+
+              <!-- Create a new pane (tab) for HP Scheduler. -->
+              <prefpane id="hawkingPane" label="Hawking"
+                        onpaneload="classHawkingPane.init()" 
+                        image="chrome://hawkingbar/content/images/prefs.png">
+
+                <!-- Intermediary between GUI and preferences system -->
+                <preferences>
+				
+				<!-- General tab -->
+				<preference id="extensions.hawking.literacybar" name="extensions.hawking.literacybar" type="bool"/>
+				<preference id="extensions.hawking.borderHighlightColor" name="extensions.hawking.borderHighlightColor" type="string"/>
+				<preference id="extensions.hawking.borderHighlightWidth" name="extensions.hawking.borderHighlightWidth" type="int"/>
+				<preference id="extensions.hawking.disabled" name="extensions.hawking.disabled" type="bool"/>
+				
+                <!-- see the next section for more information -->
+                </preferences>
+				
+				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
+				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
+
+				<!-- GUI Elements... -->
+				<tabbox id="something" flex="1"
+						onselect="gAdvancedPane.tabSelectionChanged();">
+
+					<tabs id="tabsElement">
+				        <tab id="generalTab" label="General" />
+				        <tab id="highlightingTab" label="Highlighting" />
+					</tabs>
+
+					<tabpanels flex="1">
+						<tabpanel id="generalPanel" orient="vertical">
+						
+							<groupbox id="generalConfigBox" align="start">
+								<caption label="General Configuration" />
+								<hbox>
+									<checkbox id="prefDisabledBox"
+										label="Disable Hawking Toolbar on Startup"
+										preference="extensions.hawking.disabled" />
+								</hbox>
+							</groupbox>
+							<groupbox id="simplifiedModeBox" align="start">
+					            <caption label="Simplified Mode"/>
+								<hbox>
+						            <checkbox id="useSimplifiedMode"
+						                    label="Use Simplified Mode on Startup"
+						                    preference="extensions.hawking.literacybar"/>
+								</hbox>
+							</groupbox>
+								
+							<groupbox>
+								<caption label="Input Switch Configuration" />
+								<hbox>
+									<label>Move Input Action: </label>
+									<textbox id="moveInputText" size="11" />
+								</hbox>
+								<hbox>
+									<label>Engage Input Action: </label>
+									<textbox id="engageInputText" size="11" />
+								</hbox>
+							</groupbox>
+
+				        </tabpanel>
+
+						<!--highlighting-->
+						<tabpanel id="highlightingPanel" orient="vertical">
+						
+							<groupbox id="lasdlgasdlg" align="start">
+								<caption label="Highlight Box Preferences" />
+								<hbox>
+									<label>Border Color: </label>
+									<colorpicker type="button" id="borderColor" palettename="standard"
+										preference="extensions.hawking.borderHighlightColor" />
+								</hbox>
+								<hbox>
+									<label>Border Width (pixels): </label>
+										<menulist id="borderWidthList" preference="extensions.hawking.borderHighlightWidth">
+											<menupopup>
+												<menuitem value="1" label="1"/>
+												<menuitem value="2" label="2"/>
+												<menuitem value="3" label="3"/>
+												<menuitem value="4" label="4"/>
+												<menuitem value="5" label="5"/>
+												<menuitem value="6" label="6"/>
+												<menuitem value="7" label="7"/>
+												<menuitem value="8" label="8"/>
+												<menuitem value="9" label="9"/>
+												<menuitem value="10" label="10"/>
+												<menuitem value="11" label="11"/>
+												<menuitem value="12" label="12"/>
+												<menuitem value="13" label="13"/>
+												<menuitem value="14" label="14"/>
+												<menuitem value="15" label="15"/>
+											</menupopup>
+										</menulist>
+								</hbox>
+							</groupbox>
+							
+				        </tabpanel>
+				        
+				    </tabpanels>
+				</tabbox>
+             </prefpane>
+        </prefwindow>
+	</overlay>
