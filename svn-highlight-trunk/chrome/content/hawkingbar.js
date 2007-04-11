@@ -364,12 +364,19 @@ function htbFindRealHighlight(obj){
 		return null;
 	}
   	if(obj.nodeName=="A"){
+		//alert("a");
 		if(obj.childNodes && htbCountRealChildren(obj)==1){
+			//alert('here');
 			var nobj = htbGetFirstRealChild(obj);
 			if(nobj && nobj.nodeName=="IMG"){
+			
 	  			return nobj;
 	  		}
+			else if(nobj && nobj.nodeName=="DIV"){
+				return nobj;
+			}
 	  	}
+
 		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
 			/*  if the <a> is in something all by itself, highlight that instead;
 			    this is to counteract the annoying "no-highlight" bug when we find an
@@ -378,6 +385,8 @@ function htbFindRealHighlight(obj){
 			return obj.parentNode;
 		}
 	}
+	
+	
 	return obj;
 }
 
@@ -388,14 +397,15 @@ function Highlight(realObj){
 	//alert('1');
 	var context = window.arguments[0].context;
 	//alert('2');
-	Firebug.Inspector.highlightObject(realObj, FirebugContext);
-	//alert('3');
-/*
 	var obj = htbFindRealHighlight(realObj);
 	if(!obj){
 		alert("I tried to highlight, but you gave me nothing");
 		return;
 	}
+	Firebug.Inspector.highlightObject(obj, FirebugContext);
+	//alert('3');
+
+	/*
 //  	alert("looking at: "+obj.nodeName);
 	var oStyle = "";
 	if(obj.style && obj.style.border)
