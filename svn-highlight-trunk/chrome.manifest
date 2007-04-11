@@ -1,0 +1,4 @@
+content hawkingbar chrome/content/
+overlay chrome://browser/content/browser.xul chrome://hawkingbar/content/hawkingbar.xul
+overlay chrome://browser/content/preferences/preferences.xul chrome://hawkingbar/content/hawkingprefs.xul
+skin hawkingbar classic/1.0 chrome/skin/
