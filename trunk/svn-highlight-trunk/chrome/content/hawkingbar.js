@@ -402,7 +402,7 @@ function Highlight(realObj){
 		alert("I tried to highlight, but you gave me nothing");
 		return;
 	}
-	Firebug.Inspector.highlightObject(obj, FirebugContext, "frame");
+	Firebug.Inspector.highlightObject(obj, FirebugContext,"frame");
 	//alert('3');
 
 	/*

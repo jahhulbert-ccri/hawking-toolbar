@@ -42,38 +42,38 @@
 	
 	
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/xpcom.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/chrome.js"/>
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/chrome.js"/> -->
     <script type="application/x-javascript" src="chrome://hawkingbar/content/lib.js"/>
     
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/domplate.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/sourceCache.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/insideOutBox.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/tabWatcher.js"/>
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/domplate.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/sourceCache.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/insideOutBox.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/tabWatcher.js"/> -->
 
     <script type="application/x-javascript" src="chrome://hawkingbar/content/firebug.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/tabContext.js"/>
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/tabContext.js"/> -->
 
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/reps.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/editor.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/infotip.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/commandLine.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/search.js"/>
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/reps.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/editor.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/infotip.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/commandLine.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/search.js"/> -->
     <script type="application/x-javascript" src="chrome://hawkingbar/content/inspector.js"/>
 
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/plugin.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/console.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/html.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/css.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/layout.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/debugger.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/dom.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/net.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/profiler.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/errors.js"/>    
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/spy.js"/>
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/plugin.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/console.js"/>  -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/html.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/css.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/layout.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/debugger.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/dom.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/net.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/profiler.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/errors.js"/>    -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/spy.js"/> -->
 
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/consoleAPI.js"/>
-    <script type="application/x-javascript" src="chrome://hawkingbar/content/commandLineAPI.js"/>
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/consoleAPI.js"/> -->
+    <!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/commandLineAPI.js"/> -->
 	
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />         

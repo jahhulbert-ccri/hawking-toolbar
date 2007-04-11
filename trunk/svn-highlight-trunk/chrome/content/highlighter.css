@@ -102,13 +102,13 @@
     background-color: SkyBlue;
 }
 
-/*.firebugHighlightGroup .firebugLayoutBox {
+.firebugHighlightGroup .firebugLayoutBox {
     background-color: transparent;
 }
 
 .firebugHighlightBox {
-    background-color: Blue !important;
-}*/
+    background-color: Green !important;
+}
 
 .firebugLayoutLine {
     z-index: 2147483647;
