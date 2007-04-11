@@ -1,0 +1,99 @@
+#HawkingPageNext{
+	list-style-image: url("chrome://hawkingbar/skin/forward_n.png");
+}
+
+#HawkingPageNext.over {
+	list-style-image: url("chrome://hawkingbar/skin/forward_s.png");
+}
+#HawkingPageClick{
+	list-style-image: url("chrome://hawkingbar/skin/click_n.png");
+}
+
+#HawkingPageClick.over {
+	list-style-image: url("chrome://hawkingbar/skin/click_s.png");
+}
+
+
+#HawkingPagePrev{
+	list-style-image: url("chrome://hawkingbar/skin/back_n.png");
+}
+#HawkingPagePrev.over {
+	list-style-image: url("chrome://hawkingbar/skin/back_s.png");
+}
+#HawkingPageExit{
+	list-style-image: url("chrome://hawkingbar/skin/close_n.png");
+}
+#HawkingPageExit.over{
+	list-style-image: url("chrome://hawkingbar/skin/close_s.png");
+}
+#HawkingIntoPage{
+	list-style-image: url("chrome://hawkingbar/skin/intoPage_n.png");
+}
+#HawkingIntoPage.over{
+	list-style-image: url("chrome://hawkingbar/skin/intoPage_s.png");
+}
+
+#HawkingScrollPage{
+	list-style-image: url("chrome://hawkingbar/skin/scroll_n.png");
+}
+
+#HawkingScrollPage.over{
+	list-style-image: url("chrome://hawkingbar/skin/scroll_s.png");
+}
+#HawkingScrollExit{
+	list-style-image: url("chrome://hawkingbar/skin/close_n.png");
+}
+#HawkingScrollExit.over{
+	list-style-image: url("chrome://hawkingbar/skin/close_s.png");
+}
+
+#HawkingBarPrefs{
+	list-style-image: url("chrome://hawkingbar/skin/prefs_n.png");
+}
+
+#HawkingBarPrefs.over{
+	list-style-image: url("chrome://hawkingbar/skin/prefs_s.png");
+}
+#HawkingBarHome{
+	list-style-image: url("chrome://hawkingbar/skin/home_n.png");
+}
+#HawkingBarHome.over{
+	list-style-image: url("chrome://hawkingbar/skin/home_s.png");
+}
+#HawkingScrollRight{
+	list-style-image: url("chrome://hawkingbar/skin/forward_n.png");
+}
+
+#HawkingScrollRight.over {
+	list-style-image: url("chrome://hawkingbar/skin/forward_s.png");
+}
+#HawkingScrollUp{
+	list-style-image: url("chrome://hawkingbar/skin/up_n.png");
+}
+
+#HawkingScrollUp.over {
+	list-style-image: url("chrome://hawkingbar/skin/up_s.png");
+}
+#HawkingScrollDown{
+	list-style-image: url("chrome://hawkingbar/skin/down_n.png");
+}
+
+#HawkingScrollDown.over {
+	list-style-image: url("chrome://hawkingbar/skin/down_s.png");
+}
+
+
+#HawkingScrollLeft{
+	list-style-image: url("chrome://hawkingbar/skin/back_n.png");
+}
+#HawkingScrollLeft.over {
+	list-style-image: url("chrome://hawkingbar/skin/back_s.png");
+}
+
+toolbarbutton{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom:0px;
+
+}
