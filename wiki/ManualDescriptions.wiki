@@ -11,3 +11,6 @@ This Manual should either extend or be a separate addition to the Administrative
 
 ==User Manual==
 Manual will explain how to use the toolbar for a disabled user. This will explain the Move and Engage idea as well as specifics on how to navigate the web.
+
+==Web Dev==
+Rules for creating accessible web content. Specifically, recommendations for the literacy center template. DTD?
