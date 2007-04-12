@@ -1,4 +1,4 @@
-#Description of the manuals we will be creating for the Hawking Toolbar
+#summary Description of the manuals we will be creating for the Hawking Toolbar
 
 ==Developer Manual==
 This manual will describe the architecture of the Hawking Toolbar as well as how to implement new subtoolbar extensions for Hawking. Some other info may include firefox documentation and tricks, etc.
