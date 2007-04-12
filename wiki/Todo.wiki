@@ -1,8 +1,5 @@
 #summary Todo List for Comp 523 Development Team
 
-==Midterm Todo==
-
-
 ==Modules to Write==
   * Bookmarks
   * Navigation
