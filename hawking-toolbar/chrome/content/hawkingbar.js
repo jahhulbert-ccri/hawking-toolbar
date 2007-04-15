@@ -197,7 +197,8 @@ function FindLinks(node, arr){
 	}
 }
 
-var ContextManager;
+var ContextManager = null;
+var Highlighter = null;
 addEvent(window, "load", HawkingTrackerSetup, true);
 //used to be called on page load		htbButtonHover(ContextManager.getCurrent());
 //this is the setup function which determines how the toolbar starts up
@@ -210,6 +211,7 @@ function HawkingTrackerSetup(){
 	//this should only be called once
 	this.done = true;
 	ContextManager = new HawkingToolbarTracker(tb);
+	Highlighter = new htbHighlighter();
 	htbButtonHover(ContextManager.getCurrent());
 	//transforms window events into move and engage
 	var simple = htbGetPref("literacybar");
@@ -388,6 +390,8 @@ function Highlight(realObj){
 		alert("I tried to highlight, but you gave me nothing");
 		return;
 	}
+	Highlighter.highlight(obj);
+	/*
 //  	alert("looking at: "+obj.nodeName);
 	var oStyle = "";
 	if(obj.style && obj.style.border)
@@ -404,7 +408,7 @@ function Highlight(realObj){
 	obj.style.border = "solid "+borderColor+" "+borderWidth+"px";
 	obj.setAttribute("old_style", oStyle);
 	//obj.focus();
-	
+	*/
 	if(obj.scrollIntoView)
 		obj.scrollIntoView();
 }
@@ -414,11 +418,14 @@ function unHighlight(realObj){
 	if(!obj){ //nothing to unhighlight
 		return;
 	}
+	Highlighter.unhighlight(obj);
+/*
 	var oStyle = "";
 	if(obj.getAttribute("old_style"))
 		oStyle = obj.getAttribute("old_style");
 	if(obj.style && obj.style.border)
-		obj.style.border = oStyle;	
+		obj.style.border = oStyle;
+*/	
 }
 
 
