@@ -18,6 +18,8 @@ htbHighlighter.prototype = {
 	highlight: function(obj){
 		if(!obj)return;
 		obj = $(obj);
+		var style = createStyleSheet(obj.ownerDocument, highlightCSS);
+		addStyleSheet(obj.ownerDocument, style);
 //		this.highlighter.style.display ="block";
 //		var dim = obj.getDimensions();
 		var dim = this.getOffsetSize(obj);
