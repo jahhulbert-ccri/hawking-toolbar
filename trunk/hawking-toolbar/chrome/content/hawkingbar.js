@@ -33,6 +33,16 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+ 
+ //variables
+var ContextManager = null;
+var Highlighter = null;
+addEvent(window, "load", HawkingTrackerSetup, true);
+var MoveEvent = 'Z';
+var EngageEvent = 'M';
+
+ 
+ 
 //this is probably the better way to go.
 function HawkingToolbarTracker(toolbar){
 	//this function should be called on window load. It should assign
@@ -197,9 +207,7 @@ function FindLinks(node, arr){
 	}
 }
 
-var ContextManager = null;
-var Highlighter = null;
-addEvent(window, "load", HawkingTrackerSetup, true);
+
 //used to be called on page load		htbButtonHover(ContextManager.getCurrent());
 //this is the setup function which determines how the toolbar starts up
 function HawkingTrackerSetup(){
@@ -307,16 +315,15 @@ function htbActionTransform(ev){
 function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
-
 	if(!ev || !ev.which) return false;
-	return (String.fromCharCode(ev.which) == '2');
+	return (String.fromCharCode(ev.which) == MoveEvent);
 }
 
 function htbIsEventClick(ev){
 //takes in an event object and determines if it matches
 //the click characteristic of an event
 	if(!ev || !ev.which) return false;
-	return (String.fromCharCode(ev.which) == '1');
+	return (String.fromCharCode(ev.which) == EngageEvent);
 }
 
 function ObjectIsVisible(obj){
