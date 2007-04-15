@@ -219,7 +219,11 @@ function HawkingTrackerSetup(){
 	ContextManager = new HawkingToolbarTracker(tb);
 	Highlighter = new htbHighlighter();
 	htbButtonHover(ContextManager.getCurrent());
-	
+
+	var mode = htbGetPref("autoMode");
+	if(mode){
+		htbEnableAuto();
+	}
 	//transforms window events into move and engage
 	var simple = htbGetPref("literacybar");
 	if(simple){
