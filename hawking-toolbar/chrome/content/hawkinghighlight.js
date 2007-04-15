@@ -3,8 +3,10 @@ var htbHighlightCSS = "chrome://hawking-toolbar/skin/highlight.css";
 var htbHighlighter = Class.create();
 
 htbHighlighter.prototype = {
+	maxZ:100000000000,
 	initialize: function(){
 		try{
+			alert(this.maxZ);
 			var div = document.createElement("div");
 			div.id = "htbHighlightDiv";
 			var rend = document.createTextNode("h");
@@ -22,8 +24,16 @@ htbHighlighter.prototype = {
 		obj = $(obj);
 		var dim = this.getOffsetSize(obj);
 		var loc = this.getViewOffset(obj, true);
-		this.body = (obj.ownerDocument.body)?obj.ownerDocument.body:obj.ownerDocument.getElementsByTagName("body")[0];
-		this.body.appendChild(this.highlighter);
+		
+		if (obj.appendChild){
+			obj.appendChild(this.highlighter);
+		}
+		{
+		
+			this.body = (obj.ownerDocument.body)?obj.ownerDocument.body:obj.ownerDocument.getElementsByTagName("body")[0];
+			this.body.appendChild(this.highlighter);
+		
+		}
 		this.move(this.highlighter, loc.x, loc.y);
 //		this.resize(this.highlighter, obj.offsetWidth, obj.offsetHeight);
 		this.resize(this.highlighter, dim.width, dim.height);
@@ -35,10 +45,20 @@ htbHighlighter.prototype = {
 		if(!borderWidth)
 			borderWidth="5";	
 		this.highlighter.style.border = "solid "+borderColor+" "+borderWidth+"px";
-		this.move(this.highlighter,loc.x-borderWidth,loc.y-borderWidth);
+		//this.move(this.highlighter,loc.x-borderWidth,loc.y-borderWidth);
 		this.highlighter.style.position = "absolute";
-		this.highlighter.style.margin="0px";
-		this.highlighter.style.padding="0px";
+		//this.highlighter.sytle.padding="2px";
+		this.move(this.highlighter,loc.x-borderWidth,loc.y-borderWidth);
+		
+		//TODO CHECK PARENTS
+		if(obj.style && obj.style.zIndex && obj.style.zIndex > this.maxZ){
+			//alert("obj.style.zIndex found");
+			this.highlighter.style.zIndex = obj.style.zIndex+1;
+		}
+		else{
+			this.highlighter.style.zIndex=this.maxZ;
+		}
+		
 	},
 	unhighlight: function (){
 		return;
