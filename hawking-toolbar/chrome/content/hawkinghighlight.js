@@ -35,7 +35,10 @@ htbHighlighter.prototype = {
 		if(!borderWidth)
 			borderWidth="5";	
 		this.highlighter.style.border = "solid "+borderColor+" "+borderWidth+"px";
+		this.move(this.highlighter,loc.x-borderWidth,loc.y-borderWidth);
 		this.highlighter.style.position = "absolute";
+		this.highlighter.style.margin="0px";
+		this.highlighter.style.padding="0px";
 	},
 	unhighlight: function (){
 		return;
