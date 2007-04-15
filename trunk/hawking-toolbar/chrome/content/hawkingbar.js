@@ -38,8 +38,8 @@
 var ContextManager = null;
 var Highlighter = null;
 addEvent(window, "load", HawkingTrackerSetup, true);
-var MoveEvent = 'Z';
-var EngageEvent = 'M';
+var moveEvent = 'Z';
+var engageEvent = 'M';
 
  
  
@@ -221,6 +221,14 @@ function HawkingTrackerSetup(){
 	ContextManager = new HawkingToolbarTracker(tb);
 	Highlighter = new htbHighlighter();
 	htbButtonHover(ContextManager.getCurrent());
+	
+	//Get Move and Engage Events from preferences
+	if(htbGetPref("moveEvent"))
+		moveEvent = htbGetPref("moveEvent");
+	if(htbGetPref("engageEvent"))
+		engageEvent = htbGetPref("engageEvent");
+	
+	
 	//transforms window events into move and engage
 	var simple = htbGetPref("literacybar");
 	if(simple){
@@ -316,14 +324,14 @@ function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
 	if(!ev || !ev.which) return false;
-	return (String.fromCharCode(ev.which) == MoveEvent);
+	return (String.fromCharCode(ev.which) == moveEvent);
 }
 
 function htbIsEventClick(ev){
 //takes in an event object and determines if it matches
 //the click characteristic of an event
 	if(!ev || !ev.which) return false;
-	return (String.fromCharCode(ev.which) == EngageEvent);
+	return (String.fromCharCode(ev.which) == engageEvent);
 }
 
 function ObjectIsVisible(obj){

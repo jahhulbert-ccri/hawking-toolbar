@@ -19,12 +19,14 @@
 				<preference id="extensions.hawking.borderHighlightColor" name="extensions.hawking.borderHighlightColor" type="string"/>
 				<preference id="extensions.hawking.borderHighlightWidth" name="extensions.hawking.borderHighlightWidth" type="int"/>
 				<preference id="extensions.hawking.disabled" name="extensions.hawking.disabled" type="bool"/>
+				<preference id="extensions.hawking.moveEvent" name="extensions.hawking.moveEvent" type="string"/>
+				<preference id="extensions.hawking.engageEvent" name="extensions.hawking.engageEvent" type="string"/>
 				
                 <!-- see the next section for more information -->
                 </preferences>
 				
 				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
-				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
+				<!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" /> -->
 
 				<!-- GUI Elements... -->
 				<tabbox id="something" flex="1"
@@ -59,11 +61,11 @@
 								<caption label="Input Switch Configuration" />
 								<hbox>
 									<label>Move Input Action: </label>
-									<textbox id="moveInputText" size="11" />
+									<textbox preference="extensions.hawking.moveEvent" id="moveInputText" size="11" />
 								</hbox>
 								<hbox>
 									<label>Engage Input Action: </label>
-									<textbox id="engageInputText" size="11" />
+									<textbox preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
 								</hbox>
 							</groupbox>
 
