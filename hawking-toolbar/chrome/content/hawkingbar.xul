@@ -39,9 +39,11 @@
  -->
 <?xml-stylesheet href="chrome://hawkingbar/skin/hawkingbar.css" type="text/css"?>
 <overlay id="TutTB-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/prototype.js" />
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkinghighlight.js" />
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
-	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />         
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" /> 
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
 	<menupopup id="menu_ToolsPopup">
 		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Literacy Center" accesskey="L" oncommand="htbToggleLiteracy()" />
 	</menupopup>
