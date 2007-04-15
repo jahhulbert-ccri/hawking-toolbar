@@ -29,8 +29,8 @@
 				<!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" /> -->
 
 				<!-- GUI Elements... -->
-				<tabbox id="something" flex="1"
-						onselect="gAdvancedPane.tabSelectionChanged();">
+				<tabbox id="something" flex="1">
+					<!-- removed onselect="gAdvancedPane.tabSelectionChanged(); -->
 
 					<tabs id="tabsElement">
 				        <tab id="generalTab" label="General" />

@@ -38,10 +38,8 @@
 var ContextManager = null;
 var Highlighter = null;
 addEvent(window, "load", HawkingTrackerSetup, true);
-var moveEvent = 'Z';
-var engageEvent = 'M';
-
- 
+var DEFAULT_MOVE_EVENT = "A";
+var DEFAULT_ENGAGE_EVENT="L";
  
 //this is probably the better way to go.
 function HawkingToolbarTracker(toolbar){
@@ -222,13 +220,6 @@ function HawkingTrackerSetup(){
 	Highlighter = new htbHighlighter();
 	htbButtonHover(ContextManager.getCurrent());
 	
-	//Get Move and Engage Events from preferences
-	if(htbGetPref("moveEvent"))
-		moveEvent = htbGetPref("moveEvent");
-	if(htbGetPref("engageEvent"))
-		engageEvent = htbGetPref("engageEvent");
-	
-	
 	//transforms window events into move and engage
 	var simple = htbGetPref("literacybar");
 	if(simple){
@@ -323,6 +314,9 @@ function htbActionTransform(ev){
 function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
+	var moveEvent = htbGetPref("moveEvent");
+	if(!moveEvent)
+		moveEvent = DEFAULT_MOVE_EVENT;
 	if(!ev || !ev.which) return false;
 	return (String.fromCharCode(ev.which) == moveEvent);
 }
@@ -330,6 +324,9 @@ function htbIsEventMove(ev){
 function htbIsEventClick(ev){
 //takes in an event object and determines if it matches
 //the click characteristic of an event
+	var engageEvent = htbGetPref("engageEvent");
+	if(!engageEvent)
+		engageEvent = DEFAULT_ENGAGE_EVENT;
 	if(!ev || !ev.which) return false;
 	return (String.fromCharCode(ev.which) == engageEvent);
 }
