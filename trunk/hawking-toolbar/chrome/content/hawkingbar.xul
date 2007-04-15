@@ -99,9 +99,9 @@
 				<toolbarseparator />
 
 				<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down"
-						   onclick="HawkingScrollDown()" />
+						   onclick="HawkingScrollUp()" />
 				<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up"
-						    onclick="HawkingScrollUp()" />
+						    onclick="HawkingScrollDown()" />
 							<toolbarseparator />
 				<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="HawkingScrollRight()" />
 				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="HawkingScrollLeft()" />
