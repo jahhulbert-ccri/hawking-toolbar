@@ -61,11 +61,13 @@
 								<caption label="Input Switch Configuration" />
 								<hbox>
 									<label>Move Input Action: </label>
-									<textbox preference="extensions.hawking.moveEvent" id="moveInputText" size="11" />
+									<textbox preference="extensions.hawking.moveEvent" maxlength="1" id="ddd" size="11" />
+
+
 								</hbox>
 								<hbox>
 									<label>Engage Input Action: </label>
-									<textbox preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
+									<textbox maxlength="1" preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
 								</hbox>
 							</groupbox>
 
