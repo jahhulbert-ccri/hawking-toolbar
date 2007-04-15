@@ -20,14 +20,12 @@ htbHighlighter.prototype = {
 	highlight: function(obj){
 		if(!obj)return;
 		obj = $(obj);
-//		this.highlighter.style.display ="block";
-//		var dim = obj.getDimensions();
 		var dim = this.getOffsetSize(obj);
 		var loc = this.getViewOffset(obj, true);
 		this.body = (obj.ownerDocument.body)?obj.ownerDocument.body:obj.ownerDocument.getElementsByTagName("body")[0];
 		this.body.appendChild(this.highlighter);
-//		alert(loc.x+" - "+loc.y+" : "+dim.width+" - "+dim.height);
 		this.move(this.highlighter, loc.x, loc.y);
+//		this.resize(this.highlighter, obj.offsetWidth, obj.offsetHeight);
 		this.resize(this.highlighter, dim.width, dim.height);
 		//get border color and width from preferences and set defaults in case of failure
 		var borderColor = htbGetPref("borderHighlightColor");
@@ -39,8 +37,8 @@ htbHighlighter.prototype = {
 		this.highlighter.style.border = "solid "+borderColor+" "+borderWidth+"px";
 		this.highlighter.style.position = "absolute";
 	},
-	unhighlight: function(){
-//		this.highlighter.style.display="none";
+	unhighlight: function (){
+		return;
 	},
 	getClientOffset: function(elt){
 	    function addOffset(elt, coords, view)
