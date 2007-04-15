@@ -4,6 +4,7 @@ function htbGetPrefs() {
 }
 
 function htbSetPref(name,value,type){
+	alert('boo');
 	var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 	if(!prefs) return;
 	if(type=='Int')
@@ -49,5 +50,15 @@ var classHawkingPane = {
   },
 };
 
+
+function captureMoveEvent(ev){
+	if(!ev){
+		alert('nope');
+		return;
+	}
+	alert(String.fromCharCode(ev.which));
+	//htbSetPref("moveEvent",String.fromCharCode(event.which),"Char");
+	//alert('hei');
+}
 
 
