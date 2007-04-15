@@ -380,7 +380,7 @@ function htbFindRealHighlight(obj){
   	if(obj.nodeName=="A"){
 		if(obj.childNodes && htbCountRealChildren(obj)==1){
 			var nobj = htbGetFirstRealChild(obj);
-			if(nobj && nobj.nodeName=="IMG"){
+			if(nobj){// && nobj.nodeName=="IMG"){
 	  			return nobj;
 	  		}
 	  	}
