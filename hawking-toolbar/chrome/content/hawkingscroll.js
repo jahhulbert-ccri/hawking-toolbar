@@ -17,7 +17,6 @@ function htbEnableAuto(){
 		timing = 2;
 	}
 	timing = timing*1000;//from seconds to miliseconds
-	alert("timing: "+timing);
 	autoInterval = setInterval("ContextManager.next();", timing);
 }
 
