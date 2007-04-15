@@ -6,7 +6,6 @@ htbHighlighter.prototype = {
 	maxZ:100000000000,
 	initialize: function(){
 		try{
-			alert(this.maxZ);
 			var div = document.createElement("div");
 			div.id = "htbHighlightDiv";
 			var rend = document.createTextNode("h");
