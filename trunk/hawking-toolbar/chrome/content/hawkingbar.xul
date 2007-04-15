@@ -44,6 +44,7 @@
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" /> 
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingscroll.js" />
 	<menupopup id="menu_ToolsPopup">
 		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Literacy Center" accesskey="L" oncommand="htbToggleLiteracy()" />
 	</menupopup>
@@ -71,6 +72,8 @@
 					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
                                label="Literacy Mode" oncommand="htbToggleLiteracy()" />
+					<toolbarbutton class="hawking" id="HawkingToggleAuto" tooltiptext="Toggle Literacy Center Mode"
+                               label="Auto Scroll" oncommand="htbToggleAuto()" />
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
