@@ -1,3 +1,5 @@
+var htbHighlightCSS = "chrome://hawking-toolbar/skin/highlight.css";
+
 var htbHighlighter = Class.create();
 
 htbHighlighter.prototype = {
@@ -18,15 +20,15 @@ htbHighlighter.prototype = {
 	highlight: function(obj){
 		if(!obj)return;
 		obj = $(obj);
-		var style = createStyleSheet(obj.ownerDocument, highlightCSS);
-		addStyleSheet(obj.ownerDocument, style);
+		var style = this.createStyleSheet(obj.ownerDocument, htbHighlightCSS);
+		this.addStyleSheet(obj.ownerDocument, style);
 //		this.highlighter.style.display ="block";
 //		var dim = obj.getDimensions();
 		var dim = this.getOffsetSize(obj);
 		var loc = this.getViewOffset(obj, true);
 		this.body = (obj.ownerDocument.body)?obj.ownerDocument.body:obj.ownerDocument.getElementsByTagName("body")[0];
 		this.body.appendChild(this.highlighter);
-		alert(loc.x+" - "+loc.y+" : "+dim.width+" - "+dim.height);
+//		alert(loc.x+" - "+loc.y+" : "+dim.width+" - "+dim.height);
 		this.move(this.highlighter, loc.x, loc.y);
 		this.resize(this.highlighter, dim.width, dim.height);
 	},
@@ -148,7 +150,23 @@ htbHighlighter.prototype = {
 	resize: function(element, w, h){
 		element.style.width = w + "px";
 		element.style.height = h + "px";
-	}
+	},
+	createStyleSheet: function(doc, url){
+	    var link = doc.createElementNS("http://www.w3.org/1999/xhtml", "link");
+	    link.firebugIgnore = true;
+	    link.setAttribute("rel", "stylesheet");
+	    link.setAttribute("type", "text/css");
+	    link.setAttribute("href", url);
+	    return link;
+	},
 
+	addStyleSheet: function(doc, link)
+	{
+	    var heads = doc.getElementsByTagName("head");
+	    if (heads.length)
+	        heads[0].appendChild(link);
+	    else
+	        doc.documentElement.appendChild(link);
+	}
 };
 
