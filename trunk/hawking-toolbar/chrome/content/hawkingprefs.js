@@ -4,7 +4,6 @@ function htbGetPrefs() {
 }
 
 function htbSetPref(name,value,type){
-	alert('boo');
 	var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 	if(!prefs) return;
 	if(type=='Int')
