@@ -40,6 +40,10 @@ var Highlighter = null;
 addEvent(window, "load", HawkingTrackerSetup, true);
 var DEFAULT_MOVE_EVENT = "A";
 var DEFAULT_ENGAGE_EVENT="L";
+
+//default scroll varaibles
+var DEFAULT_VERTICAL_SCROLL = 200;
+var DEFAULT_HORIZONTAL_SCROLL = 200;
  
 //this is probably the better way to go.
 function HawkingToolbarTracker(toolbar){
@@ -488,19 +492,39 @@ function OpenPrefs(ev){
 	alert("These are the preferences");
 	return;
 }
-function HawkingScrollDown(){
-  window.content.scrollBy(0,100);
+
+function htbScrollWindow(horizontal,vertical){
+	window.content.scrollBy(horizontal,vertical);
+}
+function htbScrollDown(){
+	var amt = htbGetPref('verticalScrollAmt')
+	if(!amt) {
+		amt = DEFAULT_VERTICAL_SCROLL;
+	}
+	htbScrollWindow(0,amt);
 }
 
-function HawkingScrollUp(){
-  window.content.scrollBy(0,-100);
+function htbScrollUp(){
+	var amt = htbGetPref('verticalScrollAmt')
+	if(!amt) {
+		amt = DEFAULT_VERTICAL_SCROLL;
+	}
+	htbScrollWindow(0,(-1*amt));
 }
-function HawkingScrollLeft(){
-  window.content.scrollBy(-50,0);
+function htbScrollLeft(){
+	var amt = htbGetPref('horizontalScrollAmt')
+	if(!amt) {
+		amt = DEFAULT_HORIZONTAL_SCROLL;
+	}
+	htbScrollWindow((-1*amt),0);
 }
 
-function HawkingScrollRight(){
-  window.content.scrollBy(50,0);
+function htbScrollRight(){
+	var amt = htbGetPref('horizontalScrollAmt')
+	if(!amt) {
+		amt = DEFAULT_HORIZONTAL_SCROLL;
+	}
+	htbScrollWindow(amt,0);
 }
 
 function htbButtonHover(obj){
