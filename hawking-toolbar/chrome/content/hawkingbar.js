@@ -422,7 +422,7 @@ function htbFindRealHighlight(obj){
   	if(obj.nodeName=="A"){
 		if(obj.childNodes && htbCountRealChildren(obj)==1){
 			var nobj = htbGetFirstRealChild(obj);
-			if(nobj){// && nobj.nodeName=="IMG"){
+			if(nobj && nobj.nodeName != "BR" && nobj.nodeName != "HR"){// && nobj.nodeName=="IMG"){
 	  			return nobj;
 	  		}
 	  	}
@@ -463,6 +463,8 @@ function Highlight(realObj){
 	obj.setAttribute("old_style", oStyle);
 	//obj.focus();
 	*/
+	
+	//htbScrollToObj(obj);
 	if(obj.scrollIntoView)
 		obj.scrollIntoView();
 }
