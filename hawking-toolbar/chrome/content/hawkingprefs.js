@@ -122,7 +122,6 @@ function htbCaptureEventPref(ev){
 		//they clicked. was it right/left?
 		htbSetPref(prefClick, true, "Bool");
 		var button = ev.button;
-		if(!htbGetPref())
 		htbSetPref(prefVal, button, "Int"); //usually 0 for left, 1 for middle, 2 for right
 		htbDoneCapturing();
 		ev.preventDefault();
