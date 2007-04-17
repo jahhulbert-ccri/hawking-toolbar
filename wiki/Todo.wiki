@@ -1,7 +1,7 @@
 #summary Todo List for Comp 523 Development Team
 
 ==Things we have to do==
-  * Make literacy work with single mode
+  * DONE - Make literacy work with single mode
   * double check on auto mode quirks
   * check special cases in test of weird highlighting -> remove from getRealHighlight
   * detect events in Firefox for clickers
