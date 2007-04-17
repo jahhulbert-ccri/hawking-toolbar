@@ -287,7 +287,7 @@ function htbActionTransform(ev){
 	}
 
 //	var ev = ev || window.event;
-	if(!ev) return false;
+	if(!ev || ev.ignoreMe) return false;
 //	alert("transforming action");
 	if (htbIsEventClick(ev)) {
 	//engage
@@ -410,6 +410,7 @@ function ClickObject(object){
 	else{
 		var evObj = document.createEvent('MouseEvents');
 		evObj.initEvent( "click", true, true );
+		evObj.ignoreMe = true;
 		object.dispatchEvent(evObj);
 	}
 }
