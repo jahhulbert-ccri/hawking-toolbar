@@ -9,7 +9,8 @@
   * beef up toolbar appearance
     * Text under images not added in xul
     * new images for click and other things without images
-    * images for sub-toolbar pics on left side 
+    * images for sub-toolbar pics on left side
+  * fix scrolling
 
 ==Modules to Write==
   * Bookmarks
