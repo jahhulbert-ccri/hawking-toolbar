@@ -244,6 +244,7 @@ function HawkingTrackerSetup(){
 			mItem.setAttribute("checked", "true");
 	}
 	addEvent(window, "keydown", htbActionTransform, true);
+	addEvent(window, "click", htbActionTransform, true);
 	//removes the event from window.onload so it is not called every time
 	window.removeEventListener("load", HawkingTrackerSetup, true);
 }
@@ -299,6 +300,7 @@ function htbActionTransform(ev){
 		}
 		if(ev.preventDefault)
 			ev.preventDefault();
+		ev.stopPropagation();
 		ev.returnValue = false;
 		return false;
 	}
@@ -313,6 +315,7 @@ function htbActionTransform(ev){
 		}
 		if(ev.preventDefault)
 			ev.preventDefault();
+		ev.stopPropagation();
 		ev.returnValue = false;
 		return false;
 	}
@@ -322,21 +325,51 @@ function htbActionTransform(ev){
 function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
+/*
 	var moveEvent = htbGetPref("moveEvent");
 	if(!moveEvent)
 		moveEvent = DEFAULT_MOVE_EVENT;
 	if(!ev || !ev.which) return false;
 	return (String.fromCharCode(ev.which) == moveEvent);
+*/
+	var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
+	var moveVal = htbGetPref("moveVal"); //value of the action
+	var etype = ev.type;//either 'click' or 'keydown'
+	if(moveClick && etype=="click" && moveVal==ev.button){
+		//they clicked. was it right/left?
+		return true;
+	}
+	else if(!moveClick && etype=="keydown" && moveVal==ev.which){
+		//this should be the only other kind, but just in case...
+		//now figure out which button was pressed (don't worry about shift/ctrl)
+		return true;
+	}
+	return false;
 }
 
 function htbIsEventClick(ev){
 //takes in an event object and determines if it matches
 //the click characteristic of an event
+/*
 	var engageEvent = htbGetPref("engageEvent");
 	if(!engageEvent)
 		engageEvent = DEFAULT_ENGAGE_EVENT;
 	if(!ev || !ev.which) return false;
 	return (String.fromCharCode(ev.which) == engageEvent);
+*/
+	var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
+	var engageVal = htbGetPref("engageVal"); //value of the action
+	var etype = ev.type;//either 'click' or 'keydown'
+	if(engageClick && etype=="click" && engageVal==ev.button){
+		//they clicked. was it right/left?
+		return true;
+	}
+	else if(!engageClick && etype=="keydown" && engageVal==ev.which){
+		//this should be the only other kind, but just in case...
+		//now figure out which button was pressed (don't worry about shift/ctrl)
+		return true;
+	}
+	return false;
 }
 
 function ObjectIsVisible(obj){
