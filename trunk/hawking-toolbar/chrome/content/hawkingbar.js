@@ -298,10 +298,10 @@ function htbActionTransform(ev){
 		else{
 			ClickObject(ContextManager.getCurrent());
 		}
-		if(ev.preventDefault)
-			ev.preventDefault();
+		ev.preventDefault();
 		ev.stopPropagation();
 		ev.returnValue = false;
+		ev.cancelBubble = true;
 		return false;
 	}
 	else if(htbIsEventMove(ev)){
@@ -313,10 +313,10 @@ function htbActionTransform(ev){
 		else{
 			ContextManager.next();
 		}
-		if(ev.preventDefault)
-			ev.preventDefault();
+		ev.preventDefault();
 		ev.stopPropagation();
 		ev.returnValue = false;
+		ev.cancelBubble = true;
 		return false;
 	}
 	return true;
@@ -588,6 +588,7 @@ function HawkingPagePrev(){
 }
 function HawkingPageClick(){
 	ClickObject(PageContext.getCurrent());
+	PageContext = new ContextList(window.content.document.body);
 }
 
 function OpenPrefs(ev){
