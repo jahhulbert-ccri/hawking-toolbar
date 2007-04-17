@@ -44,7 +44,7 @@
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" /> 
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
-	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingscroll.js" />
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingautomode.js" />
 	<menupopup id="menu_ToolsPopup">
 		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Literacy Center" accesskey="L" oncommand="htbToggleLiteracy()" />
 	</menupopup>
