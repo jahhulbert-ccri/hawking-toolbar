@@ -2,9 +2,10 @@
 
           <overlay id="hawkingPrefOverlay"
                    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
+            <!-- John: moved script directly below the overlay tag -->
+			<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
             <!-- Merge with the BrowserPreferences Window -->
-            <prefwindow id="BrowserPreferences">
+            <prefwindow id="BrowserPreferences" onclick="htbCaptureEventPref(event)" onkeydown="htbCaptureEventPref(event)">
 
               <!-- Create a new pane (tab) for HP Scheduler. -->
               <prefpane id="hawkingPane" label="Hawking"
@@ -28,7 +29,6 @@
                 <!-- see the next section for more information -->
                 </preferences>
 				
-				<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
 				<!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" /> -->
 
 				<!-- GUI Elements... -->
@@ -64,12 +64,18 @@
 							<groupbox>
 								<caption label="Input Switch Configuration" />
 								<hbox>
-									<label>Move Input Action: </label>
+									<toolbarbutton id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Set 'Move' Action" onclick="htbCaptureEventMove(event)" />
+									<!--
+									<label>Set 'Move' Action: </label>
 									<textbox preference="extensions.hawking.moveEvent" maxlength="1" id="ddd" size="11" />
+									-->
 								</hbox>
 								<hbox>
-									<label>Engage Input Action: </label>
+									<toolbarbutton id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Set 'Click' Action" onclick="htbCaptureEventEngage(event)" />
+									<!--
+									<label>Set 'Engage' Action: </label>
 									<textbox maxlength="1" preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
+									-->
 								</hbox>
 							</groupbox>
 							
