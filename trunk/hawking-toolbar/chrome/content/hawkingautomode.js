@@ -15,7 +15,7 @@ function htbEnableAuto(){
 	var timing = parseFloat(htbGetPref("autoInterval"));
 	if(timing<1 || isNaN(timing)){
 		timing = 2;
-		htbSetPref("autoInterval", 2, "Integer"); //sets an erroneous preference back
+		htbSetPref("autoInterval", 2, "Int"); //sets an erroneous preference back
 	}
 	timing = timing*1000;//from seconds to miliseconds
 	autoInterval = setInterval("htbAutoIterate();", timing);
