@@ -17,7 +17,7 @@ function htbEnableAuto(){
 		timing = 2;
 	}
 	timing = timing*1000;//from seconds to miliseconds
-	autoInterval = setInterval("ContextManager.next();", timing);
+	autoInterval = setInterval("htbAutoIterate();", timing);
 //	alert(autoInterval+" set");
 }
 
@@ -25,4 +25,12 @@ function htbDisableAuto(){
 	htbSetPref("autoMode", false, "Bool");
 //	alert("got: "+autoInterval);
 	clearInterval(autoInterval);
+}
+
+function htbAutoIterate(){
+	var simple = htbGetPref("literacybar");
+	if(simple)//we're in literacy mode
+		HawkingPageNext();
+	else //we're in normal toolbar mode
+		ContextManager.next();		
 }
