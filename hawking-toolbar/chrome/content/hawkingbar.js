@@ -388,13 +388,13 @@ function htbFindRealHighlight(obj){
 	  			return nobj;
 	  		}
 	  	}
-		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
+//		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
 			/*  if the <a> is in something all by itself, highlight that instead;
 			    this is to counteract the annoying "no-highlight" bug when we find an
 			    <a> tag inside a <div> with an id so it appears as a clickable logo
 			*/
-			return obj.parentNode;
-		}
+//			return obj.parentNode;
+//		}
 	}
 	return obj;
 }
