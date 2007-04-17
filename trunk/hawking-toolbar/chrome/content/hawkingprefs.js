@@ -71,9 +71,12 @@ function htbSetCapturing(b){
 
 
 function htbCaptureEventMove(ev){
-	document.getElementById("htbEngageButton").disabled =true;
-	document.getElementById("htbMoveButton").disabled =true;
-	document.getElementById("htbMoveButton").label = "Capturing Move...";
+	var ebut = document.getElementById("htbEngageButton");
+	var mbut = document.getElementById("htbMoveButton");
+	if(ebut.disabled || mbut.disabled) return;
+	ebut.disabled =true;
+	mbut.disabled =true;
+	mbut.label = "Capturing Move...";
 
 	ev.preventDefault();
 	ev.stopPropagation();
@@ -83,9 +86,12 @@ function htbCaptureEventMove(ev){
 	return false;
 }
 function htbCaptureEventEngage(ev){
-	document.getElementById("htbEngageButton").disabled =true;
-	document.getElementById("htbMoveButton").disabled =true;
-	document.getElementById("htbMoveButton").label = "Capturing Engage...";
+	var ebut = document.getElementById("htbEngageButton");
+	var mbut = document.getElementById("htbMoveButton");
+	if(ebut.disabled || mbut.disabled) return;
+	ebut.disabled =true;
+	mbut.disabled =true;
+	ebut.label = "Capturing Engage...";
 
 	ev.preventDefault();
 	ev.stopPropagation();
