@@ -11,6 +11,7 @@
     * new images for click and other things without images
     * images for sub-toolbar pics on left side
   * fix scrolling
+  * merge with brett clippingdale's pages
 
 ==Modules to Write==
   * Bookmarks
