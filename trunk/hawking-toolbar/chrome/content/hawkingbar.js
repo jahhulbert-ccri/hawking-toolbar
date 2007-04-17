@@ -466,6 +466,72 @@ function Highlight(realObj){
 		obj.scrollIntoView();
 }
 
+function htbScrollToObj(obj){
+
+	var screenHeight;
+	var screenWidth;
+	if(window.frameElement) {
+		alert('frame element');
+		screenHeight = window.frameElement.content.innerHeight;
+		screenWidth = window.frameElement.content.innerWidth;
+	}
+	else {
+		screenHeight = window.content.innerHeight;
+		screenWidth = window.content.innerWidth;
+	}
+		
+	var maxX = window.content.scrollMaxX;
+	var maxY = window.content.scrollMaxY;
+	
+	var scrollToX;
+	var scrollToY;
+	
+	if(obj.offsetTop && obj.offsetLeft) {
+		//alert('in');
+		var yPos = obj.offsetTop;
+		var xPos = obj.offsetLeft;
+		//if (obj.parentNode.nodeName=="LI")
+			//alert('li found');
+		
+		//alert(maxX +','+maxY);
+		scrollToX = xPos-(screenWidth/4);
+		scrollToY = yPos-(screenHeight/4)
+	}
+	else{
+	
+		if(obj.scrollIntoView) {
+			obj.scrollIntoView();
+		}
+		
+		var scrolledX;
+		var scrolledY;
+		
+		if(window.frameElement) {
+			alert('frame element');
+			scrolledX = window.frameElement.content.pageXOffset;
+			scrolledY = window.frameElement.content.pageYOffset;
+		}
+		else {
+			scrolledX = window.content.pageXOffset;
+			scrolledY = window.content.pageYOffset;
+		}
+		
+		//alert('scroll into view');
+		
+		
+		scrollToX = scrolledX-(screenWidth/2);
+		scrollToY = scrolledY-(screenHeight/2);
+
+	}
+	
+	if(window.frameElement){
+		window.frameElement.content.scrollTo(scrollToX,scrollToY);
+	}
+	else{
+		window.content.scrollTo(scrollToX,scrollToY);
+	}
+}
+
 function unHighlight(realObj){
 	var obj = htbFindRealHighlight(realObj);
 	if(!obj){ //nothing to unhighlight
