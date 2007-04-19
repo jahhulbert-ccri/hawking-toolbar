@@ -57,7 +57,7 @@
 					<toolbarbutton class="hawking" id="HawkingIntoPage" tooltiptext="Go Into Page"
                                label="Link Navigation" onclick="Scope('HawkingSBPageNav')" />
 					<toolbarseparator />
-					<toolbarbutton id="HawkingNavBar" tooltiptext="Go Into Page"
+					<toolbarbutton id="HawkingNavBar" tooltiptext="Move between pages"
                                label="Navigation Toolbar" onclick="Scope('HawkingSBHistoryNav');" />
 					<toolbarseparator />
                 	<toolbarbutton class="hawking" id="HawkingScrollPage" tooltiptext="Scroll Page"
@@ -120,11 +120,12 @@
         	<toolbar id="HawkingSBHistoryNav" toolbarname="HawkingHistory" accesskey="H"
 	                 class="chromeclass-toolbar" context="toolbar-context-menu" 
 	                 hidden="true">
-				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Go back one page" onclick="htbBack()" />
-				<toolbarbutton id="HawkingScrollRight" tooltiptext="Go forward one page" onclick="htbForward()" />
+				<image src='chrome://hawkingbar/skin/navigation_n.png' />
+				<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="htbBack()" />
+				<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="htbForward()" />
 				<toolbarbutton id="HawkingReload" tooltiptext="Reload the page" onclick="htbReload()" />
 				<toolbarseparator />
-				<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
+				<toolbarbutton id="HawkingNavExit" tooltiptext="Exit"
 						   onclick="UnScope()" />
         	</toolbar>
 
