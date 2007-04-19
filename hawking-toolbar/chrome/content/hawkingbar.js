@@ -480,12 +480,18 @@ function Highlight(realObj){
 		//obj.scrollIntoView();
 }
 
+/**
+ * htbScrollToObj
+ * Description: function takes an object and positions it in the center of the screen using scrolling
+ * Arg: object to center
+ */
 function htbScrollToObj(obj){
-
+	/**
+	  * compute screen height and width of screen holding object accounting for frames if needed.
+	  */
 	var screenHeight;
 	var screenWidth;
 	if(window.frameElement) {
-		//alert('frame element');
 		screenHeight = window.frameElement.content.innerHeight;
 		screenWidth = window.frameElement.content.innerWidth;
 	}
@@ -493,18 +499,26 @@ function htbScrollToObj(obj){
 		screenHeight = window.content.innerHeight;
 		screenWidth = window.content.innerWidth;
 	}
-		
+	
+	//variables maxX and maxY are the total document height
 	var maxX = window.content.scrollMaxX;
 	var maxY = window.content.scrollMaxY;
 	
+	//variables to store position to which we will scroll
 	var scrollToX;
 	var scrollToY;
 	
+	/**
+	  * if object offsets are available, compute pixel position on screen
+	  */
 	if(obj.offsetTop && obj.offsetLeft) {		
 		
 		var yPos = obj.offsetTop;
 		var xPos = obj.offsetLeft;
 		
+		/**
+		  * loop up to document body and find offset of object by adding values of offset parents
+		  */
 		var temp = obj;
 		while(temp != window.content.document.body){
 			temp = temp.offsetParent;
@@ -512,10 +526,14 @@ function htbScrollToObj(obj){
 			xPos+=temp.offsetLeft;
 		}
 		
-		//alert(maxX +','+maxY);
+		//set values in scroll to
 		scrollToY = yPos-(screenHeight/2);
 		scrollToX = xPos-(screenWidth/2);
 	}
+	/**
+	  * if object offsets are not available, use firefox function scrollIntoView to scroll
+	  * and then center using half of screen width.
+	  */
 	else{
 		if(obj.scrollIntoView) {
 			obj.scrollIntoView();
@@ -537,9 +555,7 @@ function htbScrollToObj(obj){
 		//alert('scroll into view');
 		scrollToX = scrolledX-(screenWidth/2);
 		scrollToY = scrolledY-(screenHeight/2);
-
 	}
-	
 	
 	if(scrollToX < screenWidth){
 		scrollToX = 0;
