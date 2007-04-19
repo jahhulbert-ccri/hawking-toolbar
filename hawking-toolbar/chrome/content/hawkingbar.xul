@@ -121,10 +121,10 @@
 	                 class="chromeclass-toolbar" context="toolbar-context-menu" 
 	                 hidden="true">
 				<image src='chrome://hawkingbar/skin/navigation_n.png' />
+				<toolbarseparator />
 				<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="htbBack()" />
 				<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="htbForward()" />
 				<toolbarbutton id="HawkingReload" tooltiptext="Reload the page" onclick="htbReload()" />
-				<toolbarseparator />
 				<toolbarbutton id="HawkingNavExit" tooltiptext="Exit"
 						   onclick="UnScope()" />
         	</toolbar>
