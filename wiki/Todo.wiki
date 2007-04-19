@@ -10,10 +10,11 @@
     * Text under images not added in xul
     * new images for click and other things without images
     * images for sub-toolbar pics on left side
-  * fix scrolling
+  * DONE - fix scrolling
   * merge with brett clippingdale's pages
   * Make a delay in single mode...plus an escape option...
   * fix frames problem
+  * Make a new mode in which if you enter simple mode, clicking will unscope you and place scope back on the toolbar.
 
 ==Modules to Write==
   * Bookmarks
