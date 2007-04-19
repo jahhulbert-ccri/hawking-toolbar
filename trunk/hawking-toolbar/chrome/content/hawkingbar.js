@@ -33,7 +33,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
- 
+
  //variables
 var ContextManager = null;
 var Highlighter = null;
@@ -223,6 +223,14 @@ function HawkingTrackerSetup(){
 	ContextManager = new HawkingToolbarTracker(tb);
 	Highlighter = new htbHighlighter();
 	htbButtonHover(ContextManager.getCurrent());
+	var dis = htbGetPref("disabled");
+	var button = document.getElementById("HawkingToggleActivity");
+	if(button){
+		if(dis)
+			button.label = "Disable Hawking Toolbar";
+		else
+			button.label = "Enable Hawking Toolbar";
+	}
 
 	var mode = htbGetPref("autoMode");
 	if(mode){
@@ -259,7 +267,7 @@ function UnScope(){
 function Scope(idstr){
 	//takes in idstring, we'll document.getElementById it
 	//and if it exists, we'll open scope
-	var obj = document.getElementById(idstr);
+	var obj = $(idstr); //$ used to be document.getElementById
 	if(!obj)return;
 	if(!ContextManager)
 		return;
@@ -650,20 +658,20 @@ function htbButtonBlur(obj){
 
 function htbToggleCapture(){
 	var dis = htbGetPref("disabled");
-	var button = document.getElementById("HawkingBarPrefs");
+	var button = document.getElementById("HawkingToggleActivity");
 	if(dis==true){
 		htbSetPref("disabled", false, "Bool");
 		if(button)
-		button.label = "Enable";
-		else
-		alert("disabled");
+		button.label = "Enable Hawking Toolbar";
+//		else
+//		alert("disabled");
 	}
 	else{
 		htbSetPref("disabled", true, "Bool");
 		if(button)
-		button.label = "Disable";
-		else
-		alert("activated");
+		button.label = "Disable Hawking Toolbar";
+//		else
+//		alert("activated");
 	}
 }
 
@@ -695,4 +703,14 @@ function htbToggleLiteracy(){
 	}
 }
 
+function htbBack(){
+	window.content.history.back();
+}
 
+function htbForward(){
+	window.content.history.forward();
+}
+
+function htbReload(){
+	window.content.location.href = window.content.location.href;
+}
