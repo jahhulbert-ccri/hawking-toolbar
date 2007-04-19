@@ -471,10 +471,13 @@ function Highlight(realObj){
 	obj.setAttribute("old_style", oStyle);
 	//obj.focus();
 	*/
+	//var re = window.content.document.getElementById('navRealestate');
+	//if(!re) alert("re not found");
+	//alert("top offset: "+re.offsetTop+"\nleft offset: "+re.offsetLeft+"\noffset height:"+re.offsetHeight);
 	
-	//htbScrollToObj(obj);
-	if(obj.scrollIntoView)
-		obj.scrollIntoView();
+	htbScrollToObj(obj);
+	//if(obj.scrollIntoView)
+		//obj.scrollIntoView();
 }
 
 function htbScrollToObj(obj){
@@ -482,7 +485,7 @@ function htbScrollToObj(obj){
 	var screenHeight;
 	var screenWidth;
 	if(window.frameElement) {
-		alert('frame element');
+		//alert('frame element');
 		screenHeight = window.frameElement.content.innerHeight;
 		screenWidth = window.frameElement.content.innerWidth;
 	}
@@ -497,19 +500,23 @@ function htbScrollToObj(obj){
 	var scrollToX;
 	var scrollToY;
 	
-	if(obj.offsetTop && obj.offsetLeft) {
-		//alert('in');
+	if(obj.offsetTop && obj.offsetLeft) {		
+		
 		var yPos = obj.offsetTop;
 		var xPos = obj.offsetLeft;
-		//if (obj.parentNode.nodeName=="LI")
-			//alert('li found');
+		
+		var temp = obj;
+		while(temp != window.content.document.body){
+			temp = temp.offsetParent;
+			yPos+=temp.offsetTop;
+			xPos+=temp.offsetLeft;
+		}
 		
 		//alert(maxX +','+maxY);
-		scrollToX = xPos-(screenWidth/4);
-		scrollToY = yPos-(screenHeight/4)
+		scrollToY = yPos-(screenHeight/2);
+		scrollToX = xPos-(screenWidth/2);
 	}
 	else{
-	
 		if(obj.scrollIntoView) {
 			obj.scrollIntoView();
 		}
@@ -528,13 +535,15 @@ function htbScrollToObj(obj){
 		}
 		
 		//alert('scroll into view');
-		
-		
 		scrollToX = scrolledX-(screenWidth/2);
 		scrollToY = scrolledY-(screenHeight/2);
 
 	}
 	
+	
+	if(scrollToX < screenWidth){
+		scrollToX = 0;
+	}
 	if(window.frameElement){
 		window.frameElement.content.scrollTo(scrollToX,scrollToY);
 	}
