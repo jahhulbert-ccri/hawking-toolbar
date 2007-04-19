@@ -91,6 +91,35 @@
 	list-style-image: url("chrome://hawkingbar/skin/back_s.png");
 }
 
+#HawkingNavBar{
+	list-style-image: url("chrome://hawkingbar/skin/navigation_n.png");
+}
+#HawkingNavBar.over{
+	list-style-image: url("chrome://hawkingbar/skin/navigation_s.png");
+}
+
+#HawkingBack{
+	list-style-image: url("chrome://hawkingbar/skin/back_n.png");
+}
+#HawkingBack.over{
+	list-style-image: url("chrome://hawkingbar/skin/back_s.png");
+}
+#HawkingForward{
+	list-style-image: url("chrome://hawkingbar/skin/forward_n.png");
+}
+#HawkingForward.over{
+	list-style-image: url("chrome://hawkingbar/skin/forward_s.png");
+}
+#HawkingRefresh{
+	list-style-image: url("chrome://hawkingbar/skin/refresh_n.png");
+}
+#HawkingRefresh.over{
+	list-style-image: url("chrome://hawkingbar/skin/refresh_s.png");
+}
+
+
+
+
 toolbarbutton{
 	padding-top: 0px;
 	padding-bottom: 0px;
