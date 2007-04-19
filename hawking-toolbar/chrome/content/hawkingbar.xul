@@ -124,8 +124,8 @@
 				<toolbarseparator />
 				<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="htbBack()" />
 				<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="htbForward()" />
-				<toolbarbutton id="HawkingReload" tooltiptext="Reload the page" onclick="htbReload()" />
-				<toolbarbutton id="HawkingNavExit" tooltiptext="Exit"
+				<toolbarbutton id="HawkingRefresh" tooltiptext="Reload the page" onclick="htbReload()" />
+				<toolbarbutton id="HawkingExitTB" tooltiptext="Exit"
 						   onclick="UnScope()" />
         	</toolbar>
 

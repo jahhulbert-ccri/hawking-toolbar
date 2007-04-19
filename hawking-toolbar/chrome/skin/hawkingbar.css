@@ -117,8 +117,12 @@
 	list-style-image: url("chrome://hawkingbar/skin/refresh_s.png");
 }
 
-
-
+#HawkingExitTB{
+	list-style-image: url("chrome://hawkingbar/skin/close_n.png");
+}
+#HawkingExitTB.over{
+	list-style-image: url("chrome://hawkingbar/skin/close_s.png");
+}
 
 toolbarbutton{
 	padding-top: 0px;
