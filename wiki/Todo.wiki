@@ -12,6 +12,7 @@
     * images for sub-toolbar pics on left side
   * fix scrolling
   * merge with brett clippingdale's pages
+  * Make a delay in single mode...plus an escape option...
 
 ==Modules to Write==
   * Bookmarks
