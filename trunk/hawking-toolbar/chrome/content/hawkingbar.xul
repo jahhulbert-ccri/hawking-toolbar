@@ -53,25 +53,24 @@
         	<toolbar id="HawkingToolBar" toolbarname="HawkingToolBar" accesskey="H"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="false">
-
+					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingIntoPage" tooltiptext="Go Into Page"
-                               label="Link Navigation" onclick="Scope('HawkingSBPageNav')" />
-					<toolbarseparator />
+                               onclick="Scope('HawkingSBPageNav')" />
 					<toolbarbutton id="HawkingNavBar" tooltiptext="Move between pages"
-                               label="Navigation Toolbar" onclick="Scope('HawkingSBHistoryNav');" />
-					<toolbarseparator />
+                               onclick="Scope('HawkingSBHistoryNav');" />
                 	<toolbarbutton class="hawking" id="HawkingScrollPage" tooltiptext="Scroll Page"
-                               label="Scroll" onclick="Scope('HawkingSBScroll')" />
+                               onclick="Scope('HawkingSBScroll')" />
                 	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
-                               label="Go to HawkingBar Home" onclick="HawkingBarGoHome()" />
+                               onclick="HawkingBarGoHome()" />
                 	<toolbarseparator />
                 	<toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
                                label="Enable/Disable" oncommand="htbToggleCapture()" />
 					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
                                label="Literacy Mode" oncommand="htbToggleLiteracy()" />
+					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingToggleAuto" tooltiptext="Toggle Literacy Center Mode"
-                               label="Auto Scroll" oncommand="htbToggleAuto()" />
+                               label="Auto Mode" oncommand="htbToggleAuto()" />
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
