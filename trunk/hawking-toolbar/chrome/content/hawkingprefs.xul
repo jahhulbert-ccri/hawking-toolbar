@@ -24,7 +24,7 @@
 				<preference id="extensions.hawking.engageEvent" name="extensions.hawking.engageEvent" type="string"/>
 				<preference id="extensions.hawking.autoMode" name="extensions.hawking.autoMode" type="bool"/>
 				<preference id="extensions.hawking.autoInterval" name="extensions.hawking.autoInterval" type="string"/>
-				
+				<preference id="extensions.hawking.literacybarEscape" name="extensions.hawking.literacybarEscape" type="bool" />
 				
                 <!-- see the next section for more information -->
                 </preferences>
@@ -58,6 +58,10 @@
 						            <checkbox id="useSimplifiedMode"
 						                    label="Use Simplified Mode on Startup"
 						                    preference="extensions.hawking.literacybar"/>
+						            <checkbox id="canLeaveSimplifiedMode"
+						                    label="Click returns to advanced mode"
+						                    preference="extensions.hawking.literacybarEscape"/>
+						                    
 								</hbox>
 							</groupbox>
 								
