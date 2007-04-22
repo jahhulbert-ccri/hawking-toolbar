@@ -621,6 +621,13 @@ function HawkingPagePrev(){
 }
 function HawkingPageClick(){
 	ClickObject(PageContext.getCurrent());
+	//this should be added after the page has loaded so we get the new body
+	var canEscape = htbGetPref("literacybarEscape");
+	if(canEscape==true && $("HawkingToolBar").hidden==true){
+		//this should implement the brilliant idea to escape
+		//from literacy mode every click if the setting is set
+		htbToggleLiteracy();
+	}
 	PageContext = new ContextList(window.content.document.body);
 }
 
