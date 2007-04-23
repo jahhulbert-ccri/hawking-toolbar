@@ -223,6 +223,10 @@ function HawkingTrackerSetup(){
 	ContextManager = new HawkingToolbarTracker(tb);
 	Highlighter = new htbHighlighter();
 	htbButtonHover(ContextManager.getCurrent());
+	if(htbGetPref("StartAsOff")){
+		//if the always start as off setting is on, set disabled
+		htbSetPref("disabled", false, "Bool");
+	}
 	var dis = htbGetPref("disabled");
 	var button = document.getElementById("HawkingToggleActivity");
 	if(button){
@@ -240,12 +244,13 @@ function HawkingTrackerSetup(){
 	var simple = htbGetPref("literacybar");
 	if(simple){
 		//simple toolbar, hide the htb
-		tb.hidden = true;
+		Scope("HawkingSBLiteracy");
+//		tb.hidden = true;
 		//show the subbar for the literacy center simple toolbar
-		var literacyTB = document.getElementById("HawkingSBLiteracy");
-		if(literacyTB) {
-			literacyTB.hidden = false;		
-		}
+//		var literacyTB = document.getElementById("HawkingSBLiteracy");
+//		if(literacyTB) {
+//			literacyTB.hidden = false;		
+//		}
 		//set attribute
 		var mItem = document.getElementById("htbLiteracyMenuItem");
 		if(mItem)
@@ -255,6 +260,7 @@ function HawkingTrackerSetup(){
 	addEvent(window, "click", htbActionTransform, true);
 	//removes the event from window.onload so it is not called every time
 	window.removeEventListener("load", HawkingTrackerSetup, true);
+	addEvent(window, "load", htbResetPageContext, true);
 }
 function UnScope(){
 	if(!ContextManager)
@@ -396,13 +402,17 @@ function ObjectIsVisible(obj){
       if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
         break;
       }
-      
+//      var loc = new htbHighlighter().getViewOffset(obj, true);
+//      if(loc.x<1 || loc.y<1)
+//      	return false;
+	      
       obj = obj.parentNode;
     }
   }
   catch(e){
     return false;
   }
+//  alert("Visible: "+obj.nodeName);
   return true;
 }
 
@@ -628,7 +638,8 @@ function HawkingPageClick(){
 		//from literacy mode every click if the setting is set
 		htbToggleLiteracy();
 	}
-	PageContext = new ContextList(window.content.document.body);
+//moved to the window.onload function htbResetPageContext
+//	PageContext = new ContextList(window.content.document.body);
 }
 
 function OpenPrefs(ev){
@@ -716,22 +727,24 @@ function htbToggleLiteracy(){
 	if(lbar){
 		//go back to full feature set
 		htbSetPref("literacybar", false, "Bool");
-		if(tb)
-			tb.hidden = false;
+		UnScope();//leave the literacy bar
+//		if(tb)
+//			tb.hidden = false;
 		if(mItem)
 			mItem.setAttribute("checked", "false");
-		if(literacyTB)
-			literacyTB.hidden=true;
+//		if(literacyTB)
+//			literacyTB.hidden=true;
 	}
 	else{
 		//reduce to literacy center feature
 		htbSetPref("literacybar", true, "Bool");
-		if(tb)
-			tb.hidden = true;
+		Scope("HawkingSBLiteracy");
+//		if(tb)
+//			tb.hidden = true;
 		if(mItem)
 			mItem.setAttribute("checked", "true");
-		if(literacyTB)
-			literacyTB.hidden=false;
+//		if(literacyTB)
+//			literacyTB.hidden=false;
 	}
 }
 
@@ -745,4 +758,9 @@ function htbForward(){
 
 function htbReload(){
 	window.content.location.href = window.content.location.href;
+}
+function htbResetPageContext(){
+	//this should reset position of the link clicker every time a new page is loaded...also in frames
+	//i hope
+	PageContext = new ContextList(window.content.document.body);
 }
