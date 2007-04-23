@@ -34,8 +34,8 @@ htbHighlighter.prototype = {
 		
 		}
 		this.move(this.highlighter, loc.x, loc.y);
-//		this.resize(this.highlighter, obj.offsetWidth, obj.offsetHeight);
 		this.resize(this.highlighter, dim.width, dim.height);
+
 		//get border color and width from preferences and set defaults in case of failure
 		var borderColor = htbGetPref("borderHighlightColor");
 		if(!borderColor)
