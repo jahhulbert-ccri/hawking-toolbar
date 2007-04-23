@@ -112,37 +112,54 @@ function htbCaptureEventPref(ev){
 	var act = "";
 	var prefClick; //moveAct, engageAct (either true for a click or false for a keypress)
 	var prefVal; //moveVal, engageVal (either the button number, or the keycode)
+	var otherClick;
+	var otherVal;
 	if(htbCaptureWhich=="move"){
 		prefClick = "moveAct";
 		prefVal = "moveVal";
+		otherClick = "engageAct";
+		otherVal = "engageVal";
 	}
 	else if(htbCaptureWhich=="engage"){
 		prefClick = "engageAct";
 		prefVal = "engageVal";
+		otherClick = "moveAct";
+		otherVal = "moveVal";
 	}
 	else{
 		return true;
 	}
+	knackerEvent(ev);
+	otherClick = htbGetPref(otherClick);
+	otherVal = htbGetPref(otherVal);
 	var etype = ev.type;//either 'click' or 'keydown'
 	if(etype=="click"){
+		var button = ev.button;
+		if(otherClick && button==otherVal){
+			//trying to set it as the same preference, do not allow!
+			htbDoneCapturing();
+			alert("You are already using this key");
+			return false;
+		}
 		//they clicked. was it right/left?
 		htbSetPref(prefClick, true, "Bool");
-		var button = ev.button;
 		htbSetPref(prefVal, button, "Int"); //usually 0 for left, 1 for middle, 2 for right
 		htbDoneCapturing();
-		ev.preventDefault();
-		ev.stopPropagation();
 		return false;
 	}
 	else if(etype=="keydown"){
 		//this should be the only other kind, but just in case...
 		//now figure out which button was pressed (don't worry about shift/ctrl)
-		htbSetPref(prefClick, false, "Bool");
 		var key = ev.which;
+		if(!otherClick && key==otherVal){
+			//trying to set it as the same preference, do not allow!
+			htbDoneCapturing();
+			alert("You are already using this key");
+			return false;
+		}
+		htbSetPref(prefClick, false, "Bool");
 		htbSetPref(prefVal, key, "Int"); //store keycode of key pressed
 		htbDoneCapturing();
-		ev.preventDefault();
-		ev.stopPropagation();
 		return false;
 	}
 	return true;
@@ -157,9 +174,60 @@ function htbDoneCapturing(){
 
 function htbResetCapture(){
 	htbSetCapturing(false);//done capturing
+	var isMove = (htbCaptureWhich=="move");
 	htbCaptureWhich = "";
+	var trans = htbTranslateAction(isMove);
+	if(isMove && $("VisualMoveEvent")){
+		$("VisualMoveEvent").value = trans;
+	}
+	else if(!isMove && $("VisualEngageEvent")){
+		$("VisualEngageEvent").value = trans;
+	}
 	document.getElementById("htbEngageButton").disabled =false;
 	document.getElementById("htbMoveButton").disabled =false;
 	document.getElementById("htbMoveButton").label = "Set 'Move' Action";
 	document.getElementById("htbEngageButton").label = "Set 'Engage' Action";	
+}
+
+function htbTranslateAction(isMove){
+	//this function should tranlate the preferences into a 
+	//description of what the move and engage actions are currently set at
+	var prefClick; //true if it was a mouseclick, false if keyboard
+	var prefVal; //value of the action event
+	var translated = "";
+	if(isMove){
+		prefClick = "moveAct";
+		prefVal = "moveVal";
+	}
+	else{
+		prefClick = "engageAct";
+		prefVal = "engageVal";
+	}
+	var isClick = htbGetPref(prefClick); //boolean
+	var val = htbGetPref(prefVal); //integer value
+	if(isClick){
+		if(val==0)
+			translated = "Left Click";
+		else if(val==1)
+			translated = "Middle Click";
+		else if(val==2)
+			translated = "Right Click";
+		else
+			translated = "Unknown Click";
+	}
+	else{
+		translated = String.fromCharCode(val);
+	}	
+	return translated;
+}
+
+function htbFillActions(){
+	var trans = htbTranslateAction(true);
+	if($("VisualMoveEvent")){
+		$("VisualMoveEvent").value = trans;
+	}
+	trans = htbTranslateAction(false);
+	if($("VisualEngageEvent")){
+		$("VisualEngageEvent").value = trans;
+	}
 }
