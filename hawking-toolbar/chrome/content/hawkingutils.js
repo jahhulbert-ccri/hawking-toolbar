@@ -30,6 +30,10 @@ function knackerEvent(eventObject) {
     if (window.event) {
         window.event.returnValue = false;
     }
+    if(eventObject.preventCapture)
+    	eventObject.preventCapture();
+    if(eventObject.preventBubble)
+    	eventObject.preventBubble();
 }
 
 /* 

@@ -41,6 +41,7 @@
 <overlay id="TutTB-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/prototype.js" />
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkinghighlight.js" />
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingsound.js" />
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />         
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" /> 
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
@@ -86,7 +87,6 @@
 					<toolbarbutton id="HawkingPagePrev" tooltiptext="Go to the previous link"
                                onclick="HawkingPagePrev()" />
 					<toolbarseparator />
-
 					<toolbarbutton id="HawkingPageExit" tooltiptext="Exit"
 								onclick="UnScope()" />
         	</toolbar>
@@ -124,7 +124,7 @@
 				<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="htbBack()" />
 				<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="htbForward()" />
 				<toolbarbutton id="HawkingRefresh" tooltiptext="Reload the page" onclick="htbReload()" />
-				<toolbarbutton id="HawkingExitTB" tooltiptext="Exit"
+				<toolbarbutton id="HawkingHistoryNavExit" tooltiptext="Exit"
 						   onclick="UnScope()" />
         	</toolbar>
 

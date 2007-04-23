@@ -77,9 +77,9 @@ function htbCaptureEventMove(ev){
 	ebut.disabled =true;
 	mbut.disabled =true;
 	mbut.label = "Capturing Move...";
-
-	ev.preventDefault();
-	ev.stopPropagation();
+	knackerEvent(ev);
+//	ev.preventDefault();
+//	ev.stopPropagation();
 	htbSetCapturing(true);
 	htbCaptureWhich = "move";
 	htbCaptureTimeout = setTimeout("htbNothingCaptured();", 5000);
@@ -93,8 +93,9 @@ function htbCaptureEventEngage(ev){
 	mbut.disabled =true;
 	ebut.label = "Capturing Engage...";
 
-	ev.preventDefault();
-	ev.stopPropagation();
+	knackerEvent(ev);
+//	ev.preventDefault();
+//	ev.stopPropagation();
 	htbSetCapturing(true);
 	htbCaptureWhich = "engage";
 	htbCaptureTimeout = setTimeout("htbNothingCaptured();", 5000);
@@ -216,6 +217,12 @@ function htbTranslateAction(isMove){
 			translated = "Unknown Click";
 	}
 	else{
+		if(val==""){
+			if(isMove)
+				val = 65; //A
+			else
+				val = 76; //L
+		}
 		translated = String.fromCharCode(val);
 	}	
 	return translated;
