@@ -117,10 +117,10 @@
 	list-style-image: url("chrome://hawkingbar/skin/refresh_s.png");
 }
 
-#HawkingExitTB{
+#HawkingHistoryNavExit{
 	list-style-image: url("chrome://hawkingbar/skin/close_n.png");
 }
-#HawkingExitTB.over{
+#HawkingHistoryNavExit.over{
 	list-style-image: url("chrome://hawkingbar/skin/close_s.png");
 }
 

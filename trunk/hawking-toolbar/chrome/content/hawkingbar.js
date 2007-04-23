@@ -34,12 +34,16 @@
  * ***** END LICENSE BLOCK ***** */
 
 
- //variables
+//variables
 var ContextManager = null;
 var Highlighter = null;
+var SoundBlaster = null;
+//calls the setup function once the browser has set up
 addEvent(window, "load", HawkingTrackerSetup, true);
-var DEFAULT_MOVE_EVENT = "A";
-var DEFAULT_ENGAGE_EVENT="L";
+
+//default move/engage values
+var DEFAULT_MOVE_EVENT = 65;
+var DEFAULT_ENGAGE_EVENT=76;
 
 //default scroll varaibles
 var DEFAULT_VERTICAL_SCROLL = 200;
@@ -103,115 +107,126 @@ function ContextList(root){
 	this.ContextLinks = []; //array of all links in this context
 	this.ContextPosition = -1;  //where we are in this array
 }
-ContextList.prototype.getCurrent = function(){
-  //returns the clickable currently pointed to (and highlighted)
-//	if(this.ContextRoot.hidden)
-//		this.ContextRoot.hidden = false;
-	if(this.ContextLinks.length==0 || this.ContextPosition<0)
-		this.Setup();
-	return this.ContextLinks[this.ContextPosition];
-}
 
-ContextList.prototype.next = function(){
-  //moves pointer to the next clickable and highlights, returns nothing
-	if(this.ContextLinks.length==0 || this.ContextPosition<0 || this.ContextPosition>this.ContextLinks.length){
-		this.Setup();
-		this.ContextPosition = this.ContextLinks.length; //sets it to one past the end.
-//		alert("done with setup "+this.ContextLinks.length);
-	}
-//	else{
-		var iterations = 0;
-		do{
-			if(iterations>this.ContextLinks.length)
-				break;
-			iterations++;
-  			this.ContextPosition++;
-  			if(this.ContextPosition>=this.ContextLinks.length)
-  		  	this.ContextPosition = 0;
+ContextList.prototype = {
+	getCurrent: function(){
+		//returns the clickable currently pointed to (and highlighted)
+		//	if(this.ContextRoot.hidden)
+		//		this.ContextRoot.hidden = false;
+		if(this.ContextLinks.length==0 || this.ContextPosition<0)
+			this.Setup();
+		return this.ContextLinks[this.ContextPosition];
+	},	
+	next: function(){
+		//moves pointer to the next clickable and highlights, returns nothing
+		if(this.ContextLinks.length==0 || this.ContextPosition<0 || this.ContextPosition>this.ContextLinks.length){
+			this.Setup();
+			this.ContextPosition = this.ContextLinks.length; //sets it to one past the end.
 		}
-		while(!ObjectIsVisible(this.getCurrent()));
-//	}
-}
-ContextList.prototype.prev = function(){
-  //move pointer to previous clickable
-	if(this.ContextLinks.length==0 || this.ContextPosition<0){
-		this.Setup();
-		this.ContextPosition = 1;
-	}
-//	else{
 		var iterations = 0;
 		do{
 			if(iterations>this.ContextLinks.length)
 				break;
 			iterations++;
-  			this.ContextPosition--;
-  			if(this.ContextPosition<0)
-  		  		this.ContextPosition = this.ContextLinks.length-1;
-  		}while(!ObjectIsVisible(this.getCurrent()));
-//	}
-}
-ContextList.prototype.Setup = function(){
-  //find all the clickables in this.ContextRoot to this.ContextLinks
-  //and sets this.ContextPosition = 0
-  this.WindowLocation=window.content.document.location;
-  this.ContextLinks = []; //clears out the old array
-  FindLinks(this.ContextRoot, this.ContextLinks);
-  this.ContextPosition = 0;
-}
-
-function FindLinks(node, arr){
-	//if there is nothing in this node, it doesn't exist, or has no children
-	//firefox randomly adds #text nodes into the dom which don't have any attributes
-	//and in fact cause a "getAttribute" to fail if called on it
-	//for this reason, if we see a #text or #comment get out
-	if(!node || node.nodeName=="#text" || node.nodeName=="#comment"){
-		return;
-	}
-	/*
-		We should look for the following:
-			<a> tags with href attribute defined
-			any node with an onclick event attatched
-			<input> tags with type="submit"
-	*/
-	if((node.nodeName=="A" && node.getAttribute('href')) || node.getAttribute('onclick') || node.getAttribute('oncommand') || (node.nodeName=="INPUT" && node.getAttribute("type") && node.getAttribute("type")=="submit")){
-		arr.push(node);
-//		alert("this node is valid: "+node.nodeName);
-//		return;
-	}
-/*	else{
-	 try{
-      if(typeof node.onclick =='function')
-	     arr.push(node);
-	 }
-	 catch(e){}
-	}
-*/
-	//check inside  frames and iframes
-  if(node.nodeName=="FRAME" || node.nodeName=="IFRAME"){
-    try{
-      FindLinks(node.contentDocument.getElementsByTagName("body")[0], arr);
-    }
-    catch(exception){
-      //sometimes weird stuff happens, nothing we can do, just skip whatever was in that iframe
-    }
-//    alert("made it");
-    return;
-  }
+	  		this.ContextPosition++;
+	  		if(this.ContextPosition>=this.ContextLinks.length)
+				this.ContextPosition = 0;
+		}while(!ObjectIsVisible(this.getCurrent()));
+	},
+	prev: function(){
+		//move pointer to previous clickable
+		if(this.ContextLinks.length==0 || this.ContextPosition<0){
+			this.Setup();
+			this.ContextPosition = 1;
+		}
+		var iterations = 0;
+		do{
+			if(iterations>this.ContextLinks.length)
+				break;
+			iterations++;
+	  		this.ContextPosition--;
+	  		if(this.ContextPosition<0)
+	  		  	this.ContextPosition = this.ContextLinks.length-1;
+	  	}while(!ObjectIsVisible(this.getCurrent()));
+	},
+	Setup: function(){
+	  //find all the clickables in this.ContextRoot to this.ContextLinks
+	  //and sets this.ContextPosition = 0
+	  this.WindowLocation=window.content.document.location;
+	  this.ContextLinks = []; //clears out the old array
+	  this.FindLinks(this.ContextRoot, this.ContextLinks);
+	  this.ContextPosition = 0;
+	},
 	
-	//check for images or event captures later
-	if(!node.childNodes || node.childNodes.length==0){
-		//it has no children, and isn't itself clickable, so return;
-		return;
-	}
-	//it has child nodes we should now check
-	for(var i=0; i<node.childNodes.length; i++){
-		FindLinks(node.childNodes[i], arr);
-	}
+	/*
+	 * FindLinks(node, arr)
+	 * This function looks through the dom starting at the node given to it
+	 * and recursively fills the array "arr" with nodes which satisfy the
+	 * "clickable" criteria specified within. There are still a few
+	 * bugs to be worked out with regard to javascript assigned "onclick" events
+	 * This will detect <a href> tags, <input> and <submit> tags, or any node with
+	 * an "onclick=" or "oncommand=" attribute. It will NOT detect elements which
+	 * are given onclick functions by javascript as this does not appear in the 
+	 * "onclick" attribute of the node. As of right now, we know of no way to
+	 * test for such a function. Commented out within is an attempt which does not work.
+	 */
+	FindLinks: function (node, arr){
+		//if there is nothing in this node, it doesn't exist, or has no children
+		//firefox randomly adds #text nodes into the dom which don't have any attributes
+		//and in fact cause a "getAttribute" to fail. if we see a #text or #comment get out
+		if(!node || node.nodeName=="#text" || node.nodeName=="#comment"){
+			return;
+		}
+		/* 
+		 * We should look for the following:
+		 * <a> tags with href attribute defined
+		 * any node with an onclick event attatched
+		 * <input> tags with type="submit" or "button"
+		 */
+		if((node.nodeName=="A" && node.getAttribute('href')) || node.getAttribute('onclick') || node.getAttribute('oncommand') || (node.nodeName=="INPUT" && node.getAttribute("type") && node.getAttribute("type")=="submit")){
+			arr.push(node);
+			//return; //should we quit after the first clickable thing we find?
+		}
+		/*
+		 * this is trying to discover javascript assigned onclick events
+		 * it does not succeed however.
+		else{
+			try{
+				if(typeof node.onclick =='function'){
+					alert("Has a javascript function: "+node.nodeName)
+					arr.push(node);
+				}
+			 }
+		 catch(e){}
+		}
+		*/
+		//check inside  frames and iframes
+		if(node.nodeName=="FRAME" || node.nodeName=="IFRAME"){
+			try{
+				this.FindLinks(node.contentDocument.getElementsByTagName("body")[0], arr);
+			}catch(exception){}
+			//sometimes weird stuff happens, nothing we can do, just skip whatever was in that iframe
+			return;
+		}
+		
+		//check for images or event captures later
+		if(!node.childNodes || node.childNodes.length==0){
+			//it has no children, and isn't itself clickable, so return;
+			return;
+		}
+		//it has child nodes we should now check
+		for(var i=0; i<node.childNodes.length; i++){
+			this.FindLinks(node.childNodes[i], arr);
+		}//end of for loop
+	}//end of findlinks
 }
 
-
-//used to be called on page load		htbButtonHover(ContextManager.getCurrent());
-//this is the setup function which determines how the toolbar starts up
+/*
+ * HawkingTrackerSetup()
+ * this is the setup function which determines how the toolbar starts up
+ * based on preferences. It disables the toolbar if that is set, it
+ * sets up in Literacy Mode if needed, etc.
+ */
 function HawkingTrackerSetup(){
 	var tb = document.getElementById("HawkingToolBar");
 	if(!tb){
@@ -222,6 +237,7 @@ function HawkingTrackerSetup(){
 	this.done = true;
 	ContextManager = new HawkingToolbarTracker(tb);
 	Highlighter = new htbHighlighter();
+	SoundBlaster = new htbSoundManager();
 	htbButtonHover(ContextManager.getCurrent());
 	if(htbGetPref("StartAsOff")){
 		//if the always start as off setting is on, set disabled
@@ -243,14 +259,8 @@ function HawkingTrackerSetup(){
 	//transforms window events into move and engage
 	var simple = htbGetPref("literacybar");
 	if(simple){
-		//simple toolbar, hide the htb
-		Scope("HawkingSBLiteracy");
-//		tb.hidden = true;
 		//show the subbar for the literacy center simple toolbar
-//		var literacyTB = document.getElementById("HawkingSBLiteracy");
-//		if(literacyTB) {
-//			literacyTB.hidden = false;		
-//		}
+		Scope("HawkingSBLiteracy");
 		//set attribute
 		var mItem = document.getElementById("htbLiteracyMenuItem");
 		if(mItem)
@@ -260,16 +270,28 @@ function HawkingTrackerSetup(){
 	addEvent(window, "click", htbActionTransform, true);
 	//removes the event from window.onload so it is not called every time
 	window.removeEventListener("load", HawkingTrackerSetup, true);
-	addEvent(window, "load", htbResetPageContext, true);
+	addEvent(window, "load", htbResetPageContext, true); //reloads the context every time a new page loads
 }
+
+/*
+ * UnScope()
+ * This function should take care of leaving the toolbar you're in
+ * so the toolbars you're leaving are hidden appropriately, and
+ * your previous toolbar's status is restored.
+ */
 function UnScope(){
 	if(!ContextManager)
 		return;
 	ContextManager.getContext().ContextRoot.hidden = true;
 	ContextManager.ExitContext();
 	ContextManager.getContext().ContextRoot.hidden = false;
-	ReLight(0);
+	ReLight();
 }
+/*
+ * Scope(idstr)
+ * This function takes care of moving into a subtoolbar, hiding the parent
+ * toolbar and showing the new one you wish to enter.
+ */
 function Scope(idstr){
 	//takes in idstring, we'll document.getElementById it
 	//and if it exists, we'll open scope
@@ -280,18 +302,31 @@ function Scope(idstr){
 	ContextManager.getContext().ContextRoot.hidden = true;
 	obj.hidden = false;
 	ContextManager.EnterContext(obj);
-	ReLight(0);
+	ReLight();
 }
-function ReLight(times){
-	// this function focuses on the current
-	// button many times in a row since it doesn't
-	//
+/* ReLight()
+ * This function is called when you switch between toolbar contexts 
+ * so you can see which button you're currently returned to/entered on
+ */
+function ReLight(){
 	htbButtonHover(ContextManager.getCurrent());
-	if(times>5)
-		return;
-	setTimeout("ReLight("+parseInt(times+1)+")", 100);
+//used to have a "times" parameter
+//before we had the css highlighting, we
+//needed to focus on it multiple times
+//	if(times>5)
+//		return;
+//	setTimeout("ReLight("+parseInt(times+1)+")", 100);
 }
-//window.onkeydown = htbActionTransform;
+
+/*
+ * htbActionTransform(ev)
+ * this function should not be passed a parameter since it is
+ * an event listenter. It looks at the preferences to
+ * determine if the event it just saw (click or keydown) was
+ * mapped to a toolbar action (either move or engage)
+ * if so, it will do the appropriate action and *try* to
+ * prevent the event object from propogating any further through
+ */
 function htbActionTransform(ev){
 	//this function captures key presses
 	//and translates them into clicks
@@ -305,6 +340,7 @@ function htbActionTransform(ev){
 //	alert("transforming action");
 	if (htbIsEventClick(ev)) {
 	//engage
+		SoundBlaster.playSound("nothin");
 		var simple = htbGetPref("literacybar");
 		if(simple){
 			HawkingPageClick();
@@ -312,6 +348,7 @@ function htbActionTransform(ev){
 		else{
 			ClickObject(ContextManager.getCurrent());
 		}
+		knackerEvent(ev);
 		ev.preventDefault();
 		ev.stopPropagation();
 		ev.returnValue = false;
@@ -327,6 +364,7 @@ function htbActionTransform(ev){
 		else{
 			ContextManager.next();
 		}
+		knackerEvent(ev);
 		ev.preventDefault();
 		ev.stopPropagation();
 		ev.returnValue = false;
@@ -335,7 +373,11 @@ function htbActionTransform(ev){
 	}
 	return true;
 }
-
+/*
+ * this is a helper function to the htbActionTransform method
+ * which will return true or false depending on whether the
+ * action it is passed is mapped to a "move" event by the hawking toolbar
+ */
 function htbIsEventMove(ev){
 //takes in an event object and determines if it matches
 //the move characteristic of an event
@@ -459,35 +501,15 @@ function htbFindRealHighlight(obj){
 function Highlight(realObj){
 	var obj = htbFindRealHighlight(realObj);
 	if(!obj){
-		alert("I tried to highlight, but you gave me nothing");
+		alert("I tried to highlight, but you gave me nothing"); //this could be a sound
 		return;
 	}
 	Highlighter.highlight(obj);
-	/*
-//  	alert("looking at: "+obj.nodeName);
-	var oStyle = "";
-	if(obj.style && obj.style.border)
-		oStyle = obj.style.border;
-	
-	//get border color and width from preferences and set defaults in case of failure
-	var borderColor = htbGetPref("borderHighlightColor");
-	if(!borderColor)
-		borderColor="#f00";
-	var borderWidth = htbGetPref("borderHighlightWidth");
-	if(!borderWidth)
-		borderWidth="5";
-	
-	obj.style.border = "solid "+borderColor+" "+borderWidth+"px";
-	obj.setAttribute("old_style", oStyle);
-	//obj.focus();
-	*/
 	//var re = window.content.document.getElementById('navRealestate');
 	//if(!re) alert("re not found");
 	//alert("top offset: "+re.offsetTop+"\nleft offset: "+re.offsetLeft+"\noffset height:"+re.offsetHeight);
 	
 	htbScrollToObj(obj);
-	//if(obj.scrollIntoView)
-		//obj.scrollIntoView();
 }
 
 /**
@@ -728,23 +750,15 @@ function htbToggleLiteracy(){
 		//go back to full feature set
 		htbSetPref("literacybar", false, "Bool");
 		UnScope();//leave the literacy bar
-//		if(tb)
-//			tb.hidden = false;
 		if(mItem)
 			mItem.setAttribute("checked", "false");
-//		if(literacyTB)
-//			literacyTB.hidden=true;
 	}
 	else{
 		//reduce to literacy center feature
 		htbSetPref("literacybar", true, "Bool");
 		Scope("HawkingSBLiteracy");
-//		if(tb)
-//			tb.hidden = true;
 		if(mItem)
 			mItem.setAttribute("checked", "true");
-//		if(literacyTB)
-//			literacyTB.hidden=false;
 	}
 }
 
@@ -759,8 +773,15 @@ function htbForward(){
 function htbReload(){
 	window.content.location.href = window.content.location.href;
 }
+
+/*
+ * htbResetPageContext()
+ * this should reset position of the link clicker every time a new page is loaded
+ * this is necessary so when a page with frames is clicked, the new content is 
+ * loaded into the findlinks so you can click the newly loaded content rather than
+ * what was in the previous frame.
+ */
 function htbResetPageContext(){
-	//this should reset position of the link clicker every time a new page is loaded...also in frames
-	//i hope
 	PageContext = new ContextList(window.content.document.body);
+	//this should also clear the highlighter.
 }
