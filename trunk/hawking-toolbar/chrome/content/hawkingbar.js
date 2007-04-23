@@ -132,6 +132,8 @@ ContextList.prototype = {
 	  		if(this.ContextPosition>=this.ContextLinks.length)
 				this.ContextPosition = 0;
 		}while(!ObjectIsVisible(this.getCurrent()));
+	  	if(!htbGetPref("soundoff"))
+			SoundBlaster.playSound("soundNext"); 
 	},
 	prev: function(){
 		//move pointer to previous clickable
@@ -148,6 +150,8 @@ ContextList.prototype = {
 	  		if(this.ContextPosition<0)
 	  		  	this.ContextPosition = this.ContextLinks.length-1;
 	  	}while(!ObjectIsVisible(this.getCurrent()));
+	  	if(!htbGetPref("soundoff"))
+			SoundBlaster.playSound("soundPrev"); 
 	},
 	Setup: function(){
 	  //find all the clickables in this.ContextRoot to this.ContextLinks
@@ -340,7 +344,6 @@ function htbActionTransform(ev){
 //	alert("transforming action");
 	if (htbIsEventClick(ev)) {
 	//engage
-		SoundBlaster.playSound("nothin");
 		var simple = htbGetPref("literacybar");
 		if(simple){
 			HawkingPageClick();
@@ -463,7 +466,11 @@ function ClickObject(object){
 	if(!object){
     		alert("you clicked, but i saw no object");
     		return;
-  }
+  	}
+	if(!htbGetPref("soundoff"))
+	SoundBlaster.playSound("soundClick"); //pass it a preference which has a string value of the file you want to play
+										 //if no such preference is set, it defaults to bark.wav
+
 	if(object.getAttribute("oncommand")){
 		object.doCommand();
 	}

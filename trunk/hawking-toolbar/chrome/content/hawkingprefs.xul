@@ -7,7 +7,7 @@
             <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />
 			<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
             <!-- Merge with the BrowserPreferences Window -->
-            <prefwindow id="BrowserPreferences" onload="htbFillActions()" onclick="htbCaptureEventPref(event)" onkeydown="htbCaptureEventPref(event)">
+            <prefwindow id="BrowserPreferences">
 
               <!-- Create a new pane (tab) for HP Scheduler. -->
               <prefpane id="hawkingPane" label="Hawking"
@@ -28,6 +28,10 @@
 				<preference id="extensions.hawking.autoMode" name="extensions.hawking.autoMode" type="bool"/>
 				<preference id="extensions.hawking.autoInterval" name="extensions.hawking.autoInterval" type="string"/>
 				<preference id="extensions.hawking.literacybarEscape" name="extensions.hawking.literacybarEscape" type="bool" />
+				<preference id="extensions.hawking.soundon" name="extensions.hawking.soundoff" type="bool" />
+				<preference id="extensions.hawking.soundClick" name="extensions.hawking.soundClick" type="string"/>
+				<preference id="extensions.hawking.soundNext" name="extensions.hawking.soundNext" type="string"/>
+				<preference id="extensions.hawking.soundPrev" name="extensions.hawking.soundPrev" type="string"/>
 				
                 <!-- see the next section for more information -->
                 </preferences>
@@ -41,6 +45,7 @@
 					<tabs id="tabsElement">
 				        <tab id="generalTab" label="General" />
 				        <tab id="highlightingTab" label="Highlighting" />
+				        <tab id="soundTab" label="Sound Effects" />
 					</tabs>
 
 					<tabpanels flex="1">
@@ -74,7 +79,7 @@
 							<groupbox>
 								<caption label="Input Switch Configuration" />
 								<hbox>
-									<toolbarbutton id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Set 'Move' Action" onclick="htbCaptureEventMove(event)" />
+									<toolbarbutton id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Set 'Move' Action" onclick="classHawkingPane.htbCaptureEventMove(event)" />
 									<textbox id="VisualMoveEvent" size="6" disabled="disabled" />
 									<!--
 									<label>Set 'Move' Action: </label>
@@ -82,7 +87,7 @@
 									-->
 								</hbox>
 								<hbox>
-									<toolbarbutton id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Set 'Click' Action" onclick="htbCaptureEventEngage(event)" />
+									<toolbarbutton id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Set 'Click' Action" onclick="classHawkingPane.htbCaptureEventEngage(event)" />
 									<textbox id="VisualEngageEvent" size="6" disabled = "disabled" />
 									<!--
 									<label>Set 'Engage' Action: </label>
@@ -144,6 +149,27 @@
 							</groupbox>
 							
 				        </tabpanel>
+
+
+
+
+						<!--highlighting-->
+						<tabpanel id="soundPanel" orient="vertical">
+						
+							<groupbox align="start">
+								<caption label="Sound Preferences" />
+								<hbox>
+						            <checkbox label="Turn off Sound Effects" preference="extensions.hawking.soundoff"/>
+								</hbox>
+								<hbox>
+									<textbox preference="extensions.hawking.soundClick" label="Click" size="11" />
+									<textbox preference="extensions.hawking.soundNext" label="Previous" size="11" />
+									<textbox preference="extensions.hawking.soundPrev" label="Next" size="11" />
+								</hbox>
+							</groupbox>
+							
+				        </tabpanel>
+
 				        
 				    </tabpanels>
 				</tabbox>
