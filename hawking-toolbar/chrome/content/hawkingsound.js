@@ -10,7 +10,8 @@ htbSoundManager.prototype = {
         	// Get the filename stored in the preferences:
 	        var file = htbGetPref(prefName);
 	        if(file=="")
-	        	file = "chrome://hawkingbar/content/sounds/BARK.wav"; //default file?
+	        	file = "BARK.wav"; //default file?
+	        file = "chrome://hawkingbar/content/sounds/"+file;
 	        // Play the sound:
 			var url = Components.classes["@mozilla.org/network/standard-url;1"].createInstance(Components.interfaces.nsIURL);
 		   	url.spec = file;
