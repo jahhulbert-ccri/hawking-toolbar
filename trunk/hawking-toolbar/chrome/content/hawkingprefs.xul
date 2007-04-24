@@ -28,7 +28,7 @@
 				<preference id="extensions.hawking.autoMode" name="extensions.hawking.autoMode" type="bool"/>
 				<preference id="extensions.hawking.autoInterval" name="extensions.hawking.autoInterval" type="string"/>
 				<preference id="extensions.hawking.literacybarEscape" name="extensions.hawking.literacybarEscape" type="bool" />
-				<preference id="extensions.hawking.soundon" name="extensions.hawking.soundoff" type="bool" />
+				<preference id="extensions.hawking.soundoff" name="extensions.hawking.soundoff" type="bool" />
 				<preference id="extensions.hawking.soundClick" name="extensions.hawking.soundClick" type="string"/>
 				<preference id="extensions.hawking.soundNext" name="extensions.hawking.soundNext" type="string"/>
 				<preference id="extensions.hawking.soundPrev" name="extensions.hawking.soundPrev" type="string"/>
@@ -159,13 +159,15 @@
 							<groupbox align="start">
 								<caption label="Sound Preferences" />
 								<hbox>
-						            <checkbox label="Turn off Sound Effects" preference="extensions.hawking.soundoff"/>
+						            <checkbox label="Turn off Sound Effects" preference="extensions.hawking.soundoff" />
 								</hbox>
+<!--
 								<hbox>
 									<textbox preference="extensions.hawking.soundClick" label="Click" size="11" />
 									<textbox preference="extensions.hawking.soundNext" label="Previous" size="11" />
 									<textbox preference="extensions.hawking.soundPrev" label="Next" size="11" />
 								</hbox>
+-->
 							</groupbox>
 							
 				        </tabpanel>
