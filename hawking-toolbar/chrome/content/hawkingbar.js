@@ -32,72 +32,586 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-
-
-//variables
-var ContextManager = null;
-var Highlighter = null;
-var SoundBlaster = null;
-//calls the setup function once the browser has set up
-addEvent(window, "load", HawkingTrackerSetup, true);
-
-//default move/engage values
-var DEFAULT_MOVE_EVENT = 65;
-var DEFAULT_ENGAGE_EVENT=76;
-
-//default scroll varaibles
-var DEFAULT_VERTICAL_SCROLL = 200;
-var DEFAULT_HORIZONTAL_SCROLL = 200;
- 
-//this is probably the better way to go.
-function HawkingToolbarTracker(toolbar){
-	//this function should be called on window load. It should assign
-	//the first element in the context array to the toolbar document.getElementById('HawkingBar-Toolbar')
-	//and it should initialize the index to -1
-	if(!toolbar){
-		alert("ERROR: Unable to locate the Hawking Toolbar in firefox");
-		return;
+var FireHawk = {
+	defaults: {
+		DEFAULT_VERTICAL_SCROLL: 200,
+		DEFAULT_HORIZONTAL_SCROLL: 200
+	},
+	Contextmanager: null,
+	Highlighter: null,
+	SoundBlaster: null,
+	PageContext: null,
+	initialize: function(){
+		//this will perform all the setting up needed
+		try{
+			addEvent(window, "keydown", this.htbActionTransform, true);
+			addEvent(window, "click", this.htbActionTransform, true);
+			addEvent(window, "load", this.htbResetPageContext, true); //reloads the context every time a new page loads
+		}catch(e){
+			alert(e.name+" - "+e.message);
+		}
+		this.FireHawkSetup();
+	},
+	
+	/*
+	 * HawkingTrackerSetup()
+	 * this is the setup function which determines how the toolbar starts up
+	 * based on preferences. It disables the toolbar if that is set, it
+	 * sets up in Literacy Mode if needed, etc.
+	 */
+	FireHawkSetup: function(){
+		try{
+		//this should only be called once
+		this.ContextManager = new ContextManager($("HawkingToolBar"));
+		this.Highlighter = new htbHighlighter();
+		this.SoundBlaster = new htbSoundManager();
+		this.htbButtonHover(this.ContextManager.getCurrent());
+		if(htbGetPref("StartAsOff")){
+			//if the always start as off setting is on, set disabled
+			htbSetPref("disabled", false, "Bool");
+		}
+		var dis = htbGetPref("disabled");
+		var button = document.getElementById("HawkingToggleActivity");
+		if(button){
+			if(dis)
+				button.label = "Disable Hawking Toolbar";
+			else
+				button.label = "Enable Hawking Toolbar";
+		}
+	
+		var mode = htbGetPref("autoMode");
+		if(mode){
+			htbEnableAuto();
+		}
+		//transforms window events into move and engage
+		var simple = htbGetPref("literacybar");
+		if(simple){
+			//show the subbar for the literacy center simple toolbar
+			this.Scope("HawkingSBLiteracy");
+			//set attribute
+			var mItem = document.getElementById("htbLiteracyMenuItem");
+			if(mItem)
+				mItem.setAttribute("checked", "true");
+		}
+		}catch(e){
+			alert(e.name+" - "+e.message)
+		}
+	},
+	/*
+	 * UnScope()
+	 * This function should take care of leaving the toolbar you're in
+	 * so the toolbars you're leaving are hidden appropriately, and
+	 * your previous toolbar's status is restored.
+	 */
+	UnScope: function (){
+		if(!this.ContextManager)
+			return;
+		if(!htbGetPref("soundoff"))
+			this.SoundBlaster.playSound("soundExit"); //pass it a preference which has a string value of the file you want to play
+											 //if no such preference is set, it defaults to bark.wav
+		this.ContextManager.getContext().ContextRoot.hidden = true;
+		this.ContextManager.ExitContext();
+		this.ContextManager.getContext().ContextRoot.hidden = false;
+		this.htbButtonHover(this.ContextManager.getCurrent());
+//		this.ReLight();
+	},
+	/*
+	 * Scope(idstr)
+	 * This function takes care of moving into a subtoolbar, hiding the parent
+	 * toolbar and showing the new one you wish to enter.
+	 */
+	Scope: function (idstr){
+		//takes in idstring, we'll document.getElementById it
+		//and if it exists, we'll open scope
+		var obj = $(idstr); //$ used to be document.getElementById
+		if(!obj)return;
+		if(!this.ContextManager)
+			return;
+		if(!htbGetPref("soundoff"))
+			this.SoundBlaster.playSound("soundEnter"); //pass it a preference which has a string value of the file you want to play
+											 //if no such preference is set, it defaults to bark.wav
+	
+		this.ContextManager.getContext().ContextRoot.hidden = true;
+		obj.hidden = false;
+		this.ContextManager.EnterContext(obj);
+		this.htbButtonHover(this.ContextManager.getCurrent());
+//		this.ReLight();
+	},
+	/* ReLight()
+	 * This function is called when you switch between toolbar contexts 
+	 * so you can see which button you're currently returned to/entered on
+	 */
+//	ReLight: function (){
+	//	this.htbButtonHover(this.ContextManager.getCurrent());
+	//used to have a "times" parameter
+	//before we had the css highlighting, we
+	//needed to focus on it multiple times
+	//	if(times>5)
+	//		return;
+	//	setTimeout("ReLight("+parseInt(times+1)+")", 100);
+	//},
+	
+	/*
+	 * htbActionTransform(ev)
+	 * this function should not be passed a parameter since it is
+	 * an event listenter. It looks at the preferences to
+	 * determine if the event it just saw (click or keydown) was
+	 * mapped to a toolbar action (either move or engage)
+	 * if so, it will do the appropriate action and *try* to
+	 * prevent the event object from propogating any further through
+	 */
+	htbActionTransform: function (ev){
+		try{
+		//this function captures key presses
+		//and translates them into clicks
+		var dis = htbGetPref("disabled");
+		if(dis==false){
+			return true; //toolbar disabled, normal action allowed
+		}
+	
+		if(!ev || ev.ignoreMe) return false;
+		if (FireHawk.htbIsEventClick(ev)) {
+		//engage
+			var simple = htbGetPref("literacybar");
+			if(simple){
+				FireHawk.HawkingPageClick();
+			}
+			else{
+				FireHawk.ClickObject(FireHawk.ContextManager.getCurrent());
+			}
+			knackerEvent(ev);
+			return false;
+		}
+		else if(FireHawk.htbIsEventMove(ev)){
+		//move
+			var simple = htbGetPref("literacybar");
+			if(simple){
+				FireHawk.HawkingPageNext();
+			}
+			else{
+				FireHawk.ContextManager.next();
+			}
+			knackerEvent(ev);
+			return false;
+		}
+		return true;
+		}catch(e){
+			alert(e.name+" - "+e.message)}
+	},
+	/*
+	 * this is a helper function to the htbActionTransform method
+	 * which will return true or false depending on whether the
+	 * action it is passed is mapped to a "move" event by the hawking toolbar
+	 */
+	htbIsEventMove: function (ev){
+	//takes in an event object and determines if it matches
+	//the move characteristic of an event
+	
+		var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
+		var moveVal = htbGetPref("moveVal"); //value of the action
+		var etype = ev.type;//either 'click' or 'keydown'
+		if(moveClick && etype=="click" && moveVal==ev.button){
+			//they clicked. was it right/left?
+			return true;
+		}
+		else if(!moveClick && etype=="keydown" && moveVal==ev.which){
+			//this should be the only other kind, but just in case...
+			//now figure out which button was pressed (don't worry about shift/ctrl)
+			return true;
+		}
+		return false;
+	},
+	
+	htbIsEventClick: function (ev){
+	//takes in an event object and determines if it matches
+	//the click characteristic of an event
+	
+		var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
+		var engageVal = htbGetPref("engageVal"); //value of the action
+		var etype = ev.type;//either 'click' or 'keydown'
+		if(engageClick && etype=="click" && engageVal==ev.button){
+			//they clicked. was it right/left?
+			return true;
+		}
+		else if(!engageClick && etype=="keydown" && engageVal==ev.which){
+			//this should be the only other kind, but just in case...
+			//now figure out which button was pressed (don't worry about shift/ctrl)
+			return true;
+		}
+		return false;
+	},	
+	ClickObject: function (object){
+		//pass this function the object you want to click
+		if(!object){
+			if(!htbGetPref("soundoff"))
+				this.SoundBlaster.playSound("soundError");
+//	    	alert("you clicked, but i saw no object");
+	    	return;
+	  	}
+		if(object.getAttribute("oncommand")){
+			object.doCommand();
+		}
+		else{
+			var evObj = document.createEvent('MouseEvents');
+			evObj.initEvent( "click", true, true );
+			evObj.ignoreMe = true;
+			object.dispatchEvent(evObj);
+		}
+	},
+	
+	htbFindRealHighlight: function (obj){
+		if(!obj){
+			return null;
+		}
+	  	if(obj.nodeName=="A"){
+			if(obj.childNodes && htbCountRealChildren(obj)==1){
+				var nobj = htbGetFirstRealChild(obj);
+				if(nobj && nobj.nodeName != "BR" && nobj.nodeName != "HR"){// && nobj.nodeName=="IMG"){
+		  			return nobj;
+		  		}
+		  	}
+	//		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
+				/*  if the <a> is in something all by itself, highlight that instead;
+				    this is to counteract the annoying "no-highlight" bug when we find an
+				    <a> tag inside a <div> with an id so it appears as a clickable logo
+				*/
+	//			return obj.parentNode;
+	//		}
+		}
+		return obj;
+	},
+	
+	
+	Highlight: function (realObj){
+		var obj = this.htbFindRealHighlight(realObj);
+		if(!obj){
+			if(!htbGetPref("soundoff"))
+				this.SoundBlaster.playSound("soundError");
+			alert("I tried to highlight, but you gave me nothing"); //this could be a sound
+			return;
+		}
+		this.Highlighter.highlight(obj);
+		//var re = window.content.document.getElementById('navRealestate');
+		//if(!re) alert("re not found");
+		//alert("top offset: "+re.offsetTop+"\nleft offset: "+re.offsetLeft+"\noffset height:"+re.offsetHeight);
+		
+		this.htbScrollToObj(obj);
+	},
+	
+	/**
+	 * htbScrollToObj
+	 * Description: function takes an object and positions it in the center of the screen using scrolling
+	 * Arg: object to center
+	 */
+	htbScrollToObj: function (obj){
+		/**
+		  * compute screen height and width of screen holding object accounting for frames if needed.
+		  */
+		var screenHeight;
+		var screenWidth;
+		if(window.frameElement) {
+			screenHeight = window.frameElement.content.innerHeight;
+			screenWidth = window.frameElement.content.innerWidth;
+		}
+		else {
+			screenHeight = window.content.innerHeight;
+			screenWidth = window.content.innerWidth;
+		}
+		
+		//variables maxX and maxY are the total document height
+		var maxX = window.content.scrollMaxX;
+		var maxY = window.content.scrollMaxY;
+		
+		//variables to store position to which we will scroll
+		var scrollToX;
+		var scrollToY;
+		
+		/**
+		  * if object offsets are available, compute pixel position on screen
+		  */
+		if(obj.offsetTop && obj.offsetLeft) {		
+			
+			var yPos = obj.offsetTop;
+			var xPos = obj.offsetLeft;
+			
+			/**
+			  * loop up to document body and find offset of object by adding values of offset parents
+			  */
+			var temp = obj;
+			while(temp != window.content.document.body){
+				temp = temp.offsetParent;
+				yPos+=temp.offsetTop;
+				xPos+=temp.offsetLeft;
+			}
+			
+			//set values in scroll to
+			scrollToY = yPos-(screenHeight/2);
+			scrollToX = xPos-(screenWidth/2);
+		}
+		/**
+		  * if object offsets are not available, use firefox function scrollIntoView to scroll
+		  * and then center using half of screen width.
+		  */
+		else{
+			if(obj.scrollIntoView) {
+				obj.scrollIntoView();
+			}
+			
+			var scrolledX;
+			var scrolledY;
+			
+			if(window.frameElement) {
+	//			alert('frame element');
+				scrolledX = window.frameElement.content.pageXOffset;
+				scrolledY = window.frameElement.content.pageYOffset;
+			}
+			else {
+				scrolledX = window.content.pageXOffset;
+				scrolledY = window.content.pageYOffset;
+			}
+			
+			//alert('scroll into view');
+			scrollToX = scrolledX-(screenWidth/2);
+			scrollToY = scrolledY-(screenHeight/2);
+		}
+		
+		if(scrollToX < screenWidth){
+			scrollToX = 0;
+		}
+		if(window.frameElement){
+			window.frameElement.content.scrollTo(scrollToX,scrollToY);
+		}
+		else{
+			window.content.scrollTo(scrollToX,scrollToY);
+		}
+	},
+	
+	unHighlight: function (realObj){
+		var obj = this.htbFindRealHighlight(realObj);
+		if(!obj){ //nothing to unhighlight
+			return;
+		}
+		this.Highlighter.unhighlight(obj);
+	},
+	HawkingBarGoHome: function (){
+	    window.content.document.location = "http://code.google.com/p/hawking-toolbar";
+	//    window.content.focus();
+	},
+	HawkingPageNext: function (){
+		//first check if we have instantiated PageContext or if the PageContext's location
+		//does not match the current page's location (they have since clicked a link and gone
+		//to a new page)
+		if(!this.PageContext || this.PageContext.WindowLocation!=window.content.document.location){
+	//		alert("page reset or new");
+			this.PageContext = new ContextList(window.content.document.body);
+		}
+		else	
+			this.unHighlight(this.PageContext.getCurrent());
+		this.PageContext.next();
+		this.Highlight(this.PageContext.getCurrent());
+	//	alert("looking at "+PageContext.getCurrent().nodeName);
+	//	alert("done");
+	},
+	HawkingPagePrev: function (){
+		//first check if we have instantiated PageContext or if the PageContext's location
+		//does not match the current page's location (they have since clicked a link and gone
+		//to a new page)
+		if(!this.PageContext || this.PageContext.WindowLocation!=window.content.document.location){
+	//		alert("page reset or new");
+			this.PageContext = new ContextList(window.content.document.body);
+		}
+		else
+			this.unHighlight(PageContext.getCurrent());
+		this.PageContext.prev();
+		if(!htbGetPref("soundoff"))
+			this.SoundBlaster.playSound("soundPrev");
+	
+		this.Highlight(this.PageContext.getCurrent());
+	//	alert("looking at "+PageContext.getCurrent().nodeName);
+	//	alert("done");
+	},
+	HawkingPageClick: function (){
+		this.ClickObject(this.PageContext.getCurrent());
+		//this should be added after the page has loaded so we get the new body
+		var canEscape = htbGetPref("literacybarEscape");
+		if(canEscape==true && $("HawkingSBLiteracy").hidden==false){
+			//this should implement the brilliant idea to escape
+			//from literacy mode every click if the setting is set
+			this.htbToggleLiteracy();
+		}
+		if(!htbGetPref("soundoff"))
+			this.SoundBlaster.playSound("soundClick");
+	
+	//moved to the window.onload function htbResetPageContext
+	//	this.PageContext = new ContextList(window.content.document.body);
+	},
+	
+	htbScrollWindow: function (horizontal,vertical){
+		window.content.scrollBy(horizontal,vertical);
+	},
+	htbScrollDown: function (){
+		var amt = htbGetPref('verticalScrollAmt')
+		if(!amt) {
+			amt = this.defaults.DEFAULT_VERTICAL_SCROLL;
+		}
+		this.htbScrollWindow(0,amt);
+	},
+	
+	htbScrollUp: function (){
+		var amt = htbGetPref('verticalScrollAmt')
+		if(!amt) {
+			amt = this.defaults.DEFAULT_VERTICAL_SCROLL;
+		}
+		this.htbScrollWindow(0,(-1*amt));
+	},
+	htbScrollLeft: function (){
+		var amt = htbGetPref('horizontalScrollAmt')
+		if(!amt) {
+			amt = this.defaults.DEFAULT_HORIZONTAL_SCROLL;
+		}
+		this.htbScrollWindow((-1*amt),0);
+	},
+	
+	htbScrollRight: function (){
+		var amt = htbGetPref('horizontalScrollAmt')
+		if(!amt) {
+			amt = this.defaults.DEFAULT_HORIZONTAL_SCROLL;
+		}
+		this.htbScrollWindow(amt,0);
+	},
+	
+	htbButtonHover: function (obj){
+		if(!obj || !obj.style)
+			return;
+		obj.focus();
+		obj.style.color = 'red';
+		obj.className = "over";
+	},
+	
+	htbButtonBlur: function (obj){
+		if(!obj || !obj.style)
+			return;
+		obj.style.color = 'black';
+		obj.className = "";
+	//	if(obj.getAttribute && obj.getAttribute("high"))
+	//		alert("changed to "+obj.getAttribute("high"));
+	},
+	
+	htbToggleCapture: function (){
+		var dis = htbGetPref("disabled");
+		var button = document.getElementById("HawkingToggleActivity");
+		if(dis==true){
+			htbSetPref("disabled", false, "Bool");
+			if(button)
+			button.label = "Enable Hawking Toolbar";
+	//		else
+	//		alert("disabled");
+		}
+		else{
+			htbSetPref("disabled", true, "Bool");
+			if(button)
+			button.label = "Disable Hawking Toolbar";
+	//		else
+	//		alert("activated");
+		}
+	},
+	
+	
+	htbToggleLiteracy: function (){
+		var lbar = htbGetPref("literacybar");
+		var mItem = document.getElementById("htbLiteracyMenuItem");
+//		var tb = document.getElementById("HawkingToolBar");
+//		var literacyTB = document.getElementById("HawkingSBLiteracy");
+		if(lbar){
+			//go back to full feature set
+			htbSetPref("literacybar", false, "Bool");
+			this.UnScope();//leave the literacy bar
+			if(mItem)
+				mItem.setAttribute("checked", "false");
+		}
+		else{
+			//reduce to literacy center feature
+			htbSetPref("literacybar", true, "Bool");
+			this.Scope("HawkingSBLiteracy");
+			if(mItem)
+				mItem.setAttribute("checked", "true");
+		}
+	},
+	
+	htbBack: function (){
+		window.content.history.back();
+	},
+	
+	htbForward: function (){
+		window.content.history.forward();
+	},
+	
+	htbReload: function (){
+		window.content.location.href = window.content.location.href;
+	},
+	
+	/*
+	 * htbResetPageContext()
+	 * this should reset position of the link clicker every time a new page is loaded
+	 * this is necessary so when a page with frames is clicked, the new content is 
+	 * loaded into the findlinks so you can click the newly loaded content rather than
+	 * what was in the previous frame.
+	 */
+	htbResetPageContext: function (){
+		this.PageContext = new ContextList(window.content.document.body);
+		//this should also clear the highlighter.
 	}
-	this.ContextArray = [new ContextList(toolbar)];//essentially a stack
-				//we only look at the top (end) ContextList
-	this.ExitContext = function(){
+
+}
+
+var ContextManager = Class.create();
+ContextManager.prototype = {
+	ContextArray: new Array(),
+	initialize: function(toolbar){
+		if(!toolbar){
+			alert("ERROR: Unable to locate the Hawking Toolbar in firefox");
+			return;
+		}
+		this.ContextArray = [new ContextList(toolbar)]; //essentially a stack (we only look at the end)
+	},
+	ExitContext: function(){
 		//this removes the top context
 		if(this.ContextArray<=1){
 			//we are at the basic toolbar level, exiting here would leave us with nothing
 			//this should never come up (our toolbar shouldn't have an 'x' but just in case...
 			return;
 		}
-		htbButtonBlur(this.getContext().getCurrent());
+		FireHawk.htbButtonBlur(this.getContext().getCurrent());
 		this.ContextArray.pop(); //removes the last array entry
-		htbButtonHover(this.getContext().getCurrent()); //back to where we used to be
-	}
-	this.EnterContext = function(ncon){
+		FireHawk.htbButtonHover(this.getContext().getCurrent()); //back to where we used to be
+	},
+	EnterContext: function(ncon){
 		//this adds a new context 'ncon' to the end of ContextArray
-		htbButtonBlur(this.getContext().getCurrent());
+		FireHawk.htbButtonBlur(this.getContext().getCurrent());
 		this.ContextArray.push(new ContextList(ncon));
-		htbButtonHover(this.getContext().getCurrent());
-	}
-	this.next = function(){
+		FireHawk.htbButtonHover(this.getContext().getCurrent());
+	},
+	next: function(){
 		//moves to next clickable
-		htbButtonBlur(this.getContext().getCurrent());
+		FireHawk.htbButtonBlur(this.getContext().getCurrent());
 		this.getContext().next();
-		htbButtonHover(this.getContext().getCurrent());
-	}
-	this.prev = function(){
+		FireHawk.htbButtonHover(this.getContext().getCurrent());
+	},
+	prev: function(){
 		//moves to previous clickable
 		htbButtonBlur(this.getContext().getCurrent());
 		this.getContext().prev();
 		htbButtonHover(this.getContext().getCurrent());
-	}
-	this.getCurrent = function(){
+	},
+	getCurrent: function(){
 	   //returns the current clickable in the current scope
 	   //or null if nothing
 		return this.getContext().getCurrent();
+	},
+	getContext: function(){
+		//this returns the current context pointed to
+		return this.ContextArray[this.ContextArray.length-1];
 	}
-	this.getContext = function(){
-    //this returns the current context pointed to
-    return this.ContextArray[this.ContextArray.length-1];
-  }
 }
 
 function ContextList(root){
@@ -131,7 +645,7 @@ ContextList.prototype = {
 	  		this.ContextPosition++;
 	  		if(this.ContextPosition>=this.ContextLinks.length)
 				this.ContextPosition = 0;
-		}while(!ObjectIsVisible(this.getCurrent()));
+		}while(!this.ObjectIsVisible(this.getCurrent()));
 	  	if(!htbGetPref("soundoff"))
 			SoundBlaster.playSound("soundNext"); 
 	},
@@ -149,7 +663,7 @@ ContextList.prototype = {
 	  		this.ContextPosition--;
 	  		if(this.ContextPosition<0)
 	  		  	this.ContextPosition = this.ContextLinks.length-1;
-	  	}while(!ObjectIsVisible(this.getCurrent()));
+	  	}while(!this.ObjectIsVisible(this.getCurrent()));
 //	  	if(!htbGetPref("soundoff"))
 //			SoundBlaster.playSound("soundPrev"); 
 	},
@@ -221,580 +735,45 @@ ContextList.prototype = {
 		for(var i=0; i<node.childNodes.length; i++){
 			this.FindLinks(node.childNodes[i], arr);
 		}//end of for loop
-	}//end of findlinks
+	},//end of findlinks
+	ObjectIsVisible: function (obj){
+	//obj.style.display is not sufficient due to
+	//style sheets having display: none; properties
+	//which the .style function does not detect.
+	  if(!obj) return false;
+	  try{
+	  	while(obj){
+	      var disp = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("display");
+	      var vis = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("visibility");
+	      if(disp=="none" || vis=="hidden"){
+	        return false;
+	      }
+	  
+	      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
+	        break;
+	      }
+	//      var loc = new htbHighlighter().getViewOffset(obj, true);
+	//      if(loc.x<1 || loc.y<1)
+	//      	return false;
+		      
+	      obj = obj.parentNode;
+	    }
+	  }
+	  catch(e){
+	    return false;
+	  }
+	//  alert("Visible: "+obj.nodeName);
+	  return true;
+	},
+
 }
 
-/*
- * HawkingTrackerSetup()
- * this is the setup function which determines how the toolbar starts up
- * based on preferences. It disables the toolbar if that is set, it
- * sets up in Literacy Mode if needed, etc.
- */
-function HawkingTrackerSetup(){
-	var tb = document.getElementById("HawkingToolBar");
+function SetUp(){
+	var tb = $("HawkingToolBar");
 	if(!tb){
-		setTimeout("HawkingTrackerSetup()", 1000); //not ready, wait 1 second
+		setTimeout("SetUp()", 200); //not ready, wait .5 seconds
 		return;
 	}
-	//this should only be called once
-	this.done = true;
-	ContextManager = new HawkingToolbarTracker(tb);
-	Highlighter = new htbHighlighter();
-	SoundBlaster = new htbSoundManager();
-	htbButtonHover(ContextManager.getCurrent());
-	if(htbGetPref("StartAsOff")){
-		//if the always start as off setting is on, set disabled
-		htbSetPref("disabled", false, "Bool");
-	}
-	var dis = htbGetPref("disabled");
-	var button = document.getElementById("HawkingToggleActivity");
-	if(button){
-		if(dis)
-			button.label = "Disable Hawking Toolbar";
-		else
-			button.label = "Enable Hawking Toolbar";
-	}
-
-	var mode = htbGetPref("autoMode");
-	if(mode){
-		htbEnableAuto();
-	}
-	//transforms window events into move and engage
-	var simple = htbGetPref("literacybar");
-	if(simple){
-		//show the subbar for the literacy center simple toolbar
-		Scope("HawkingSBLiteracy");
-		//set attribute
-		var mItem = document.getElementById("htbLiteracyMenuItem");
-		if(mItem)
-			mItem.setAttribute("checked", "true");
-	}
-	addEvent(window, "keydown", htbActionTransform, true);
-	addEvent(window, "click", htbActionTransform, true);
-	//removes the event from window.onload so it is not called every time
-	window.removeEventListener("load", HawkingTrackerSetup, true);
-	addEvent(window, "load", htbResetPageContext, true); //reloads the context every time a new page loads
+	FireHawk.initialize();
 }
-
-/*
- * UnScope()
- * This function should take care of leaving the toolbar you're in
- * so the toolbars you're leaving are hidden appropriately, and
- * your previous toolbar's status is restored.
- */
-function UnScope(){
-	if(!ContextManager)
-		return;
-	if(!htbGetPref("soundoff"))
-		SoundBlaster.playSound("soundExit"); //pass it a preference which has a string value of the file you want to play
-										 //if no such preference is set, it defaults to bark.wav
-	ContextManager.getContext().ContextRoot.hidden = true;
-	ContextManager.ExitContext();
-	ContextManager.getContext().ContextRoot.hidden = false;
-	ReLight();
-}
-/*
- * Scope(idstr)
- * This function takes care of moving into a subtoolbar, hiding the parent
- * toolbar and showing the new one you wish to enter.
- */
-function Scope(idstr){
-	//takes in idstring, we'll document.getElementById it
-	//and if it exists, we'll open scope
-	var obj = $(idstr); //$ used to be document.getElementById
-	if(!obj)return;
-	if(!ContextManager)
-		return;
-	if(!htbGetPref("soundoff"))
-		SoundBlaster.playSound("soundEnter"); //pass it a preference which has a string value of the file you want to play
-										 //if no such preference is set, it defaults to bark.wav
-
-	ContextManager.getContext().ContextRoot.hidden = true;
-	obj.hidden = false;
-	ContextManager.EnterContext(obj);
-	ReLight();
-}
-/* ReLight()
- * This function is called when you switch between toolbar contexts 
- * so you can see which button you're currently returned to/entered on
- */
-function ReLight(){
-	htbButtonHover(ContextManager.getCurrent());
-//used to have a "times" parameter
-//before we had the css highlighting, we
-//needed to focus on it multiple times
-//	if(times>5)
-//		return;
-//	setTimeout("ReLight("+parseInt(times+1)+")", 100);
-}
-
-/*
- * htbActionTransform(ev)
- * this function should not be passed a parameter since it is
- * an event listenter. It looks at the preferences to
- * determine if the event it just saw (click or keydown) was
- * mapped to a toolbar action (either move or engage)
- * if so, it will do the appropriate action and *try* to
- * prevent the event object from propogating any further through
- */
-function htbActionTransform(ev){
-	//this function captures key presses
-	//and translates them into clicks
-	var dis = htbGetPref("disabled");
-	if(dis==false){
-		return true; //toolbar disabled, normal action allowed
-	}
-
-//	var ev = ev || window.event;
-	if(!ev || ev.ignoreMe) return false;
-//	alert("transforming action");
-	if (htbIsEventClick(ev)) {
-	//engage
-		var simple = htbGetPref("literacybar");
-		if(simple){
-			HawkingPageClick();
-		}
-		else{
-			ClickObject(ContextManager.getCurrent());
-		}
-		knackerEvent(ev);
-		ev.preventDefault();
-		ev.stopPropagation();
-		ev.returnValue = false;
-		ev.cancelBubble = true;
-		return false;
-	}
-	else if(htbIsEventMove(ev)){
-	//move
-		var simple = htbGetPref("literacybar");
-		if(simple){
-			HawkingPageNext();
-		}
-		else{
-			ContextManager.next();
-		}
-		knackerEvent(ev);
-		ev.preventDefault();
-		ev.stopPropagation();
-		ev.returnValue = false;
-		ev.cancelBubble = true;
-		return false;
-	}
-	return true;
-}
-/*
- * this is a helper function to the htbActionTransform method
- * which will return true or false depending on whether the
- * action it is passed is mapped to a "move" event by the hawking toolbar
- */
-function htbIsEventMove(ev){
-//takes in an event object and determines if it matches
-//the move characteristic of an event
-/*
-	var moveEvent = htbGetPref("moveEvent");
-	if(!moveEvent)
-		moveEvent = DEFAULT_MOVE_EVENT;
-	if(!ev || !ev.which) return false;
-	return (String.fromCharCode(ev.which) == moveEvent);
-*/
-	var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
-	var moveVal = htbGetPref("moveVal"); //value of the action
-	var etype = ev.type;//either 'click' or 'keydown'
-	if(moveClick && etype=="click" && moveVal==ev.button){
-		//they clicked. was it right/left?
-		return true;
-	}
-	else if(!moveClick && etype=="keydown" && moveVal==ev.which){
-		//this should be the only other kind, but just in case...
-		//now figure out which button was pressed (don't worry about shift/ctrl)
-		return true;
-	}
-	return false;
-}
-
-function htbIsEventClick(ev){
-//takes in an event object and determines if it matches
-//the click characteristic of an event
-/*
-	var engageEvent = htbGetPref("engageEvent");
-	if(!engageEvent)
-		engageEvent = DEFAULT_ENGAGE_EVENT;
-	if(!ev || !ev.which) return false;
-	return (String.fromCharCode(ev.which) == engageEvent);
-*/
-	var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
-	var engageVal = htbGetPref("engageVal"); //value of the action
-	var etype = ev.type;//either 'click' or 'keydown'
-	if(engageClick && etype=="click" && engageVal==ev.button){
-		//they clicked. was it right/left?
-		return true;
-	}
-	else if(!engageClick && etype=="keydown" && engageVal==ev.which){
-		//this should be the only other kind, but just in case...
-		//now figure out which button was pressed (don't worry about shift/ctrl)
-		return true;
-	}
-	return false;
-}
-
-function ObjectIsVisible(obj){
-//obj.style.display is not sufficient due to
-//style sheets having display: none; properties
-//which the .style function does not detect.
-  if(!obj) return false;
-  try{
-  	while(obj){
-      var disp = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("display");
-      var vis = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("visibility");
-      if(disp=="none" || vis=="hidden"){
-        return false;
-      }
-  
-      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
-        break;
-      }
-//      var loc = new htbHighlighter().getViewOffset(obj, true);
-//      if(loc.x<1 || loc.y<1)
-//      	return false;
-	      
-      obj = obj.parentNode;
-    }
-  }
-  catch(e){
-    return false;
-  }
-//  alert("Visible: "+obj.nodeName);
-  return true;
-}
-
-function ClickObject(object){
-	//pass this function the object you want to click
-	if(!object){
-		if(!htbGetPref("soundoff"))
-			SoundBlaster.playSound("soundError");
-    	alert("you clicked, but i saw no object");
-    	return;
-  	}
-	if(object.getAttribute("oncommand")){
-		object.doCommand();
-	}
-	else{
-		var evObj = document.createEvent('MouseEvents');
-		evObj.initEvent( "click", true, true );
-		evObj.ignoreMe = true;
-		object.dispatchEvent(evObj);
-	}
-}
-
-function htbFindRealHighlight(obj){
-	if(!obj){
-		return null;
-	}
-  	if(obj.nodeName=="A"){
-		if(obj.childNodes && htbCountRealChildren(obj)==1){
-			var nobj = htbGetFirstRealChild(obj);
-			if(nobj && nobj.nodeName != "BR" && nobj.nodeName != "HR"){// && nobj.nodeName=="IMG"){
-	  			return nobj;
-	  		}
-	  	}
-//		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
-			/*  if the <a> is in something all by itself, highlight that instead;
-			    this is to counteract the annoying "no-highlight" bug when we find an
-			    <a> tag inside a <div> with an id so it appears as a clickable logo
-			*/
-//			return obj.parentNode;
-//		}
-	}
-	return obj;
-}
-
-
-function Highlight(realObj){
-	var obj = htbFindRealHighlight(realObj);
-	if(!obj){
-		if(!htbGetPref("soundoff"))
-			SoundBlaster.playSound("soundError");
-		alert("I tried to highlight, but you gave me nothing"); //this could be a sound
-		return;
-	}
-	Highlighter.highlight(obj);
-	//var re = window.content.document.getElementById('navRealestate');
-	//if(!re) alert("re not found");
-	//alert("top offset: "+re.offsetTop+"\nleft offset: "+re.offsetLeft+"\noffset height:"+re.offsetHeight);
-	
-	htbScrollToObj(obj);
-}
-
-/**
- * htbScrollToObj
- * Description: function takes an object and positions it in the center of the screen using scrolling
- * Arg: object to center
- */
-function htbScrollToObj(obj){
-	/**
-	  * compute screen height and width of screen holding object accounting for frames if needed.
-	  */
-	var screenHeight;
-	var screenWidth;
-	if(window.frameElement) {
-		screenHeight = window.frameElement.content.innerHeight;
-		screenWidth = window.frameElement.content.innerWidth;
-	}
-	else {
-		screenHeight = window.content.innerHeight;
-		screenWidth = window.content.innerWidth;
-	}
-	
-	//variables maxX and maxY are the total document height
-	var maxX = window.content.scrollMaxX;
-	var maxY = window.content.scrollMaxY;
-	
-	//variables to store position to which we will scroll
-	var scrollToX;
-	var scrollToY;
-	
-	/**
-	  * if object offsets are available, compute pixel position on screen
-	  */
-	if(obj.offsetTop && obj.offsetLeft) {		
-		
-		var yPos = obj.offsetTop;
-		var xPos = obj.offsetLeft;
-		
-		/**
-		  * loop up to document body and find offset of object by adding values of offset parents
-		  */
-		var temp = obj;
-		while(temp != window.content.document.body){
-			temp = temp.offsetParent;
-			yPos+=temp.offsetTop;
-			xPos+=temp.offsetLeft;
-		}
-		
-		//set values in scroll to
-		scrollToY = yPos-(screenHeight/2);
-		scrollToX = xPos-(screenWidth/2);
-	}
-	/**
-	  * if object offsets are not available, use firefox function scrollIntoView to scroll
-	  * and then center using half of screen width.
-	  */
-	else{
-		if(obj.scrollIntoView) {
-			obj.scrollIntoView();
-		}
-		
-		var scrolledX;
-		var scrolledY;
-		
-		if(window.frameElement) {
-//			alert('frame element');
-			scrolledX = window.frameElement.content.pageXOffset;
-			scrolledY = window.frameElement.content.pageYOffset;
-		}
-		else {
-			scrolledX = window.content.pageXOffset;
-			scrolledY = window.content.pageYOffset;
-		}
-		
-		//alert('scroll into view');
-		scrollToX = scrolledX-(screenWidth/2);
-		scrollToY = scrolledY-(screenHeight/2);
-	}
-	
-	if(scrollToX < screenWidth){
-		scrollToX = 0;
-	}
-	if(window.frameElement){
-		window.frameElement.content.scrollTo(scrollToX,scrollToY);
-	}
-	else{
-		window.content.scrollTo(scrollToX,scrollToY);
-	}
-}
-
-function unHighlight(realObj){
-	var obj = htbFindRealHighlight(realObj);
-	if(!obj){ //nothing to unhighlight
-		return;
-	}
-	Highlighter.unhighlight(obj);
-/*
-	var oStyle = "";
-	if(obj.getAttribute("old_style"))
-		oStyle = obj.getAttribute("old_style");
-	if(obj.style && obj.style.border)
-		obj.style.border = oStyle;
-*/	
-}
-
-
-function HawkingBarGoHome(){
-    window.content.document.location = "http://code.google.com/p/hawking-toolbar";
-//    window.content.focus();
-}
-var PageContext = null;
-function HawkingPageNext(){
-	//first check if we have instantiated PageContext or if the PageContext's location
-	//does not match the current page's location (they have since clicked a link and gone
-	//to a new page)
-	if(!PageContext || PageContext.WindowLocation!=window.content.document.location){
-//		alert("page reset or new");
-		PageContext = new ContextList(window.content.document.body);
-	}
-	else	
-		unHighlight(PageContext.getCurrent());
-	PageContext.next();
-	Highlight(PageContext.getCurrent());
-//	alert("looking at "+PageContext.getCurrent().nodeName);
-//	alert("done");
-}
-function HawkingPagePrev(){
-	//first check if we have instantiated PageContext or if the PageContext's location
-	//does not match the current page's location (they have since clicked a link and gone
-	//to a new page)
-	if(!PageContext || PageContext.WindowLocation!=window.content.document.location){
-//		alert("page reset or new");
-		PageContext = new ContextList(window.content.document.body);
-	}
-	else
-		unHighlight(PageContext.getCurrent());
-	PageContext.prev();
-	if(!htbGetPref("soundoff"))
-		SoundBlaster.playSound("soundPrev");
-
-	Highlight(PageContext.getCurrent());
-//	alert("looking at "+PageContext.getCurrent().nodeName);
-//	alert("done");
-}
-function HawkingPageClick(){
-	ClickObject(PageContext.getCurrent());
-	//this should be added after the page has loaded so we get the new body
-	var canEscape = htbGetPref("literacybarEscape");
-	if(canEscape==true && $("HawkingSBLiteracy").hidden==false){
-		//this should implement the brilliant idea to escape
-		//from literacy mode every click if the setting is set
-		htbToggleLiteracy();
-	}
-	if(!htbGetPref("soundoff"))
-		SoundBlaster.playSound("soundClick");
-
-//moved to the window.onload function htbResetPageContext
-//	PageContext = new ContextList(window.content.document.body);
-}
-
-function htbScrollWindow(horizontal,vertical){
-	window.content.scrollBy(horizontal,vertical);
-}
-function htbScrollDown(){
-	var amt = htbGetPref('verticalScrollAmt')
-	if(!amt) {
-		amt = DEFAULT_VERTICAL_SCROLL;
-	}
-	htbScrollWindow(0,amt);
-}
-
-function htbScrollUp(){
-	var amt = htbGetPref('verticalScrollAmt')
-	if(!amt) {
-		amt = DEFAULT_VERTICAL_SCROLL;
-	}
-	htbScrollWindow(0,(-1*amt));
-}
-function htbScrollLeft(){
-	var amt = htbGetPref('horizontalScrollAmt')
-	if(!amt) {
-		amt = DEFAULT_HORIZONTAL_SCROLL;
-	}
-	htbScrollWindow((-1*amt),0);
-}
-
-function htbScrollRight(){
-	var amt = htbGetPref('horizontalScrollAmt')
-	if(!amt) {
-		amt = DEFAULT_HORIZONTAL_SCROLL;
-	}
-	htbScrollWindow(amt,0);
-}
-
-function htbButtonHover(obj){
-	if(!obj || !obj.style)
-		return;
-	obj.focus();
-	obj.style.color = 'red';
-	obj.className = "over";
-}
-
-function htbButtonBlur(obj){
-	if(!obj || !obj.style)
-		return;
-	obj.style.color = 'black';
-	obj.className = "";
-//	if(obj.getAttribute && obj.getAttribute("high"))
-//		alert("changed to "+obj.getAttribute("high"));
-}
-
-function htbToggleCapture(){
-	var dis = htbGetPref("disabled");
-	var button = document.getElementById("HawkingToggleActivity");
-	if(dis==true){
-		htbSetPref("disabled", false, "Bool");
-		if(button)
-		button.label = "Enable Hawking Toolbar";
-//		else
-//		alert("disabled");
-	}
-	else{
-		htbSetPref("disabled", true, "Bool");
-		if(button)
-		button.label = "Disable Hawking Toolbar";
-//		else
-//		alert("activated");
-	}
-}
-
-
-function htbToggleLiteracy(){
-	var lbar = htbGetPref("literacybar");
-	var mItem = document.getElementById("htbLiteracyMenuItem");
-	var tb = document.getElementById("HawkingToolBar");
-	var literacyTB = document.getElementById("HawkingSBLiteracy");
-	if(lbar){
-		//go back to full feature set
-		htbSetPref("literacybar", false, "Bool");
-		UnScope();//leave the literacy bar
-		if(mItem)
-			mItem.setAttribute("checked", "false");
-	}
-	else{
-		//reduce to literacy center feature
-		htbSetPref("literacybar", true, "Bool");
-		Scope("HawkingSBLiteracy");
-		if(mItem)
-			mItem.setAttribute("checked", "true");
-	}
-}
-
-function htbBack(){
-	window.content.history.back();
-}
-
-function htbForward(){
-	window.content.history.forward();
-}
-
-function htbReload(){
-	window.content.location.href = window.content.location.href;
-}
-
-/*
- * htbResetPageContext()
- * this should reset position of the link clicker every time a new page is loaded
- * this is necessary so when a page with frames is clicked, the new content is 
- * loaded into the findlinks so you can click the newly loaded content rather than
- * what was in the previous frame.
- */
-function htbResetPageContext(){
-	PageContext = new ContextList(window.content.document.body);
-	//this should also clear the highlighter.
-}
+SetUp();
