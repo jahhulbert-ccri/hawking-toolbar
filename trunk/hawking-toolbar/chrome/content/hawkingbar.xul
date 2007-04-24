@@ -47,7 +47,7 @@
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingautomode.js" />
 	<menupopup id="menu_ToolsPopup">
-		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Literacy Center" accesskey="L" onclick="htbToggleLiteracy()" />
+		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Literacy Center" accesskey="L" onclick="FireHawk.htbToggleLiteracy()" />
 	</menupopup>
     	<toolbox id="navigator-toolbox">
     
@@ -56,22 +56,22 @@
                  hidden="false">
 					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingIntoPage" tooltiptext="Go Into Page"
-                               onclick="Scope('HawkingSBPageNav')" />
+                               onclick="FireHawk.Scope('HawkingSBPageNav')" />
 					<toolbarbutton id="HawkingNavBar" tooltiptext="Move between pages"
-                               onclick="Scope('HawkingSBHistoryNav');" />
+                               onclick="FireHawk.Scope('HawkingSBHistoryNav');" />
                 	<toolbarbutton class="hawking" id="HawkingScrollPage" tooltiptext="Scroll Page"
-                               onclick="Scope('HawkingSBScroll')" />
+                               onclick="FireHawk.Scope('HawkingSBScroll')" />
                 	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
-                               onclick="HawkingBarGoHome()" />
+                               onclick="FireHawk.HawkingBarGoHome()" />
                 	<toolbarseparator />
                 	<toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
-                               label="Enable/Disable" onclick="htbToggleCapture()" />
+                               label="Enable/Disable" onclick="FireHawk.htbToggleCapture()" />
 					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
-                               label="Literacy Mode" oncommand="htbToggleLiteracy()" />
+                               label="Literacy Mode" oncommand="FireHawk.htbToggleLiteracy()" />
 					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingToggleAuto" tooltiptext="Toggle Literacy Center Mode"
-                               label="Auto Mode" oncommand="htbToggleAuto()" />
+                               label="Auto Mode" oncommand="FireHawk.htbToggleAuto()" />
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
@@ -79,16 +79,16 @@
 				<image src='chrome://hawkingbar/skin/intoPage_n.png' />
 				<toolbarseparator />
 				<toolbarbutton id="HawkingPageNext" tooltiptext="Go to the next link"
-                               onclick="HawkingPageNext()" />
+                               onclick="FireHawk.HawkingPageNext()" />
                 	<toolbarseparator />
 					<toolbarbutton id="HawkingPageClick" tooltiptext="Click the current link"
-								 onclick="HawkingPageClick()" />
+								 onclick="FireHawk.HawkingPageClick()" />
 					<toolbarseparator />
 					<toolbarbutton id="HawkingPagePrev" tooltiptext="Go to the previous link"
-                               onclick="HawkingPagePrev()" />
+                               onclick="FireHawk.HawkingPagePrev()" />
 					<toolbarseparator />
 					<toolbarbutton id="HawkingPageExit" tooltiptext="Exit"
-								onclick="UnScope()" />
+								onclick="FireHawk.UnScope()" />
         	</toolbar>
         	<toolbar id="HawkingSBScroll" toolbarname="HawkingScroll" accesskey="S"
 	                 class="chromeclass-toolbar" context="toolbar-context-menu" 
@@ -96,36 +96,35 @@
 				<image src='chrome://hawkingbar/skin/scroll_n.png' />
 				<toolbarseparator />
 
-				<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down" onclick="htbScrollUp()" />
-				<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up" onclick="htbScrollDown()" />
+				<toolbarbutton id="HawkingScrollUp" tooltiptext="Scroll Down" onclick="FireHawk.htbScrollUp()" />
+				<toolbarbutton id="HawkingScrollDown" tooltiptext="Scroll Up" onclick="FireHawk.htbScrollDown()" />
 				<toolbarseparator />
-				<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="htbScrollRight()" />
-				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="htbScrollLeft()" />
+				<toolbarbutton id="HawkingScrollRight" tooltiptext="Scroll Right" onclick="FireHawk.htbScrollRight()" />
+				<toolbarbutton id="HawkingScrollLeft" tooltiptext="Scroll Left" onclick="FireHawk.htbScrollLeft()" />
 				<toolbarseparator />
 				<toolbarbutton id="HawkingScrollExit" tooltiptext="Exit"
-						   onclick="UnScope()" />
+						   onclick="FireHawk.UnScope()" />
         	</toolbar>
 			
 			<toolbar id="HawkingSBLiteracy" toolbarname="Literacy" accesskey="S"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
 
-					<toolbarbutton id="HawkingLiteracyName" tooltiptext="Literacy Center Simplified Toolbar" 
-							label="Literacy Center Toolbar" />
+					<label tooltiptext="Literacy Center Simplified Toolbar">Literacy Center Toolbar</label>
 					<toolbarseparator />
 					<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Standard Hawking Toolbar" 
-							label="Return to Standard Hawking Toolbar" onclick="htbToggleLiteracy()" />
+							label="Return to Standard Hawking Toolbar" onclick="FireHawk.htbToggleLiteracy()" />
         	</toolbar>
         	<toolbar id="HawkingSBHistoryNav" toolbarname="HawkingHistory" accesskey="H"
 	                 class="chromeclass-toolbar" context="toolbar-context-menu" 
 	                 hidden="true">
 				<image src='chrome://hawkingbar/skin/navigation_n.png' />
 				<toolbarseparator />
-				<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="htbBack()" />
-				<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="htbForward()" />
-				<toolbarbutton id="HawkingRefresh" tooltiptext="Reload the page" onclick="htbReload()" />
+				<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="FireHawk.htbBack()" />
+				<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="FireHawk.htbForward()" />
+				<toolbarbutton id="HawkingRefresh" tooltiptext="Reload the page" onclick="FireHawk.htbReload()" />
 				<toolbarbutton id="HawkingHistoryNavExit" tooltiptext="Exit"
-						   onclick="UnScope()" />
+						   onclick="FireHawk.UnScope()" />
         	</toolbar>
 
     	</toolbox>
