@@ -11,13 +11,11 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Initial Developer of the Original Code is Parakey Inc.
+ * The Initial Developers of the Original Code are John Foushee, Andrew Hulbert, and Brian Louden
  *
- * Portions created by the Initial Developer are Copyright (C) 2006
+ * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
- * Contributor(s):
- *     Joe Hewitt <joe@joehewitt.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
