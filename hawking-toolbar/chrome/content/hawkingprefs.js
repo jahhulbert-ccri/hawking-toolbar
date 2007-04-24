@@ -200,12 +200,12 @@ var classHawkingPane = {
 				translated = "Unknown Click";
 		}
 		else{
-			if(val==""){
-				if(isMove)
-					val = 65; //A
-				else
-					val = 76; //L
-			}
+//			if(val==""){
+//				if(isMove)
+//					val = 65; //A
+//				else
+//					val = 76; //L
+//			}
 			translated = String.fromCharCode(val);
 		}	
 		return translated;

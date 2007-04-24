@@ -161,7 +161,6 @@ ContextList.prototype = {
 	  this.FindLinks(this.ContextRoot, this.ContextLinks);
 	  this.ContextPosition = 0;
 	},
-	
 	/*
 	 * FindLinks(node, arr)
 	 * This function looks through the dom starting at the node given to it
@@ -286,6 +285,9 @@ function HawkingTrackerSetup(){
 function UnScope(){
 	if(!ContextManager)
 		return;
+	if(!htbGetPref("soundoff"))
+		SoundBlaster.playSound("soundExit"); //pass it a preference which has a string value of the file you want to play
+										 //if no such preference is set, it defaults to bark.wav
 	ContextManager.getContext().ContextRoot.hidden = true;
 	ContextManager.ExitContext();
 	ContextManager.getContext().ContextRoot.hidden = false;
@@ -303,6 +305,10 @@ function Scope(idstr){
 	if(!obj)return;
 	if(!ContextManager)
 		return;
+	if(!htbGetPref("soundoff"))
+		SoundBlaster.playSound("soundEnter"); //pass it a preference which has a string value of the file you want to play
+										 //if no such preference is set, it defaults to bark.wav
+
 	ContextManager.getContext().ContextRoot.hidden = true;
 	obj.hidden = false;
 	ContextManager.EnterContext(obj);
@@ -464,13 +470,11 @@ function ObjectIsVisible(obj){
 function ClickObject(object){
 	//pass this function the object you want to click
 	if(!object){
-    		alert("you clicked, but i saw no object");
-    		return;
+		if(!htbGetPref("soundoff"))
+			SoundBlaster.playSound("soundError");
+    	alert("you clicked, but i saw no object");
+    	return;
   	}
-	if(!htbGetPref("soundoff"))
-	SoundBlaster.playSound("soundClick"); //pass it a preference which has a string value of the file you want to play
-										 //if no such preference is set, it defaults to bark.wav
-
 	if(object.getAttribute("oncommand")){
 		object.doCommand();
 	}
@@ -508,6 +512,8 @@ function htbFindRealHighlight(obj){
 function Highlight(realObj){
 	var obj = htbFindRealHighlight(realObj);
 	if(!obj){
+		if(!htbGetPref("soundoff"))
+			SoundBlaster.playSound("soundError");
 		alert("I tried to highlight, but you gave me nothing"); //this could be a sound
 		return;
 	}
@@ -582,7 +588,7 @@ function htbScrollToObj(obj){
 		var scrolledY;
 		
 		if(window.frameElement) {
-			alert('frame element');
+//			alert('frame element');
 			scrolledX = window.frameElement.content.pageXOffset;
 			scrolledY = window.frameElement.content.pageYOffset;
 		}
@@ -639,6 +645,8 @@ function HawkingPageNext(){
 	else	
 		unHighlight(PageContext.getCurrent());
 	PageContext.next();
+	if(!htbGetPref("soundoff"))
+		SoundBlaster.playSound("soundNext");
 	Highlight(PageContext.getCurrent());
 //	alert("looking at "+PageContext.getCurrent().nodeName);
 //	alert("done");
@@ -654,6 +662,9 @@ function HawkingPagePrev(){
 	else
 		unHighlight(PageContext.getCurrent());
 	PageContext.prev();
+	if(!htbGetPref("soundoff"))
+		SoundBlaster.playSound("soundPrev");
+
 	Highlight(PageContext.getCurrent());
 //	alert("looking at "+PageContext.getCurrent().nodeName);
 //	alert("done");
@@ -662,18 +673,16 @@ function HawkingPageClick(){
 	ClickObject(PageContext.getCurrent());
 	//this should be added after the page has loaded so we get the new body
 	var canEscape = htbGetPref("literacybarEscape");
-	if(canEscape==true && $("HawkingToolBar").hidden==true){
+	if(canEscape==true && $("HawkingSBLiteracy").hidden==false){
 		//this should implement the brilliant idea to escape
 		//from literacy mode every click if the setting is set
 		htbToggleLiteracy();
 	}
+	if(!htbGetPref("soundoff"))
+		SoundBlaster.playSound("soundClick");
+
 //moved to the window.onload function htbResetPageContext
 //	PageContext = new ContextList(window.content.document.body);
-}
-
-function OpenPrefs(ev){
-	alert("These are the preferences");
-	return;
 }
 
 function htbScrollWindow(horizontal,vertical){
@@ -722,7 +731,6 @@ function htbButtonBlur(obj){
 	if(!obj || !obj.style)
 		return;
 	obj.style.color = 'black';
-//	obj.style.listStyleImage = "url('chrome://hawkingbar/skin/close_n.png')";
 	obj.className = "";
 //	if(obj.getAttribute && obj.getAttribute("high"))
 //		alert("changed to "+obj.getAttribute("high"));
