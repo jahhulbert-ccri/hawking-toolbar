@@ -150,8 +150,8 @@ ContextList.prototype = {
 	  		if(this.ContextPosition<0)
 	  		  	this.ContextPosition = this.ContextLinks.length-1;
 	  	}while(!ObjectIsVisible(this.getCurrent()));
-	  	if(!htbGetPref("soundoff"))
-			SoundBlaster.playSound("soundPrev"); 
+//	  	if(!htbGetPref("soundoff"))
+//			SoundBlaster.playSound("soundPrev"); 
 	},
 	Setup: function(){
 	  //find all the clickables in this.ContextRoot to this.ContextLinks
@@ -645,8 +645,6 @@ function HawkingPageNext(){
 	else	
 		unHighlight(PageContext.getCurrent());
 	PageContext.next();
-	if(!htbGetPref("soundoff"))
-		SoundBlaster.playSound("soundNext");
 	Highlight(PageContext.getCurrent());
 //	alert("looking at "+PageContext.getCurrent().nodeName);
 //	alert("done");
