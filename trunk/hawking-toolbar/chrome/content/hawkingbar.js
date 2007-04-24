@@ -645,7 +645,7 @@ ContextList.prototype = {
 				this.ContextPosition = 0;
 		}while(!this.ObjectIsVisible(this.getCurrent()));
 	  	if(!htbGetPref("soundoff"))
-			SoundBlaster.playSound("soundNext"); 
+			FireHawk.SoundBlaster.playSound("soundNext"); 
 	},
 	prev: function(){
 		//move pointer to previous clickable
@@ -663,7 +663,7 @@ ContextList.prototype = {
 	  		  	this.ContextPosition = this.ContextLinks.length-1;
 	  	}while(!this.ObjectIsVisible(this.getCurrent()));
 //	  	if(!htbGetPref("soundoff"))
-//			SoundBlaster.playSound("soundPrev"); 
+//			FireHawk.SoundBlaster.playSound("soundPrev"); 
 	},
 	Setup: function(){
 	  //find all the clickables in this.ContextRoot to this.ContextLinks
