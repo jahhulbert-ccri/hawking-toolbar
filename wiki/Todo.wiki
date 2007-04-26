@@ -21,6 +21,7 @@
   * preferences for sounds...can they add their own sound?
   * switch between tabs
   * recommend disable tabs
+  * change scrolling to scroll to highlight div instead of page element
 
 ==Modules to Write==
   * Bookmarks
