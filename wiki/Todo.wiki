@@ -19,6 +19,8 @@
   * TEST IT - rip navigation functions from browser.js for foward, back, etc.
   * move real highlight to highlighter class
   * preferences for sounds...can they add their own sound?
+  * switch between tabs
+  * recommend disable tabs
 
 ==Modules to Write==
   * Bookmarks
