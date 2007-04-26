@@ -3,9 +3,9 @@
 ==Things we have to do==
   * DONE - Make literacy work with single mode
   * Use browser.back() function
-  * double check on auto mode quirks
+  * DONE - double check on auto mode quirks
   * check special cases in test of weird highlighting -> remove from getRealHighlight
-  * detect events in Firefox for clickers
+  * DONE - detect events in Firefox for clickers
   * Documentation, tutorial, etc.
   * beef up toolbar appearance
     * Text under images not added in xul
@@ -13,9 +13,10 @@
     * images for sub-toolbar pics on left side
   * DONE - fix scrolling
   * merge with brett clippingdale's pages
-  * Make a delay in single mode...plus an escape option...
+  * Make a delay in auto mode
+  * DONE - plus an escape option...
   * fix frames problem
-  * Make a new mode in which if you enter simple mode, clicking will unscope you and place scope back on the toolbar.
+  * DONE - Make a new mode in which if you enter simple mode, clicking will unscope you and place scope back on the toolbar.
   * TEST IT - rip navigation functions from browser.js for foward, back, etc.
   * move real highlight to highlighter class
   * preferences for sounds...can they add their own sound?
