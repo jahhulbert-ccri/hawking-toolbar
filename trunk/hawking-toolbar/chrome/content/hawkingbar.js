@@ -336,7 +336,7 @@ var FireHawk = {
 			  * loop up to document body and find offset of object by adding values of offset parents
 			  */
 			var temp = obj;
-			while(temp != window.content.document.body){
+			while(temp != window.content.document.body && temp.offsetParent && temp.offsetTop && temp.offsetLeft){
 				temp = temp.offsetParent;
 				yPos+=temp.offsetTop;
 				xPos+=temp.offsetLeft;
