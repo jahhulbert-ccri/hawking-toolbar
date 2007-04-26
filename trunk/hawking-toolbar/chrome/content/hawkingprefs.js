@@ -1,5 +1,67 @@
 const htbPrefPrefix = "extensions.hawking.";
 
+function htbGetSoundFiles(){
+
+	const id = "HawkingBar";
+	alert('here');
+	var ext = Components.classes["@mozilla.org/extensions/manager;1"]
+	                    .getService(Components.interfaces.nsIExtensionManager)
+	                    .getInstallLocation(id)
+	                    .getItemLocation(id); 			
+	// file is the given directory (nsIFile)
+	/*alert('here 2');
+	var entry = ext.directoryEntries;
+	alert('here3');
+	//alert(ext);
+	//alert('dude');
+	var array = [];
+	while(entries.hasMoreElements())
+	{
+	  var entry = entries.getNext();
+	  entry.QueryInterface(Components.interfaces.nsIFile);
+	  array.push(entry);
+	  //alert(entry);
+	}
+	return array;*/
+}
+try{
+	htbGetSoundFiles();
+}
+catch(e){alert(e);}
+function getContents(aURL){
+  var ioService=Components.classes["@mozilla.org/network/io-service;1"]
+    .getService(Components.interfaces.nsIIOService);
+  var scriptableStream=Components
+    .classes["@mozilla.org/scriptableinputstream;1"]
+    .getService(Components.interfaces.nsIScriptableInputStream);
+
+  var channel=ioService.newChannel(aURL,null,null);
+  var input=channel.open();
+  scriptableStream.init(input);
+  var str=scriptableStream.read(input.available());
+  scriptableStream.close();
+  input.close();
+  return str;
+}
+/*
+try{
+  alert(getContents("chrome://content/"));
+  alert(getContents("http://www.mozillazine.org/"));
+}catch(e){alert(e)}
+*/
+function htbWriteSoundsOptions(menuListId){
+	var menuList = document.getElementById(menuListId);
+	if(!menuList) return;
+
+	var files = htbGetSoundFiles();
+	for(var x=0; x<files.length; x++){
+		//menuList.appendItem(label, value, description);
+	}
+}
+
+
+
+
 function htbSetPref(name,value,type){
 	if(!this.prefs){
 		this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
