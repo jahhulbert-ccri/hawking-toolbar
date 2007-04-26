@@ -1,5 +1,5 @@
 const htbPrefPrefix = "extensions.hawking.";
-
+/*
 function htbGetSoundFiles(){
 
 	const id = "HawkingBar";
@@ -8,7 +8,7 @@ function htbGetSoundFiles(){
 	                    .getService(Components.interfaces.nsIExtensionManager)
 	                    .getInstallLocation(id)
 	                    .getItemLocation(id); 			
-	// file is the given directory (nsIFile)
+	// file is the given directory (nsIFile)*/
 	/*alert('here 2');
 	var entry = ext.directoryEntries;
 	alert('here3');
@@ -23,7 +23,7 @@ function htbGetSoundFiles(){
 	  //alert(entry);
 	}
 	return array;*/
-}
+/*}
 try{
 	htbGetSoundFiles();
 }
@@ -49,6 +49,7 @@ try{
   alert(getContents("http://www.mozillazine.org/"));
 }catch(e){alert(e)}
 */
+/*
 function htbWriteSoundsOptions(menuListId){
 	var menuList = document.getElementById(menuListId);
 	if(!menuList) return;
@@ -58,7 +59,7 @@ function htbWriteSoundsOptions(menuListId){
 		//menuList.appendItem(label, value, description);
 	}
 }
-
+*/
 
 
 
