@@ -1,28 +1,31 @@
 #summary Todo List for Comp 523 Development Team
 
 ==Things we have to do==
-  * DONE - Make literacy work with single mode
   * Use browser.back() function
-  * DONE - double check on auto mode quirks
   * check special cases in test of weird highlighting -> remove from getRealHighlight
-  * DONE - detect events in Firefox for clickers
+
   * Documentation, tutorial, etc.
   * beef up toolbar appearance
     * Text under images not added in xul
     * new images for click and other things without images
     * images for sub-toolbar pics on left side
-  * DONE - fix scrolling
   * merge with brett clippingdale's pages
   * Make a delay in auto mode
-  * DONE - plus an escape option...
   * fix frames problem
-  * DONE - Make a new mode in which if you enter simple mode, clicking will unscope you and place scope back on the toolbar.
   * TEST IT - rip navigation functions from browser.js for foward, back, etc.
   * move real highlight to highlighter class
   * preferences for sounds...can they add their own sound?
   * switch between tabs
   * recommend disable tabs
   * change scrolling to scroll to highlight div instead of page element
+
+==Done Stuff==
+  * DONE - Make literacy work with single mode
+  * DONE - fix scrolling
+  * DONE - plus an escape option...
+  * DONE - Make a new mode in which if you enter simple mode, clicking will unscope you and place scope back on the toolbar.
+  * DONE - double check on auto mode quirks
+  * DONE - detect events in Firefox for mouse clicks
 
 ==Modules to Write==
   * Bookmarks
