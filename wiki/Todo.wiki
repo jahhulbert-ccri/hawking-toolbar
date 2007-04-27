@@ -1,4 +1,5 @@
 #summary Todo List for Comp 523 Development Team
+#labels Featured
 
 ==Things we have to do==
   * Use browser.back() function
@@ -8,16 +9,16 @@
     * Text under images not added in xul
     * new images for click and other things without images
     * images for sub-toolbar pics on left side
-  * merge with brett clippingdale's pages
+  * merge with brett clippingdale's pages - email him
   * Make a delay in auto mode
-  * fix frames problem
+  * fix frames problem - have it reload stuff
   * TEST IT - rip navigation functions from browser.js for foward, back, etc.
-  * preferences for sounds...can they add their own sound?
   * switch between tabs
   * recommend disable tabs
   * implement sound chooser option by reading directory structure
 
 ==Done Stuff==
+  * DONE - update set move and engage buttons to make it look more intuitive
   * DONE - Make literacy work with single mode
   * DONE - fix scrolling
   * DONE - plus an escape option...
