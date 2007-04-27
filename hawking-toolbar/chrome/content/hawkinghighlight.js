@@ -58,7 +58,11 @@ htbHighlighter.prototype = {
 		else{
 			this.highlighter.style.zIndex=this.maxZ;
 		}
-		this.scrollToObj(obj);
+		
+		
+		//use scroll to div now inplace of object scroll
+		//this.scrollToObj(obj);
+		this.scrollToDiv(this.highlighter);
 	},
 	unhighlight: function (){
 		return;
@@ -85,10 +89,65 @@ htbHighlighter.prototype = {
 		return obj;
 	},
 	
+	// function scrolls to a div and centers it.
+	scrollToDiv: function(div){
+		// Returns a string with only numbers.
+		// Optionally allows a decimal.
+		// (c) Joe Chrzanowski
+		function numbersOnly(string, allowdecimal) {
+		    validchars = "0123456789";
+		    outstr = "";
+		    if (allowdecimal)
+		        validchars += ".";
+		        
+		    for (i = 0; i < string.length; i++) {
+		        if (validchars.indexOf(string.charAt(i)) >= 0)
+		            outstr += string.charAt(i);
+		    }
+		    return outstr;
+		}
+		
+		//alert('in0');
+		//compute screen height and width of screen holding object accounting for frames if needed.
+		var screenHeight;
+		var screenWidth;
+		if(window.frameElement) {
+			screenHeight = window.frameElement.content.innerHeight;
+			screenWidth = window.frameElement.content.innerWidth;
+		}
+		else {
+			screenHeight = window.content.innerHeight;
+			screenWidth = window.content.innerWidth;
+		}
+		
+		var scrollToX = numbersOnly(div.style.left);
+		var scrollToY = numbersOnly(div.style.top);
+		
+		//set values in scroll to
+		scrollToY = scrollToY-(screenHeight/2);
+		scrollToX = scrollToX-(screenWidth/2);
+		
+		//if still within screen on x coord, don't scroll x
+		if(scrollToX < screenWidth){
+			scrollToX = 0;
+		}
+		
+		//if scrolltoY < 3/4 of height and no x scrolling needed, don't scroll to reduce flicker
+		if(!(scrollToY < (3*screenHeight/4) && scrollToX!=0)){
+			if(window.frameElement){
+				window.frameElement.content.scrollTo(scrollToX,scrollToY);
+			}
+			else{
+				window.content.scrollTo(scrollToX,scrollToY);
+			}
+		}
+	},
+	
 	/**
 	 * scrollToObj
 	 * Description: function takes an object and positions it in the center of the screen using scrolling
 	 * Arg: object to center
+	 * DEPRICATED
 	 */
 	scrollToObj: function (obj){
 		/**
