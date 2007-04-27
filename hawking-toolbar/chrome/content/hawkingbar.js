@@ -336,7 +336,7 @@ var FireHawk = {
 			  * loop up to document body and find offset of object by adding values of offset parents
 			  */
 			var temp = obj;
-			while(temp != window.content.document.body && temp.offsetParent && temp.offsetTop && temp.offsetLeft){
+			while(temp != window.content.document.body){
 				temp = temp.offsetParent;
 				yPos+=temp.offsetTop;
 				xPos+=temp.offsetLeft;
@@ -357,7 +357,7 @@ var FireHawk = {
 			
 			var scrolledX;
 			var scrolledY;
-			
+		
 			if(window.frameElement) {
 	//			alert('frame element');
 				scrolledX = window.frameElement.content.pageXOffset;
@@ -373,14 +373,19 @@ var FireHawk = {
 			scrollToY = scrolledY-(screenHeight/2);
 		}
 		
+		//if still within screen on x coord, don't scroll x
 		if(scrollToX < screenWidth){
 			scrollToX = 0;
 		}
-		if(window.frameElement){
-			window.frameElement.content.scrollTo(scrollToX,scrollToY);
-		}
-		else{
-			window.content.scrollTo(scrollToX,scrollToY);
+		
+		//if scrolltoY < 3/4 of height and no x scrolling needed, don't scroll to reduce flicker
+		if(!(scrollToY < (3*screenHeight/4) && scrollToX!=0)){
+			if(window.frameElement){
+				window.frameElement.content.scrollTo(scrollToX,scrollToY);
+			}
+			else{
+				window.content.scrollTo(scrollToX,scrollToY);
+			}
 		}
 	},
 	
