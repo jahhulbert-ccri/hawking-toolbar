@@ -12,11 +12,9 @@
   * Make a delay in auto mode
   * fix frames problem
   * TEST IT - rip navigation functions from browser.js for foward, back, etc.
-  * move real highlight to highlighter class
   * preferences for sounds...can they add their own sound?
   * switch between tabs
   * recommend disable tabs
-  * change scrolling to scroll to highlight div instead of page element
   * implement sound chooser option by reading directory structure
 
 ==Done Stuff==
@@ -26,6 +24,8 @@
   * DONE - Make a new mode in which if you enter simple mode, clicking will unscope you and place scope back on the toolbar.
   * DONE - double check on auto mode quirks
   * DONE - detect events in Firefox for mouse clicks
+  * DONE - move real highlight to highlighter class
+  * DONE - change scrolling to scroll to highlight div instead of page element
 
 ==Modules to Write==
   * Bookmarks
