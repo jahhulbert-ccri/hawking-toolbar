@@ -20,6 +20,7 @@ htbHighlighter.prototype = {
 	},
 	highlight: function(obj){
 		if(!obj)return;
+		obj = this.findRealHighlight(obj);
 		obj = $(obj);
 		var dim = this.getOffsetSize(obj);
 		var loc = this.getViewOffset(obj, true);
@@ -57,10 +58,124 @@ htbHighlighter.prototype = {
 		else{
 			this.highlighter.style.zIndex=this.maxZ;
 		}
-		
+		this.scrollToObj(obj);
 	},
 	unhighlight: function (){
 		return;
+	},
+	findRealHighlight: function (obj){
+		if(!obj){
+			return null;
+		}
+	  	if(obj.nodeName=="A"){
+			if(obj.childNodes && htbCountRealChildren(obj)==1){
+				var nobj = htbGetFirstRealChild(obj);
+				if(nobj && nobj.nodeName != "BR" && nobj.nodeName != "HR"){// && nobj.nodeName=="IMG"){
+		  			return nobj;
+		  		}
+		  	}
+	//		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
+				/*  if the <a> is in something all by itself, highlight that instead;
+				    this is to counteract the annoying "no-highlight" bug when we find an
+				    <a> tag inside a <div> with an id so it appears as a clickable logo
+				*/
+	//			return obj.parentNode;
+	//		}
+		}
+		return obj;
+	},
+	
+	/**
+	 * scrollToObj
+	 * Description: function takes an object and positions it in the center of the screen using scrolling
+	 * Arg: object to center
+	 */
+	scrollToObj: function (obj){
+		/**
+		  * compute screen height and width of screen holding object accounting for frames if needed.
+		  */
+		var screenHeight;
+		var screenWidth;
+		if(window.frameElement) {
+			screenHeight = window.frameElement.content.innerHeight;
+			screenWidth = window.frameElement.content.innerWidth;
+		}
+		else {
+			screenHeight = window.content.innerHeight;
+			screenWidth = window.content.innerWidth;
+		}
+		
+		//variables maxX and maxY are the total document height
+		var maxX = window.content.scrollMaxX;
+		var maxY = window.content.scrollMaxY;
+		
+		//variables to store position to which we will scroll
+		var scrollToX;
+		var scrollToY;
+		
+		/**
+		  * if object offsets are available, compute pixel position on screen
+		  */
+		if(obj.offsetTop && obj.offsetLeft) {		
+			
+			var yPos = obj.offsetTop;
+			var xPos = obj.offsetLeft;
+			
+			/**
+			  * loop up to document body and find offset of object by adding values of offset parents
+			  */
+			var temp = obj;
+			while(temp != window.content.document.body){
+				temp = temp.offsetParent;
+				yPos+=temp.offsetTop;
+				xPos+=temp.offsetLeft;
+			}
+			
+			//set values in scroll to
+			scrollToY = yPos-(screenHeight/2);
+			scrollToX = xPos-(screenWidth/2);
+		}
+		/**
+		  * if object offsets are not available, use firefox function scrollIntoView to scroll
+		  * and then center using half of screen width.
+		  */
+		else{
+			if(obj.scrollIntoView) {
+				obj.scrollIntoView();
+			}
+			
+			var scrolledX;
+			var scrolledY;
+		
+			if(window.frameElement) {
+	//			alert('frame element');
+				scrolledX = window.frameElement.content.pageXOffset;
+				scrolledY = window.frameElement.content.pageYOffset;
+			}
+			else {
+				scrolledX = window.content.pageXOffset;
+				scrolledY = window.content.pageYOffset;
+			}
+			
+			//alert('scroll into view');
+			scrollToX = scrolledX-(screenWidth/2);
+			scrollToY = scrolledY-(screenHeight/2);
+		}
+		
+		//if still within screen on x coord, don't scroll x
+		if(scrollToX < screenWidth){
+			scrollToX = 0;
+		}
+		
+		//if scrolltoY < 3/4 of height and no x scrolling needed, don't scroll to reduce flicker
+		if(!(scrollToY < (3*screenHeight/4) && scrollToX!=0)){
+			if(window.frameElement){
+				window.frameElement.content.scrollTo(scrollToX,scrollToY);
+			}
+			else{
+				window.content.scrollTo(scrollToX,scrollToY);
+			}
+		}
 	},
 	getClientOffset: function(elt){
 	    function addOffset(elt, coords, view)
