@@ -3,7 +3,6 @@
 ==Things we have to do==
   * Use browser.back() function
   * check special cases in test of weird highlighting -> remove from getRealHighlight
-
   * Documentation, tutorial, etc.
   * beef up toolbar appearance
     * Text under images not added in xul
@@ -18,6 +17,7 @@
   * switch between tabs
   * recommend disable tabs
   * change scrolling to scroll to highlight div instead of page element
+  * implement sound chooser option by reading directory structure
 
 ==Done Stuff==
   * DONE - Make literacy work with single mode
