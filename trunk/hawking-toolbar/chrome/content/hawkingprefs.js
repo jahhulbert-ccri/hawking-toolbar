@@ -232,8 +232,8 @@ var classHawkingPane = {
 		}
 		document.getElementById("htbEngageButton").disabled =false;
 		document.getElementById("htbMoveButton").disabled =false;
-		document.getElementById("htbMoveButton").label = "Set 'Move' Action";
-		document.getElementById("htbEngageButton").label = "Set 'Engage' Action";	
+		document.getElementById("htbMoveButton").label = "Click Here To Set 'Move' Action";
+		document.getElementById("htbEngageButton").label = "Click Here To Set 'Engage' Action";	
 	},
 
 	htbTranslateAction: function (isMove){
