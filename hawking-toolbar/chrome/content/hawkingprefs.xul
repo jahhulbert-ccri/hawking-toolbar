@@ -78,22 +78,37 @@
 								
 							<groupbox>
 								<caption label="Input Switch Configuration" />
-								<hbox align="center">
-									<toolbarbutton id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Set 'Move' Action" onclick="classHawkingPane.htbCaptureEventMove(event)" />
-									<textbox id="VisualMoveEvent" size="6" disabled="disabled" />
-									<!--
-									<label>Set 'Move' Action: </label>
-									<textbox preference="extensions.hawking.moveEvent" maxlength="1" id="ddd" size="11" />
-									-->
-								</hbox>
-								<hbox align="center">
-									<toolbarbutton id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Set 'Click' Action" onclick="classHawkingPane.htbCaptureEventEngage(event)" />
-									<textbox id="VisualEngageEvent" size="6" disabled = "disabled" />
-									<!--
-									<label>Set 'Engage' Action: </label>
-									<textbox maxlength="1" preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
-									-->
-								</hbox>
+								<grid>
+									<columns>
+										<column>
+											<hbox align="center">
+												<button id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Click Here To Set 'Move' Action" onclick="classHawkingPane.htbCaptureEventMove(event)" />
+											</hbox>
+											<hbox align="center">
+												<button id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Click Here To Set 'Click' Action" onclick="classHawkingPane.htbCaptureEventEngage(event)" />
+											</hbox>
+										</column>
+										<column>
+											<hbox align="center">
+												<label>Event: </label>
+												<textbox id="VisualMoveEvent" size="6" disabled="disabled" />
+												<!--
+												<label>Set 'Move' Action: </label>
+												<textbox preference="extensions.hawking.moveEvent" maxlength="1" id="ddd" size="11" />
+												-->
+											</hbox>
+											<hbox align="center">
+												<label>Event: </label>
+												<textbox id="VisualEngageEvent" size="6" disabled = "disabled" />
+												<!--
+												<label>Set 'Engage' Action: </label>
+												<textbox maxlength="1" preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
+												-->
+											</hbox>
+										</column>
+									</columns>
+									
+								</grid>										
 							</groupbox>
 							
 							<groupbox>
