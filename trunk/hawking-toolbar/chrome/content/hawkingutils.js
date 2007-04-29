@@ -110,7 +110,7 @@ htbDirectory.prototype = {
 		if(nsiFile.isDirectory()){
 			this._nsiFile=nsiFile;
 		}
-		else alert("nsi file is not dir");
+		//else alert("nsi file is not dir");
 	},
 	
 	getNsiFile: function(fileName){

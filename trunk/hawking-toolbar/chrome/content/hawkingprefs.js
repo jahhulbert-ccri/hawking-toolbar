@@ -141,7 +141,7 @@ var classHawkingPane = {
 			
 			return files;
 		}
-		catch(e){alert(e);}
+		catch(e){FireHawk.htbAlert(e);}
 	},
 	htbWriteSoundOptions: function(menuListId){
 			var menuList = document.getElementById(menuListId);
@@ -161,7 +161,7 @@ var classHawkingPane = {
 				//alert(pref);
 				menuList.value=pref;
 			}
-			catch(e){alert(e);}
+			catch(e){FireHawk.htbAlert(e);}
 	},
 	htbCaptureEventMove: function (ev){
 		knackerEvent(ev);
