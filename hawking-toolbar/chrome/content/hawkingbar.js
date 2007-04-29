@@ -40,6 +40,7 @@ var FireHawk = {
 		DEFAULT_VERTICAL_SCROLL: 200,
 		DEFAULT_HORIZONTAL_SCROLL: 200
 	},
+	autoInterval: null,
 	ErrorBox: null,
 	Contextmanager: null,
 	Highlighter: null,
@@ -87,7 +88,7 @@ var FireHawk = {
 		
 			var mode = htbGetPref("autoMode");
 			if(mode){
-				htbEnableAuto();
+				this.htbEnableAuto();
 			}
 			//transforms window events into move and engage
 			var simple = htbGetPref("literacybar");
@@ -521,7 +522,49 @@ var FireHawk = {
 	htbRemoveErrorMessage: function(tid){
 		if($(tid))
 			this.ErrorBox.removeChild($(tid));
+	},
+	
+	
+	
+
+	htbToggleAuto: function(){
+		var mode = htbGetPref("autoMode");
+		if(mode==true){
+			this.htbDisableAuto();
+		}
+		else{
+			this.htbEnableAuto();
+		}
+	},
+
+	htbEnableAuto: function(){
+		htbSetPref("autoMode", true, "Bool");
+		var timing = parseFloat(htbGetPref("autoInterval"));
+		if(timing<1 || isNaN(timing)){
+			timing = 2;
+			htbSetPref("autoInterval", 2, "Int"); //sets an erroneous preference back
+		}
+		timing = timing*1000;//from seconds to miliseconds
+		this.autoInterval = setInterval("FireHawk.htbAutoIterate();", timing);
+	//	alert(autoInterval+" set");
+	},
+
+	htbDisableAuto: function(){
+		try{
+		htbSetPref("autoMode", false, "Bool");
+		clearInterval(this.autoInterval);
+		}catch(e){}
+	},
+
+	htbAutoIterate: function(){
+		var simple = htbGetPref("literacybar");
+		if(simple)//we're in literacy mode
+			this..HawkingPageNext();
+		else //we're in normal toolbar mode
+			this.ContextManager.next();		
 	}
+	
+	
 	
 }
 
