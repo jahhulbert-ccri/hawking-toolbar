@@ -11,7 +11,11 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Initial Developers of the Original Code are John Foushee, Andrew Hulbert, and Brian Louden
+ * The Initial Developers of the Original Code are John Foushee, Andrew Hulbert,
+ * and Brian Louden
+ *
+ * The current homepage the FireHawk Toolbar is updates is 
+ * http://code.google.com/p/hawking-toolbar/ 
  *
  * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
@@ -30,6 +34,7 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
 var FireHawk = {
 	defaults: {
 		DEFAULT_VERTICAL_SCROLL: 200,
@@ -257,6 +262,13 @@ var FireHawk = {
 		}
 	},
 	
+	/**
+	 * Highlight(obj) 
+	 * This function calls the highlighter class and passes it the object it received
+	 * as an argument to be highlighted. Function throws an error if the object does not 
+	 * exist. If the object to highlight does exist, it calls the highlighter class to 
+	 * highlight the object.
+	 */
 	Highlight: function (obj){
 		
 		if(!obj){
@@ -266,13 +278,14 @@ var FireHawk = {
 			return;
 		}
 		this.Highlighter.highlight(obj);
-		//var re = window.content.document.getElementById('navRealestate');
-		//if(!re) alert("re not found");
-		//alert("top offset: "+re.offsetTop+"\nleft offset: "+re.offsetLeft+"\noffset height:"+re.offsetHeight);
 	},
 	
-	
-	
+	/**
+	 * unHighlight(obj)
+	 * This function is called when an object is unhighlighted such as when the user
+	 * wants to move to the next link. It passes the object to the unhighlight function
+	 * of the highlighter to perform any functionality the highlighter class implements.
+	 */
 	unHighlight: function (obj){
 		
 		if(!obj){ //nothing to unhighlight
@@ -280,25 +293,40 @@ var FireHawk = {
 		}
 		this.Highlighter.unhighlight(obj);
 	},
+	
+	/**
+	 * HawkingBarGoHome()
+	 * Used for development to access FireHawk homepage
+	 */
 	HawkingBarGoHome: function (){
 	    window.content.document.location = "http://code.google.com/p/hawking-toolbar";
-	//    window.content.focus();
+	    //window.content.focus();
 	},
+	
+	/**
+	 * HawkingPageNext()
+	 * 
+	 */
 	HawkingPageNext: function (){
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
 		//to a new page)
 		if(!this.PageContext || this.PageContext.WindowLocation!=window.content.document.location){
-	//		alert("page reset or new");
+			//alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
 		else	
 			this.unHighlight(this.PageContext.getCurrent());
 		this.PageContext.next();
 		this.Highlight(this.PageContext.getCurrent());
-	//	alert("looking at "+PageContext.getCurrent().nodeName);
-	//	alert("done");
+		//alert("looking at "+PageContext.getCurrent().nodeName);
+		//alert("done");
 	},
+	
+	/**
+	 * HawkingPagePrev()
+	 *
+	 */
 	HawkingPagePrev: function (){
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
@@ -333,9 +361,19 @@ var FireHawk = {
 	//	this.PageContext = new ContextList(window.content.document.body);
 	},
 	
+	/**
+	 * htbScrollWindow(horizontal,vertical)
+	 * Function scrolls to a given location in the window
+	 */
 	htbScrollWindow: function (horizontal,vertical){
 		window.content.scrollBy(horizontal,vertical);
 	},
+	
+	/**
+	 * htbScrollDown()
+	 * Function scrolls down by a defined amount when the user moves to the next
+	 * link on a page
+	 */
 	htbScrollDown: function (){
 		var amt = htbGetPref('verticalScrollAmt')
 		if(!amt) {
