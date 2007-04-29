@@ -123,6 +123,13 @@
 #HawkingHistoryNavExit.over{
 	list-style-image: url("chrome://hawkingbar/skin/close_s.png");
 }
+#HawkingErrorMessage{
+	margin: 4px;
+}
+
+#HawkingErrorMessage textbox{
+	color: #f00;
+}
 
 toolbarbutton{
 	padding-top: 0px;
