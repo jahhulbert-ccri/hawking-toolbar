@@ -277,7 +277,7 @@ var FireHawk = {
 	Highlight: function (obj){
 		
 		if(!obj){
-			this.htbAlert("I tried to highlight, but you gave me nothing"); //this could be a sound
+			this.htbAlert("Nothing to highlight"); //this could be a sound
 			return;
 		}
 		this.Highlighter.highlight(obj);
@@ -499,10 +499,11 @@ var FireHawk = {
 			}
 			var txt = document.createElement("textbox");
 			txt.setAttribute("value", msg);
+			txt.className = "plain";
 			var tid = "ErrorText"+parseInt(this.ErrorBox.childNodes.length);
 			txt.id = tid;
 			this.ErrorBox.appendChild(txt);
-			setTimeout("FireHawk.htbRemoveErrorMessage('"+tid+"');", 5000);
+			setTimeout("FireHawk.htbRemoveErrorMessage('"+tid+"');", 60000);//disappear in 1 minute
 			if(this.ErrorBox.childNodes.length>3)
 				this.ErrorBox.removeChild(this.ErrorBox.firstChild);
 //			this.ErrorBox.setAttribute("value", msg);
@@ -515,9 +516,6 @@ var FireHawk = {
 		var ebox = document.createElement("box");
 		ebox.id = "HawkingErrorMessage";
 		ebox.setAttribute("orient", "vertical");
-//		ebox.setAttribute("multiline","true");
-//		ebox.disabled = true;
-//		ebox.value="";
 		return ebox;
 	},
 	htbRemoveErrorMessage: function(tid){
