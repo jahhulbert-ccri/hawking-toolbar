@@ -497,18 +497,24 @@ var FireHawk = {
 				this.ErrorBox = this.htbMakeEbox();
 				this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
 			}
-			this.ErrorBox.setAttribute("value", msg);
+			var txt = document.createElement("textbox");
+			txt.setAttribute("value", msg);
+			this.ErrorBox.appendChild(txt);
+			if(this.ErrorBox.childNodes.length>3)
+				this.ErrorBox.removeChild(this.ErrorBox.firstChild);
+//			this.ErrorBox.setAttribute("value", msg);
 		}
 		catch(e){
 			alert(e.name+" - "+e.message);
 		}
 	},
 	htbMakeEbox: function(){
-		var ebox = document.createElement("textbox");
+		var ebox = document.createElement("box");
 		ebox.id = "HawkingErrorMessage";
-		ebox.setAttribute("multiline","true");
-		ebox.disabled = true;
-		ebox.value="";
+		ebox.setAttribute("orient", "vertical");
+//		ebox.setAttribute("multiline","true");
+//		ebox.disabled = true;
+//		ebox.value="";
 		return ebox;
 	}
 	
