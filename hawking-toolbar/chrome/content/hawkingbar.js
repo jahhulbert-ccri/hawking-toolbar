@@ -40,6 +40,7 @@ var FireHawk = {
 		DEFAULT_VERTICAL_SCROLL: 200,
 		DEFAULT_HORIZONTAL_SCROLL: 200
 	},
+	ErrorBox: null,
 	Contextmanager: null,
 	Highlighter: null,
 	SoundBlaster: null,
@@ -51,7 +52,7 @@ var FireHawk = {
 			addEvent(window, "click", this.htbActionTransform, true);
 			addEvent(window, "load", this.htbResetPageContext, true); //reloads the context every time a new page loads
 		}catch(e){
-			alert(e.name+" - "+e.message);
+			this.htbAlert(e.name+" - "+e.message);
 		}
 		this.FireHawkSetup();
 	},
@@ -64,40 +65,42 @@ var FireHawk = {
 	 */
 	FireHawkSetup: function(){
 		try{
-		//this should only be called once
-		this.ContextManager = new ContextManager($("HawkingToolBar"));
-		this.Highlighter = new htbHighlighter();
-		this.SoundBlaster = new htbSoundManager();
-		this.htbButtonHover(this.ContextManager.getCurrent());
-		if(htbGetPref("StartAsOff")){
-			//if the always start as off setting is on, set disabled
-			htbSetPref("disabled", false, "Bool");
-		}
-		var dis = htbGetPref("disabled");
-		var button = document.getElementById("HawkingToggleActivity");
-		if(button){
-			if(dis)
-				button.label = "Disable Hawking Toolbar";
-			else
-				button.label = "Enable Hawking Toolbar";
-		}
-	
-		var mode = htbGetPref("autoMode");
-		if(mode){
-			htbEnableAuto();
-		}
-		//transforms window events into move and engage
-		var simple = htbGetPref("literacybar");
-		if(simple){
-			//show the subbar for the literacy center simple toolbar
-			this.Scope("HawkingSBLiteracy");
-			//set attribute
-			var mItem = document.getElementById("htbLiteracyMenuItem");
-			if(mItem)
-				mItem.setAttribute("checked", "true");
-		}
+			//this should only be called once
+			this.ContextManager = new ContextManager($("HawkingToolBar"));
+			this.Highlighter = new htbHighlighter();
+			this.SoundBlaster = new htbSoundManager();
+			this.htbButtonHover(this.ContextManager.getCurrent());
+			this.ErrorBox = this.htbMakeEbox();
+			this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
+			if(htbGetPref("StartAsOff")){
+				//if the always start as off setting is on, set disabled
+				htbSetPref("disabled", false, "Bool");
+			}
+			var dis = htbGetPref("disabled");
+			var button = document.getElementById("HawkingToggleActivity");
+			if(button){
+				if(dis)
+					button.label = "Disable Hawking Toolbar";
+				else
+					button.label = "Enable Hawking Toolbar";
+			}
+		
+			var mode = htbGetPref("autoMode");
+			if(mode){
+				htbEnableAuto();
+			}
+			//transforms window events into move and engage
+			var simple = htbGetPref("literacybar");
+			if(simple){
+				//show the subbar for the literacy center simple toolbar
+				this.Scope("HawkingSBLiteracy");
+				//set attribute
+				var mItem = document.getElementById("htbLiteracyMenuItem");
+				if(mItem)
+					mItem.setAttribute("checked", "true");
+			}
 		}catch(e){
-			alert(e.name+" - "+e.message)
+			this.htbAlert(e.name+" - "+e.message)
 		}
 	},
 	/*
@@ -116,7 +119,9 @@ var FireHawk = {
 		this.ContextManager.ExitContext();
 		this.ContextManager.getContext().ContextRoot.hidden = false;
 		this.htbButtonHover(this.ContextManager.getCurrent());
-//		this.ReLight();
+		this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
+
+	//		this.ReLight();
 	},
 	/*
 	 * Scope(idstr)
@@ -138,6 +143,8 @@ var FireHawk = {
 		obj.hidden = false;
 		this.ContextManager.EnterContext(obj);
 		this.htbButtonHover(this.ContextManager.getCurrent());
+		this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
+
 //		this.ReLight();
 	},
 	/* ReLight()
@@ -199,7 +206,7 @@ var FireHawk = {
 		}
 		return true;
 		}catch(e){
-			alert(e.name+" - "+e.message)}
+			this.htbAlert(e.name+" - "+e.message)}
 	},
 	/*
 	 * this is a helper function to the htbActionTransform method
@@ -246,9 +253,7 @@ var FireHawk = {
 	ClickObject: function (object){
 		//pass this function the object you want to click
 		if(!object){
-			if(!htbGetPref("soundoff"))
-				this.SoundBlaster.playSound("soundError");
-//	    	alert("you clicked, but i saw no object");
+			this.htbAlert("There is nothing to click");
 	    	return;
 	  	}
 		if(object.getAttribute("oncommand")){
@@ -272,9 +277,7 @@ var FireHawk = {
 	Highlight: function (obj){
 		
 		if(!obj){
-			if(!htbGetPref("soundoff"))
-				this.SoundBlaster.playSound("soundError");
-			alert("I tried to highlight, but you gave me nothing"); //this could be a sound
+			this.htbAlert("I tried to highlight, but you gave me nothing"); //this could be a sound
 			return;
 		}
 		this.Highlighter.highlight(obj);
@@ -485,8 +488,30 @@ var FireHawk = {
 	htbResetPageContext: function (){
 		this.PageContext = new ContextList(window.content.document.body);
 		//this should also clear the highlighter.
+	},
+	htbAlert: function(msg){
+		try{
+			if(!htbGetPref("soundoff"))
+				this.SoundBlaster.playSound("soundError");
+			if(!this.ErrorBox){//create one and append to the current scope
+				this.ErrorBox = this.htbMakeEbox();
+				this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
+			}
+			this.ErrorBox.setAttribute("value", msg);
+		}
+		catch(e){
+			alert(e.name+" - "+e.message);
+		}
+	},
+	htbMakeEbox: function(){
+		var ebox = document.createElement("textbox");
+		ebox.id = "HawkingErrorMessage";
+		ebox.setAttribute("multiline","true");
+		ebox.disabled = true;
+		ebox.value="";
+		return ebox;
 	}
-
+	
 }
 
 var ContextManager = Class.create();
@@ -696,7 +721,7 @@ ContextList.prototype = {
 function SetUp(){
 	var tb = $("HawkingToolBar");
 	if(!tb){
-		setTimeout("SetUp()", 200); //not ready, wait .5 seconds
+		setTimeout("SetUp()", 200); //not ready, wait .2 seconds
 		return;
 	}
 	FireHawk.initialize();
