@@ -34,6 +34,7 @@
 					<toolbarseparator />
 					<toolbarbutton class="hawking" id="HawkingToggleAuto" tooltiptext="Toggle Literacy Center Mode"
                                label="Auto Mode" oncommand="FireHawk.htbToggleAuto()" />
+					<!-- textbox id="HawkingErrorMessage" multiline="true" disabled="true" value="" / -->
         	</toolbar>
         	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
