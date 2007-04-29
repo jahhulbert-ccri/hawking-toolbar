@@ -180,27 +180,27 @@
 									<separator class="thin"/>
 									<hbox align="center">
 										<label control="soundClick">Click Sound: </label>
-										<menulist id="soundClick" preference="">
+										<menulist id="soundClick" preference="extensions.hawking.soundClick">
 											<menupopup>
-												<menuitem value="1" label="1"/>
+												
 											</menupopup>
 										</menulist>
 									</hbox>
 									<separator class="thin"/>
 									<hbox align="center">
 										<label control="soundNext">Next Sound: </label>
-										<menulist id="soundNext" preference="">
+										<menulist id="soundNext" preference="extensions.hawking.soundNext">
 											<menupopup>
-												<menuitem value="1" label="1"/>
+												
 											</menupopup>
 										</menulist>
 									</hbox>
 									<separator class="thin"/>
 									<hbox align="center">
 										<label control="soundPrev">Previous Sound: </label>
-										<menulist id="soundPrev" preference="">
+										<menulist id="soundPrev" preference="extensions.hawking.soundPrev">
 											<menupopup>
-												<menuitem value="1" label="1"/>
+												
 											</menupopup>
 										</menulist>
 									</hbox>

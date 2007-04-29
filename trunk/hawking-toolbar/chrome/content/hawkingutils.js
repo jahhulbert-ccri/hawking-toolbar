@@ -101,3 +101,101 @@ function htbGetFirstRealChild(parent){
 	}
 	return false;
 }
+
+var htbDirectory = Class.create();
+htbDirectory.prototype = {
+	_nsiFile:false,
+	
+	initialize: function(nsiFile){
+		if(nsiFile.isDirectory()){
+			this._nsiFile=nsiFile;
+		}
+		else alert("nsi file is not dir");
+	},
+	
+	getNsiFile: function(fileName){
+		if(!this._nsiFile){
+			return false;
+		}
+		var file_enum=this._nsiFile.directoryEntries;
+		while(file_enum.hasMoreElements()){
+			var temp=file_enum.getNext().QueryInterface(Components.interfaces.nsIFile);
+			if(temp.leafName==fileName){
+				return temp;
+			}
+		}
+		return false;
+	},
+	
+	getHtbDirectory: function(dirName){
+		if(!this._nsiFile) return false;
+		var file_enum=this._nsiFile.directoryEntries;
+		while(file_enum.hasMoreElements()){
+			var temp=file_enum.getNext().QueryInterface(Components.interfaces.nsIFile);
+			if(temp.leafName==dirName && temp.isDirectory()){
+				return new htbDirectory(temp);
+			}
+		}
+		return false;
+	},
+
+	getName: function(){
+		if(!this._nsiFile) return false;
+		return this._nsiFile.leafName;
+	},
+	
+	getArrayOfFilesAsNsi: function(){
+		if(!this._nsiFile) return false;
+		var ret_array = new Array();
+		var file_enum=this._nsiFile.directoryEntries;
+		while(file_enum.hasMoreElements()){
+			var temp=file_enum.getNext().QueryInterface(Components.interfaces.nsIFile);
+			if(temp.isFile()){
+				ret_array.push(temp);
+			}
+		}
+		return ret_array;
+	},
+	
+	getArrayOfDirsAsNsi: function(){
+		if(!this._nsiFile) return false;
+		var ret_array = new Array();
+		var file_enum=this._nsiFile.directoryEntries;
+		while(file_enum.hasMoreElements()){
+			var temp=file_enum.getNext().QueryInterface(Components.interfaces.nsIFile);
+			if(temp.isDirectory()){
+				ret_array.push(temp);
+			}
+		}
+		return ret_array;
+	},
+	
+	getArrayOfNsiFiles: function(){
+		if(!this._nsiFile) return false;
+		var ret_array = new Array();
+		var file_enum=this._nsiFile.directoryEntries;
+		while(file_enum.hasMoreElements()){
+			var temp=file_enum.getNext().QueryInterface(Components.interfaces.nsIFile);
+			ret_array.push(temp);
+		}
+		return ret_array;
+	},
+	/*
+	getArrayOfExt: function(ext,extLength){
+		if(!this._nsiFile) return false;
+		var ret_array = new Array();
+		var file_enum=this._nsiFile.directoryEntries;
+		while(file_enum.hasMoreElements()){
+			var temp=file_enum.getNext().QueryInterface(Components.interfaces.nsIFile);
+			var name=temp.leafName;
+			var text=substring(temp.length-extLength,temp.length);
+			alert(name);
+			if(temp.substring(temp.length-extLength-1,temp.length-extLength)=="." && name==ext){
+				ret_array.push(temp);
+			}
+		}
+		return ret_array;
+	}*/
+	
+	
+}
