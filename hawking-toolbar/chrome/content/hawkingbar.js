@@ -499,7 +499,10 @@ var FireHawk = {
 			}
 			var txt = document.createElement("textbox");
 			txt.setAttribute("value", msg);
+			var tid = "ErrorText"+parseInt(this.ErrorBox.childNodes.length);
+			txt.id = tid;
 			this.ErrorBox.appendChild(txt);
+			setTimeout("FireHawk.htbRemoveErrorMessage('"+tid+"');", 5000);
 			if(this.ErrorBox.childNodes.length>3)
 				this.ErrorBox.removeChild(this.ErrorBox.firstChild);
 //			this.ErrorBox.setAttribute("value", msg);
@@ -516,6 +519,10 @@ var FireHawk = {
 //		ebox.disabled = true;
 //		ebox.value="";
 		return ebox;
+	},
+	htbRemoveErrorMessage: function(tid){
+		if($(tid))
+			this.ErrorBox.removeChild($(tid));
 	}
 	
 }
