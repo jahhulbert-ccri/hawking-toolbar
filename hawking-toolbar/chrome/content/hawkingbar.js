@@ -315,7 +315,7 @@ var FireHawk = {
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
 		//to a new page)
-		if(!this.PageContext || this.PageContext.WindowLocation!=window.content.document.location){
+		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=window.content.document.location){
 			//alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
@@ -335,7 +335,7 @@ var FireHawk = {
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
 		//to a new page)
-		if(!this.PageContext || this.PageContext.WindowLocation!=window.content.document.location){
+		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=window.content.document.location){
 	//		alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
@@ -351,6 +351,7 @@ var FireHawk = {
 	},
 	HawkingPageClick: function (){
 		this.ClickObject(this.PageContext.getCurrent());
+		this.PageContext.Old = true;
 		//this should be added after the page has loaded so we get the new body
 		var canEscape = htbGetPref("literacybarEscape");
 		if(canEscape==true && $("HawkingSBLiteracy").hidden==false){
@@ -627,6 +628,7 @@ function ContextList(root){
 }
 
 ContextList.prototype = {
+	Old: false,
 	getCurrent: function(){
 		//returns the clickable currently pointed to (and highlighted)
 		//	if(this.ContextRoot.hidden)
