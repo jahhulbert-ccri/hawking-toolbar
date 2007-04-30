@@ -4,10 +4,7 @@
 ==Things we have to do==
   * Use browser.back() function
   * Documentation, tutorial, etc.
-  * beef up toolbar appearance
-    * Text under images not added in xul
-    * new images for click and other things without images
-    * images for sub-toolbar pics on left side
+  * update toolbar images
   * merge with brett clippingdale's pages - email him
   * Make a delay in auto mode
   * fix frames problem - have it reload stuff
