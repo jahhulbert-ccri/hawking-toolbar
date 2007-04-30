@@ -2,14 +2,10 @@
 #labels Featured
 
 ==Things we have to do==
-  * Use browser.back() function
   * Documentation, tutorial, etc.
   * update toolbar images
-  * merge with brett clippingdale's pages - email him
   * Make a delay in auto mode
   * fix frames problem - have it reload stuff
-  * TEST IT - rip navigation functions from browser.js for foward, back, etc.
-  * switch between tabs
   * recommend disable tabs
 
 ==Done Stuff==
@@ -27,6 +23,10 @@
 == Long term==
   * check special cases in test of weird highlighting -> remove from getRealHighlight
   * allow users to add their own sound
+  * Use browser.back() function
+  * merge with brett clippingdale's pages - email him
+  * switch between tabs
+
 
 ==Future Modules to Write==
   * Bookmarks
