@@ -49,8 +49,8 @@ var FireHawk = {
 	initialize: function(){
 		//this will perform all the setting up needed
 		try{
-			addEvent(window, "keydown", this.htbActionTransform, true);
-			addEvent(window, "click", this.htbActionTransform, true);
+			addEvent(window, "keydown", htbActionTransform, true);
+			addEvent(window, "click", htbActionTransform, true);
 			addEvent(window, "load", this.htbResetPageContext, true); //reloads the context every time a new page loads
 		}catch(e){
 			this.htbAlert(e.name+" - "+e.message);
@@ -59,7 +59,7 @@ var FireHawk = {
 	},
 	
 	/*
-	 * HawkingTrackerSetup()
+	 * FireHawkSetup()
 	 * this is the setup function which determines how the toolbar starts up
 	 * based on preferences. It disables the toolbar if that is set, it
 	 * sets up in Literacy Mode if needed, etc.
@@ -162,101 +162,6 @@ var FireHawk = {
 	//	setTimeout("ReLight("+parseInt(times+1)+")", 100);
 	//},
 	
-	/*
-	 * htbActionTransform(ev)
-	 * this function should not be passed a parameter since it is
-	 * an event listenter. It looks at the preferences to
-	 * determine if the event it just saw (click or keydown) was
-	 * mapped to a toolbar action (either move or engage)
-	 * if so, it will do the appropriate action and *try* to
-	 * prevent the event object from propogating any further through
-	 */
-	htbActionTransform: function (ev){
-		try{
-		//this function captures key presses
-		//and translates them into clicks
-		var dis = htbGetPref("disabled");
-		if(dis==false){
-			return true; //toolbar disabled, normal action allowed
-		}
-	
-		if(!ev || ev.ignoreMe) return false;
-		if (FireHawk.htbIsEventClick(ev)) {
-		//engage
-			var autoOn = htbGetPref("autoMode");
-			if(autoOn){
-			//if in autoscrolling mode, reset the timeout every time there is a click, so you can continue to do the same thing
-				FireHawk.htbDisableAuto();
-				FireHawk.htbEnableAuto();
-			}
-			var simple = htbGetPref("literacybar");
-			if(simple){
-				FireHawk.HawkingPageClick();
-			}
-			else{
-				FireHawk.ClickObject(FireHawk.ContextManager.getCurrent());
-			}
-			knackerEvent(ev);
-			return false;
-		}
-		else if(FireHawk.htbIsEventMove(ev)){
-		//move
-			var simple = htbGetPref("literacybar");
-			if(simple){
-				FireHawk.HawkingPageNext();
-			}
-			else{
-				FireHawk.ContextManager.next();
-			}
-			knackerEvent(ev);
-			return false;
-		}
-		return true;
-		}catch(e){
-			this.htbAlert(e.name+" - "+e.message)}
-	},
-	/*
-	 * this is a helper function to the htbActionTransform method
-	 * which will return true or false depending on whether the
-	 * action it is passed is mapped to a "move" event by the hawking toolbar
-	 */
-	htbIsEventMove: function (ev){
-	//takes in an event object and determines if it matches
-	//the move characteristic of an event
-	
-		var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
-		var moveVal = htbGetPref("moveVal"); //value of the action
-		var etype = ev.type;//either 'click' or 'keydown'
-		if(moveClick && etype=="click" && moveVal==ev.button){
-			//they clicked. was it right/left?
-			return true;
-		}
-		else if(!moveClick && etype=="keydown" && moveVal==ev.which){
-			//this should be the only other kind, but just in case...
-			//now figure out which button was pressed (don't worry about shift/ctrl)
-			return true;
-		}
-		return false;
-	},
-	
-	htbIsEventClick: function (ev){
-	//takes in an event object and determines if it matches
-	//the click characteristic of an event
-	
-		var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
-		var engageVal = htbGetPref("engageVal"); //value of the action
-		var etype = ev.type;//either 'click' or 'keydown'
-		if(engageClick && etype=="click" && engageVal==ev.button){
-			//they clicked. was it right/left?
-			return true;
-		}
-		else if(!engageClick && etype=="keydown" && engageVal==ev.which){
-			//this should be the only other kind, but just in case...
-			//now figure out which button was pressed (don't worry about shift/ctrl)
-			return true;
-		}
-		return false;
-	},	
 	ClickObject: function (object){
 		//pass this function the object you want to click
 		if(!object){
@@ -776,6 +681,105 @@ ContextList.prototype = {
 	},
 
 }
+
+	/*
+	 * htbActionTransform(ev)
+	 * this function should not be passed a parameter since it is
+	 * an event listenter. It looks at the preferences to
+	 * determine if the event it just saw (click or keydown) was
+	 * mapped to a toolbar action (either move or engage)
+	 * if so, it will do the appropriate action and *try* to
+	 * prevent the event object from propogating any further through
+	 */
+	function htbActionTransform(ev){
+		try{
+		//this function captures key presses
+		//and translates them into clicks
+		var dis = htbGetPref("disabled");
+		if(dis==false){
+			return true; //toolbar disabled, normal action allowed
+		}
+	
+		if(!ev || ev.ignoreMe) return false;
+		if (htbIsEventClick(ev)) {
+		//engage
+			var autoOn = htbGetPref("autoMode");
+			if(autoOn){
+			//if in autoscrolling mode, reset the timeout every time there is a click, so you can continue to do the same thing
+				FireHawk.htbDisableAuto();
+				FireHawk.htbEnableAuto();
+			}
+			var simple = htbGetPref("literacybar");
+			if(simple){
+				FireHawk.HawkingPageClick();
+			}
+			else{
+				FireHawk.ClickObject(FireHawk.ContextManager.getCurrent());
+			}
+			knackerEvent(ev);
+			return false;
+		}
+		else if(htbIsEventMove(ev)){
+		//move
+			var simple = htbGetPref("literacybar");
+			if(simple){
+				FireHawk.HawkingPageNext();
+			}
+			else{
+				FireHawk.ContextManager.next();
+			}
+			knackerEvent(ev);
+			return false;
+		}
+		return true;
+		}
+		catch(e){
+			FireHawk.htbAlert(e.name+" - "+e.message)
+		}
+	}
+	/*
+	 * this is a helper function to the htbActionTransform method
+	 * which will return true or false depending on whether the
+	 * action it is passed is mapped to a "move" event by the hawking toolbar
+	 */
+	function htbIsEventMove (ev){
+	//takes in an event object and determines if it matches
+	//the move characteristic of an event
+	
+		var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
+		var moveVal = htbGetPref("moveVal"); //value of the action
+		var etype = ev.type;//either 'click' or 'keydown'
+		if(moveClick && etype=="click" && moveVal==ev.button){
+			//they clicked. was it right/left?
+			return true;
+		}
+		else if(!moveClick && etype=="keydown" && moveVal==ev.which){
+			//this should be the only other kind, but just in case...
+			//now figure out which button was pressed (don't worry about shift/ctrl)
+			return true;
+		}
+		return false;
+	}
+	
+	function htbIsEventClick(ev){
+	//takes in an event object and determines if it matches
+	//the click characteristic of an event
+	
+		var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
+		var engageVal = htbGetPref("engageVal"); //value of the action
+		var etype = ev.type;//either 'click' or 'keydown'
+		if(engageClick && etype=="click" && engageVal==ev.button){
+			//they clicked. was it right/left?
+			return true;
+		}
+		else if(!engageClick && etype=="keydown" && engageVal==ev.which){
+			//this should be the only other kind, but just in case...
+			//now figure out which button was pressed (don't worry about shift/ctrl)
+			return true;
+		}
+		return false;
+	}
+
 
 function SetUp(){
 	var tb = $("HawkingToolBar");
