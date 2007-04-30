@@ -14,7 +14,6 @@
   * TEST IT - rip navigation functions from browser.js for foward, back, etc.
   * switch between tabs
   * recommend disable tabs
-  * implement sound chooser option by reading directory structure
 
 ==Done Stuff==
   * DONE - update set move and engage buttons to make it look more intuitive
@@ -26,6 +25,7 @@
   * DONE - detect events in Firefox for mouse clicks
   * DONE - move real highlight to highlighter class
   * DONE - change scrolling to scroll to highlight div instead of page element
+  * DONE implement sound chooser option by reading directory structure
 
 == Long term==
   * check special cases in test of weird highlighting -> remove from getRealHighlight
