@@ -183,6 +183,12 @@ var FireHawk = {
 		if(!ev || ev.ignoreMe) return false;
 		if (FireHawk.htbIsEventClick(ev)) {
 		//engage
+			var autoOn = htbGetPref("autoMode");
+			if(autoOn){
+			//if in autoscrolling mode, reset the timeout every time there is a click, so you can continue to do the same thing
+				FireHawk.htbDisableAuto();
+				FireHawk.htbEnableAuto();
+			}
 			var simple = htbGetPref("literacybar");
 			if(simple){
 				FireHawk.HawkingPageClick();
@@ -524,9 +530,6 @@ var FireHawk = {
 		if($(tid))
 			this.ErrorBox.removeChild($(tid));
 	},
-	
-	
-	
 
 	htbToggleAuto: function(){
 		var mode = htbGetPref("autoMode");
@@ -560,7 +563,7 @@ var FireHawk = {
 	htbAutoIterate: function(){
 		var simple = htbGetPref("literacybar");
 		if(simple)//we're in literacy mode
-			this..HawkingPageNext();
+			this.HawkingPageNext();
 		else //we're in normal toolbar mode
 			this.ContextManager.next();		
 	}
