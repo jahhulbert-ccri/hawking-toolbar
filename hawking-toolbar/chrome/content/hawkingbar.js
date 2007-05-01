@@ -590,11 +590,17 @@ var FireHawk = {
 } //end FireHawk definition
 
 /**
- *
+ * Context Manager class and prototype
+ * The Context Manager manages a toolbar context and moves between clickable items and clicks on items
  */
 var ContextManager = Class.create();
 ContextManager.prototype = {
 	ContextArray: new Array(),
+	
+	/**
+	 * initialize(toolbar)
+	 * overrides prototype function to initialize toolbar
+	 */
 	initialize: function(toolbar){
 		if(!toolbar){
 			alert("ERROR: Unable to locate the Hawking Toolbar in firefox");
@@ -602,6 +608,11 @@ ContextManager.prototype = {
 		}
 		this.ContextArray = [new ContextList(toolbar)]; //essentially a stack (we only look at the end)
 	},
+	
+	/**
+	 * ExitContext()
+	 * this function exits a context and removes it from the context array
+	 */
 	ExitContext: function(){
 		//this removes the top context
 		if(this.ContextArray<=1){
@@ -613,29 +624,54 @@ ContextManager.prototype = {
 		this.ContextArray.pop(); //removes the last array entry
 		FireHawk.htbButtonHover(this.getContext().getCurrent()); //back to where we used to be
 	},
+	
+	/**
+	 * EnterContext(ncon)
+	 * This function takes the ncon (next context) argument and moves to it and adds it to the context array
+	 */
 	EnterContext: function(ncon){
 		//this adds a new context 'ncon' to the end of ContextArray
 		FireHawk.htbButtonBlur(this.getContext().getCurrent());
 		this.ContextArray.push(new ContextList(ncon));
 		FireHawk.htbButtonHover(this.getContext().getCurrent());
 	},
+	
+	/**
+	 * next()
+	 * This function moves to the next clickable object in the context
+	 */
 	next: function(){
 		//moves to next clickable
 		FireHawk.htbButtonBlur(this.getContext().getCurrent());
 		this.getContext().next();
 		FireHawk.htbButtonHover(this.getContext().getCurrent());
 	},
+	
+	/**
+	 * prev()
+	 * this function moves to the previous clickable object in the context
+	 */
 	prev: function(){
 		//moves to previous clickable
 		htbButtonBlur(this.getContext().getCurrent());
 		this.getContext().prev();
 		htbButtonHover(this.getContext().getCurrent());
 	},
+	
+	/**
+	 * getCurrent()
+	 * this function returns the current clickable item in the current context
+	 */
 	getCurrent: function(){
-	   //returns the current clickable in the current scope
-	   //or null if nothing
+		//returns the current clickable in the current scope
+		//or null if nothing
 		return this.getContext().getCurrent();
 	},
+	
+	/**
+	 * getContext()
+	 * this function returns the current context pointed to.
+	 */
 	getContext: function(){
 		//this returns the current context pointed to
 		return this.ContextArray[this.ContextArray.length-1];
@@ -643,6 +679,10 @@ ContextManager.prototype = {
 	
 } //end ContextManager definition
 
+/**
+ * ContextList function/var
+ * this is the context list fuction which stores links and a pointer to them
+ */
 function ContextList(root){
 	//this object should store 
 	this.ContextRoot = root;
@@ -651,8 +691,17 @@ function ContextList(root){
 	this.ContextPosition = -1;  //where we are in this array
 }
 
+/**
+ * ContextList prototype
+ * prototype for the context list
+ */
 ContextList.prototype = {
 	Old: false,
+	
+	/**
+	 * getCurrent()
+	 * This function returns the current clickable item in the context list held by the pointer
+	 */
 	getCurrent: function(){
 		//returns the clickable currently pointed to (and highlighted)
 		//	if(this.ContextRoot.hidden)
@@ -660,7 +709,12 @@ ContextList.prototype = {
 		if(this.ContextLinks.length==0 || this.ContextPosition<0)
 			this.Setup();
 		return this.ContextLinks[this.ContextPosition];
-	},	
+	},
+	
+	/**
+	 * next()
+	 * This function moves the pointer of the context list to the previous item
+	 */
 	next: function(){
 		//moves pointer to the next clickable and highlights, returns nothing
 		if(this.ContextLinks.length==0 || this.ContextPosition<0 || this.ContextPosition>this.ContextLinks.length){
@@ -675,10 +729,17 @@ ContextList.prototype = {
 	  		this.ContextPosition++;
 	  		if(this.ContextPosition>=this.ContextLinks.length)
 				this.ContextPosition = 0;
-		}while(!this.ObjectIsVisible(this.getCurrent()));
-	  	if(!htbGetPref("soundoff"))
+		}
+		while(!this.ObjectIsVisible(this.getCurrent()));
+	  	if(!htbGetPref("soundoff")){
 			FireHawk.SoundBlaster.playSound("soundNext"); 
+		}
 	},
+	
+	/**
+	 * prev()
+	 * This function moves the pointer of the context list to the next item.
+	 */
 	prev: function(){
 		//move pointer to previous clickable
 		if(this.ContextLinks.length==0 || this.ContextPosition<0){
@@ -693,10 +754,16 @@ ContextList.prototype = {
 	  		this.ContextPosition--;
 	  		if(this.ContextPosition<0)
 	  		  	this.ContextPosition = this.ContextLinks.length-1;
-	  	}while(!this.ObjectIsVisible(this.getCurrent()));
-//	  	if(!htbGetPref("soundoff"))
-//			FireHawk.SoundBlaster.playSound("soundPrev"); 
+	  	}
+		while(!this.ObjectIsVisible(this.getCurrent()));
+	  	//if(!htbGetPref("soundoff"))
+			//FireHawk.SoundBlaster.playSound("soundPrev"); 
 	},
+	
+	/**
+	 * Setup()
+	 * This function finds all clickable links on the contextRoot and adds them to the context links var
+	 */
 	Setup: function(){
 	  //find all the clickables in this.ContextRoot to this.ContextLinks
 	  //and sets this.ContextPosition = 0
@@ -705,7 +772,8 @@ ContextList.prototype = {
 	  this.FindLinks(this.ContextRoot, this.ContextLinks);
 	  this.ContextPosition = 0;
 	},
-	/*
+	
+	/**
 	 * FindLinks(node, arr)
 	 * This function looks through the dom starting at the node given to it
 	 * and recursively fills the array "arr" with nodes which satisfy the
@@ -766,137 +834,151 @@ ContextList.prototype = {
 			this.FindLinks(node.childNodes[i], arr);
 		}//end of for loop
 	},//end of findlinks
+	
+	/**
+	 * ObjectIsVisible(obj)
+	 * this function tries computes whether or not an object is visible to the user via multiple methods
+	 * and returns a boolean
+	 */
 	ObjectIsVisible: function (obj){
-	//obj.style.display is not sufficient due to
-	//style sheets having display: none; properties
-	//which the .style function does not detect.
-	  if(!obj) return false;
-	  try{
-	  	while(obj){
-	      var disp = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("display");
-	      var vis = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("visibility");
-	      if(disp=="none" || vis=="hidden"){
-	        return false;
-	      }
-	  
-	      if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
-	        break;
-	      }
-	//      var loc = new htbHighlighter().getViewOffset(obj, true);
-	//      if(loc.x<1 || loc.y<1)
-	//      	return false;
-		      
-	      obj = obj.parentNode;
-	    }
-	  }
-	  catch(e){
-	    return false;
-	  }
-	//  alert("Visible: "+obj.nodeName);
-	  return true;
+		//obj.style.display is not sufficient due to
+		//style sheets having display: none; properties
+		//which the .style function does not detect.
+		if(!obj){
+			return false;
+		}
+		try{
+			while(obj){
+				var disp = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("display");
+				var vis = window.content.document.defaultView.getComputedStyle(obj, null).getPropertyValue("visibility");
+				if(disp=="none" || vis=="hidden"){
+					return false;
+				}
+				if(!obj.parentNode || obj.parentNode.nodeName=="HTML" || obj.parentNode.nodeName=="BODY"){
+					break;
+				}
+				//var loc = new htbHighlighter().getViewOffset(obj, true);
+				//if(loc.x<1 || loc.y<1)
+				//return false;
+				obj = obj.parentNode;
+			} // end while(obj) loop
+		} //end try
+		catch(e){
+			return false;
+		}
+		// alert("Visible: "+obj.nodeName);
+		return true;
 	},
 
 } //end ContextList definition
 
-	/*
-	 * htbActionTransform(ev)
-	 * this function should not be passed a parameter since it is
-	 * an event listenter. It looks at the preferences to
-	 * determine if the event it just saw (click or keydown) was
-	 * mapped to a toolbar action (either move or engage)
-	 * if so, it will do the appropriate action and *try* to
-	 * prevent the event object from propogating any further through
-	 */
-	function htbActionTransform(ev){
-		try{
-		//this function captures key presses
-		//and translates them into clicks
-		var dis = htbGetPref("disabled");
-		if(dis==false){
-			return true; //toolbar disabled, normal action allowed
-		}
-	
-		if(!ev || ev.ignoreMe) return false;
-		if (htbIsEventClick(ev)) {
-		//engage
-			var autoOn = htbGetPref("autoMode");
-			if(autoOn){
-			//if in autoscrolling mode, reset the timeout every time there is a click, so you can continue to do the same thing
-				FireHawk.htbDisableAuto();
-				FireHawk.htbEnableAuto();
-			}
-			var simple = htbGetPref("literacybar");
-			if(simple){
-				FireHawk.HawkingPageClick();
-			}
-			else{
-				FireHawk.ClickObject(FireHawk.ContextManager.getCurrent());
-			}
-			knackerEvent(ev);
-			return false;
-		}
-		else if(htbIsEventMove(ev)){
-		//move
-			var simple = htbGetPref("literacybar");
-			if(simple){
-				FireHawk.HawkingPageNext();
-			}
-			else{
-				FireHawk.ContextManager.next();
-			}
-			knackerEvent(ev);
-			return false;
-		}
-		return true;
-		}
-		catch(e){
-			FireHawk.htbAlert(e.name+" - "+e.message)
-		}
+/**
+ * htbActionTransform(ev)
+ * this function should not be passed a parameter since it is
+ * an event listenter. It looks at the preferences to
+ * determine if the event it just saw (click or keydown) was
+ * mapped to a toolbar action (either move or engage)
+ * if so, it will do the appropriate action and *try* to
+ * prevent the event object from propogating any further through
+ */
+function htbActionTransform(ev){
+	try{
+	//this function captures key presses
+	//and translates them into clicks
+	var dis = htbGetPref("disabled");
+	if(dis==false){
+		return true; //toolbar disabled, normal action allowed
 	}
-	/*
-	 * this is a helper function to the htbActionTransform method
-	 * which will return true or false depending on whether the
-	 * action it is passed is mapped to a "move" event by the hawking toolbar
-	 */
-	function htbIsEventMove (ev){
+
+	if(!ev || ev.ignoreMe) return false;
+	if (htbIsEventClick(ev)) {
+		//engage event
+		var autoOn = htbGetPref("autoMode");
+		if(autoOn){
+			//if in autoscrolling mode, reset the timeout every time there is a click, so you can continue to do the same thing
+			FireHawk.htbDisableAuto();
+			FireHawk.htbEnableAuto();
+		}
+		var simple = htbGetPref("literacybar");
+		if(simple){
+			FireHawk.HawkingPageClick();
+		}
+		else{
+			FireHawk.ClickObject(FireHawk.ContextManager.getCurrent());
+		}
+		knackerEvent(ev);
+		return false;
+	}
+	else if(htbIsEventMove(ev)){
+		//move event
+		var simple = htbGetPref("literacybar");
+		if(simple){
+			FireHawk.HawkingPageNext();
+		}
+		else{
+			FireHawk.ContextManager.next();
+		}
+		knackerEvent(ev);
+		return false;
+	}
+	return true;
+	}
+	catch(e){
+		FireHawk.htbAlert(e.name+" - "+e.message)
+	}
+}
+	
+/**
+ * htbIsEventMove(ev)
+ * this is a helper function to the htbActionTransform method
+ * which will return true or false depending on whether the
+ * action it is passed is mapped to a "move" event by the hawking toolbar
+ */
+function htbIsEventMove (ev){
 	//takes in an event object and determines if it matches
 	//the move characteristic of an event
-	
-		var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
-		var moveVal = htbGetPref("moveVal"); //value of the action
-		var etype = ev.type;//either 'click' or 'keydown'
-		if(moveClick && etype=="click" && moveVal==ev.button){
-			//they clicked. was it right/left?
-			return true;
-		}
-		else if(!moveClick && etype=="keydown" && moveVal==ev.which){
-			//this should be the only other kind, but just in case...
-			//now figure out which button was pressed (don't worry about shift/ctrl)
-			return true;
-		}
-		return false;
+	var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
+	var moveVal = htbGetPref("moveVal"); //value of the action
+	var etype = ev.type;//either 'click' or 'keydown'
+	if(moveClick && etype=="click" && moveVal==ev.button){
+		//they clicked. was it right/left?
+		return true;
 	}
+	else if(!moveClick && etype=="keydown" && moveVal==ev.which){
+		//this should be the only other kind, but just in case...
+		//now figure out which button was pressed (don't worry about shift/ctrl)
+		return true;
+	}
+	return false;
+}
 	
-	function htbIsEventClick(ev){
+/**
+ * htbIsEventClick(ev)
+ * this function takes an event and tries to match it to a hawking toolbar Engage event to determine if it
+ * is an event defined as a move or engage event and returns true if it is
+ */
+function htbIsEventClick(ev){
 	//takes in an event object and determines if it matches
 	//the click characteristic of an event
-	
-		var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
-		var engageVal = htbGetPref("engageVal"); //value of the action
-		var etype = ev.type;//either 'click' or 'keydown'
-		if(engageClick && etype=="click" && engageVal==ev.button){
-			//they clicked. was it right/left?
-			return true;
-		}
-		else if(!engageClick && etype=="keydown" && engageVal==ev.which){
-			//this should be the only other kind, but just in case...
-			//now figure out which button was pressed (don't worry about shift/ctrl)
-			return true;
-		}
-		return false;
+	var engageClick = htbGetPref("engageAct"); //true if click, false if keypress
+	var engageVal = htbGetPref("engageVal"); //value of the action
+	var etype = ev.type;//either 'click' or 'keydown'
+	if(engageClick && etype=="click" && engageVal==ev.button){
+		//they clicked. was it right/left?
+		return true;
 	}
+	else if(!engageClick && etype=="keydown" && engageVal==ev.which){
+		//this should be the only other kind, but just in case...
+		//now figure out which button was pressed (don't worry about shift/ctrl)
+		return true;
+	}
+	return false;
+}
 
-
+/**
+ * SetUp()
+ * This function performs the initial setup of the toolbar by initializing it.
+ */
 function SetUp(){
 	var tb = $("HawkingToolBar");
 	if(!tb){
@@ -905,4 +987,6 @@ function SetUp(){
 	}
 	FireHawk.initialize();
 }
+
+//perform first call of the code to setup the toolbar and get everying up and running
 SetUp();
