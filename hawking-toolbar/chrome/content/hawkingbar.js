@@ -788,7 +788,7 @@ ContextList.prototype = {
 	FindLinks: function (node, arr){
 		//if there is nothing in this node, it doesn't exist, or has no children
 		//firefox randomly adds #text nodes into the dom which don't have any attributes
-		//and in fact cause a "getAttribute" to fail. if we see a #text or #comment get out
+		//and in fact cause a "getAttribute" to crash javascript. if we see a #text or #comment get out
 		if(!node || node.nodeName=="#text" || node.nodeName=="#comment"){
 			return;
 		}
@@ -883,8 +883,6 @@ ContextList.prototype = {
  */
 function htbActionTransform(ev){
 	try{
-	//this function captures key presses
-	//and translates them into clicks
 	var dis = htbGetPref("disabled");
 	if(dis==false){
 		return true; //toolbar disabled, normal action allowed
@@ -977,7 +975,7 @@ function htbIsEventClick(ev){
 
 /**
  * SetUp()
- * This function performs the initial setup of the toolbar by initializing it.
+ * This function performs the initial setup of the toolbar by initializing it once the toolbar's XUL elements have been loaded.
  */
 function SetUp(){
 	var tb = $("HawkingToolBar");
