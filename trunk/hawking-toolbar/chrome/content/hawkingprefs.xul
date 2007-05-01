@@ -1,23 +1,20 @@
 <?xml version="1.0"?>
 
-          <overlay id="hawkingPrefOverlay"
-                   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-            <!-- John: moved script directly below the overlay tag -->
-            <script type="application/x-javascript" src="chrome://hawkingbar/content/prototype.js" />
-            <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />
-			<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
-            <!-- Merge with the BrowserPreferences Window -->
-            <prefwindow id="BrowserPreferences">
+<overlay id="hawkingPrefOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/prototype.js" />
+    <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingutils.js" />
+	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingprefs.js" />
+	<!-- Note: assume that hawkingbar.js is already loaded into memory -->
+	
+    <!-- Merge with the BrowserPreferences Window -->
+    <prefwindow id="BrowserPreferences">
 
-              <!-- Create a new pane (tab) for HP Scheduler. -->
-              <prefpane id="hawkingPane" label="Hawking"
-                        onpaneload="classHawkingPane.init()" 
-                        image="chrome://hawkingbar/content/images/prefs.png">
+		<!-- Create a new pane (tab) for hawking toolbar pane in firefox prefs. -->
+		<prefpane id="hawkingPane" label="Hawking"
+			    onpaneload="classHawkingPane.init()" 
+			    image="chrome://hawkingbar/content/images/prefs.png">
 
-                <!-- Intermediary between GUI and preferences system -->
-                <preferences>
-				
-				<!-- General tab -->
+            <preferences>
 				<preference id="extensions.hawking.literacybar" name="extensions.hawking.literacybar" type="bool"/>
 				<preference id="extensions.hawking.borderHighlightColor" name="extensions.hawking.borderHighlightColor" type="string"/>
 				<preference id="extensions.hawking.borderHighlightWidth" name="extensions.hawking.borderHighlightWidth" type="int"/>
@@ -32,193 +29,170 @@
 				<preference id="extensions.hawking.soundClick" name="extensions.hawking.soundClick" type="string"/>
 				<preference id="extensions.hawking.soundNext" name="extensions.hawking.soundNext" type="string"/>
 				<preference id="extensions.hawking.soundPrev" name="extensions.hawking.soundPrev" type="string"/>
-				
-                <!-- see the next section for more information -->
-                </preferences>
-				
-				<!-- <script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" /> -->
+            </preferences>
 
-				<!-- GUI Elements... -->
-				<tabbox id="something" flex="1">
-					<!-- removed onselect="gAdvancedPane.tabSelectionChanged(); -->
+			<!-- GUI Elements... -->
+			<tabbox id="something" flex="1">
+				<!-- Define tabs for this box -->
+				<tabs id="tabsElement">
+			        <tab id="generalTab" label="General" />
+			        <tab id="highlightingTab" label="Highlighting" />
+			        <tab id="soundTab" label="Sound Effects" />
+				</tabs>
 
-					<tabs id="tabsElement">
-				        <tab id="generalTab" label="General" />
-				        <tab id="highlightingTab" label="Highlighting" />
-				        <tab id="soundTab" label="Sound Effects" />
-					</tabs>
-
-					<tabpanels flex="1">
-						<tabpanel id="generalPanel" orient="vertical">
-						
-							<groupbox id="generalConfigBox" align="start">
-								<caption label="General Configuration" />
-								<hbox align="center">
-									<checkbox id="prefDisabledBox"
+				<!--define tab panels -->
+				<tabpanels flex="1">
+					<!-- General Panel -->
+					<tabpanel id="generalPanel" orient="vertical">
+						<groupbox id="generalConfigBox" align="start">
+							<caption label="General Configuration" />
+							<hbox align="center">
+								<checkbox id="prefDisabledBox"
 										label="Always Disable Hawking Toolbar on Startup"
 										preference="extensions.hawking.StartAsOff" />
-									<checkbox id="prefDisabledBox"
+								<checkbox id="prefDisabledBox"
 										label="Enable Hawking Toolbar Now"
 										preference="extensions.hawking.disabled" />
-								</hbox>
-							</groupbox>
-							
-							<groupbox id="simplifiedModeBox" align="start">
-					            <caption label="Simplified Mode"/>
+							</hbox>
+						</groupbox>
+						<groupbox id="simplifiedModeBox" align="start">
+				            <caption label="Simplified Mode"/>
+							<hbox align="center">
+					            <checkbox id="useSimplifiedMode"
+					                    label="Use Simplified Mode on Startup"
+					                    preference="extensions.hawking.literacybar"/>
+					            <checkbox id="canLeaveSimplifiedMode"
+					                    label="Click returns to advanced mode"
+					                    preference="extensions.hawking.literacybarEscape"/> 
+							</hbox>
+						</groupbox>
+						<groupbox>
+							<caption label="Input Switch Configuration" />
+							<grid>
+								<columns>
+									<column>
+										<hbox align="center">
+											<button id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Click Here To Set 'Move' Action" onclick="classHawkingPane.htbCaptureEventMove(event)" />
+										</hbox>
+										<hbox align="center">
+											<button id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Click Here To Set 'Click' Action" onclick="classHawkingPane.htbCaptureEventEngage(event)" />
+										</hbox>
+									</column>
+									<column>
+										<hbox align="center">
+											<label>Event: </label>
+											<textbox id="VisualMoveEvent" size="6" disabled="disabled" />
+											<!--
+											<label>Set 'Move' Action: </label>
+											<textbox preference="extensions.hawking.moveEvent" maxlength="1" id="ddd" size="11" />
+											-->
+										</hbox>
+										<hbox align="center">
+											<label>Event: </label>
+											<textbox id="VisualEngageEvent" size="6" disabled = "disabled" />
+											<!--
+											<label>Set 'Engage' Action: </label>
+											<textbox maxlength="1" preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
+											-->
+										</hbox>
+									</column>
+								</columns>
+							</grid>										
+						</groupbox>
+						<groupbox>
+							<caption label="Single Input Mode (Auto Mode)" />
+							<vbox>
 								<hbox align="center">
-						            <checkbox id="useSimplifiedMode"
-						                    label="Use Simplified Mode on Startup"
-						                    preference="extensions.hawking.literacybar"/>
-						            <checkbox id="canLeaveSimplifiedMode"
-						                    label="Click returns to advanced mode"
-						                    preference="extensions.hawking.literacybarEscape"/>
-						                    
-								</hbox>
-							</groupbox>
-								
-							<groupbox>
-								<caption label="Input Switch Configuration" />
-								<grid>
-									<columns>
-										<column>
-											<hbox align="center">
-												<button id="htbMoveButton" tooltiptext="Set the action to move in the toolbar" label="Click Here To Set 'Move' Action" onclick="classHawkingPane.htbCaptureEventMove(event)" />
-											</hbox>
-											<hbox align="center">
-												<button id="htbEngageButton" tooltiptext="Set the action to click in the toolbar" label="Click Here To Set 'Click' Action" onclick="classHawkingPane.htbCaptureEventEngage(event)" />
-											</hbox>
-										</column>
-										<column>
-											<hbox align="center">
-												<label>Event: </label>
-												<textbox id="VisualMoveEvent" size="6" disabled="disabled" />
-												<!--
-												<label>Set 'Move' Action: </label>
-												<textbox preference="extensions.hawking.moveEvent" maxlength="1" id="ddd" size="11" />
-												-->
-											</hbox>
-											<hbox align="center">
-												<label>Event: </label>
-												<textbox id="VisualEngageEvent" size="6" disabled = "disabled" />
-												<!--
-												<label>Set 'Engage' Action: </label>
-												<textbox maxlength="1" preference="extensions.hawking.engageEvent" id="engageInputText" size="11" />
-												-->
-											</hbox>
-										</column>
-									</columns>
-									
-								</grid>										
-							</groupbox>
-							
-							<groupbox>
-								<caption label="Single Input Mode (Auto Mode)" />
-								<vbox>
-									<hbox align="center">
-										<checkbox id="prefAutoModeBox"
+									<checkbox id="prefAutoModeBox"
 											label="Enable Single Input Mode Upon Startup"
 											preference="extensions.hawking.autoMode" />
-									</hbox>
-									<hbox align="center">
-										<label>Scrolling Interval (seconds): </label>
-										<textbox maxlength="4" preference="extensions.hawking.autoInterval" id="autoIntervalText" size="4" />
-									</hbox>
-								</vbox>
-							</groupbox>
-							
-				        </tabpanel>
-
-						<!--highlighting-->
-						<tabpanel id="highlightingPanel" orient="vertical">
-						
-							<groupbox id="lasdlgasdlg" align="start">
-								<caption label="Highlight Box Preferences" />
+								</hbox>
 								<hbox align="center">
-									<label>Border Color: </label>
-									<colorpicker type="button" id="borderColor" palettename="standard"
+									<label>Scrolling Interval (seconds): </label>
+									<textbox maxlength="4" preference="extensions.hawking.autoInterval" id="autoIntervalText" size="4" />
+								</hbox>
+							</vbox>
+						</groupbox>
+			        </tabpanel>
+
+					<!--highlighting panel-->
+					<tabpanel id="highlightingPanel" orient="vertical">
+						<groupbox id="lasdlgasdlg" align="start">
+							<caption label="Highlight Box Preferences" />
+							<hbox align="center">
+								<label>Border Color: </label>
+								<colorpicker type="button" id="borderColor" palettename="standard"
 										preference="extensions.hawking.borderHighlightColor" />
+							</hbox>
+							<separator class="thin"/>
+							<hbox align="center">
+								<label>Border Width (pixels): </label>
+								<menulist id="borderWidthList" preference="extensions.hawking.borderHighlightWidth">
+									<menupopup>
+										<menuitem value="1" label="1"/>
+										<menuitem value="2" label="2"/>
+										<menuitem value="3" label="3"/>
+										<menuitem value="4" label="4"/>
+										<menuitem value="5" label="5"/>
+										<menuitem value="6" label="6"/>
+										<menuitem value="7" label="7"/>
+										<menuitem value="8" label="8"/>
+										<menuitem value="9" label="9"/>
+										<menuitem value="10" label="10"/>
+										<menuitem value="11" label="11"/>
+										<menuitem value="12" label="12"/>
+										<menuitem value="13" label="13"/>
+										<menuitem value="14" label="14"/>
+										<menuitem value="15" label="15"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+						</groupbox>
+			        </tabpanel>
+
+					<!--sound panel-->
+					<tabpanel id="soundPanel" orient="vertical">
+						<groupbox align="start">
+							<caption label="Sound Preferences" />
+							<vbox>
+								<hbox align="center">
+						            <checkbox label="Turn off Sound Effects" preference="extensions.hawking.soundoff" />
 								</hbox>
 								<separator class="thin"/>
 								<hbox align="center">
-									<label>Border Width (pixels): </label>
-										<menulist id="borderWidthList" preference="extensions.hawking.borderHighlightWidth">
-											<menupopup>
-												<menuitem value="1" label="1"/>
-												<menuitem value="2" label="2"/>
-												<menuitem value="3" label="3"/>
-												<menuitem value="4" label="4"/>
-												<menuitem value="5" label="5"/>
-												<menuitem value="6" label="6"/>
-												<menuitem value="7" label="7"/>
-												<menuitem value="8" label="8"/>
-												<menuitem value="9" label="9"/>
-												<menuitem value="10" label="10"/>
-												<menuitem value="11" label="11"/>
-												<menuitem value="12" label="12"/>
-												<menuitem value="13" label="13"/>
-												<menuitem value="14" label="14"/>
-												<menuitem value="15" label="15"/>
-											</menupopup>
-										</menulist>
+									<label control="soundClick">Click Sound: </label>
+									<menulist id="soundClick" preference="extensions.hawking.soundClick">
+										<menupopup>
+										</menupopup>
+									</menulist>
 								</hbox>
-							</groupbox>
-							
-				        </tabpanel>
-
-
-
-
-						<!--sound panel-->
-						<tabpanel id="soundPanel" orient="vertical">
-						
-							<groupbox align="start">
-								<caption label="Sound Preferences" />
-								<vbox>
-									<hbox align="center">
-							            <checkbox label="Turn off Sound Effects" preference="extensions.hawking.soundoff" />
-									</hbox>
-									<separator class="thin"/>
-									<hbox align="center">
-										<label control="soundClick">Click Sound: </label>
-										<menulist id="soundClick" preference="extensions.hawking.soundClick">
-											<menupopup>
-												
-											</menupopup>
-										</menulist>
-									</hbox>
-									<separator class="thin"/>
-									<hbox align="center">
-										<label control="soundNext">Next Sound: </label>
-										<menulist id="soundNext" preference="extensions.hawking.soundNext">
-											<menupopup>
-												
-											</menupopup>
-										</menulist>
-									</hbox>
-									<separator class="thin"/>
-									<hbox align="center">
-										<label control="soundPrev">Previous Sound: </label>
-										<menulist id="soundPrev" preference="extensions.hawking.soundPrev">
-											<menupopup>
-												
-											</menupopup>
-										</menulist>
-									</hbox>
-								</vbox>
-<!--
-								<hbox>
-									<textbox preference="extensions.hawking.soundClick" label="Click" size="11" />
-									<textbox preference="extensions.hawking.soundNext" label="Previous" size="11" />
-									<textbox preference="extensions.hawking.soundPrev" label="Next" size="11" />
+								<separator class="thin"/>
+								<hbox align="center">
+									<label control="soundNext">Next Sound: </label>
+									<menulist id="soundNext" preference="extensions.hawking.soundNext">
+										<menupopup>
+										</menupopup>
+									</menulist>
 								</hbox>
--->
-							</groupbox>
-							
-				        </tabpanel>
+								<separator class="thin"/>
+								<hbox align="center">
+									<label control="soundPrev">Previous Sound: </label>
+									<menulist id="soundPrev" preference="extensions.hawking.soundPrev">
+										<menupopup>
+										</menupopup>
+									</menulist>
+								</hbox>
+							</vbox>
 
-				        
-				    </tabpanels>
-				</tabbox>
-             </prefpane>
-        </prefwindow>
-	</overlay>
+							<!-- <hbox>
+								<textbox preference="extensions.hawking.soundClick" label="Click" size="11" />
+								<textbox preference="extensions.hawking.soundNext" label="Previous" size="11" />
+								<textbox preference="extensions.hawking.soundPrev" label="Next" size="11" />
+							</hbox> -->
+						</groupbox>
+			        </tabpanel>
+			    </tabpanels>
+			</tabbox>
+		</prefpane>
+    </prefwindow>
+</overlay>
