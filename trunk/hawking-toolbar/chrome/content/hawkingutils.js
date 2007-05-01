@@ -14,7 +14,7 @@
  * The Initial Developers of the Original Code are John Foushee, Andrew Hulbert,
  * and Brian Louden
  *
- * The current homepage the FireHawk Toolbar is updates is 
+ * The current homepage for the FireHawk Toolbar and updates
  * http://code.google.com/p/hawking-toolbar/ 
  *
  * Portions created by the Initial Developer are Copyright (C) 2007
