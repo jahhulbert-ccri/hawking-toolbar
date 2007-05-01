@@ -35,6 +35,12 @@
  *
  * ***** END LICENSE BLOCK ***** */
  
+/**
+ * FireHawk 
+ * Main toolbar class/var that contains the toolbar code similar to the main() class in a java program
+ * This variable implements the ContextManager, Highlighter and other classes and serves
+ * as the main controller of the toolbar code.
+ */
 var FireHawk = {
 	defaults: {
 		DEFAULT_VERTICAL_SCROLL: 200,
@@ -46,6 +52,12 @@ var FireHawk = {
 	Highlighter: null,
 	SoundBlaster: null,
 	PageContext: null,
+	
+	/**
+	 * initialize()
+	 * function overrides setup function
+	 * function initializes the toolbar events and calls FireHawkSetup
+	 */
 	initialize: function(){
 		//this will perform all the setting up needed
 		try{
@@ -58,11 +70,12 @@ var FireHawk = {
 		this.FireHawkSetup();
 	},
 	
-	/*
+	/**
 	 * FireHawkSetup()
 	 * this is the setup function which determines how the toolbar starts up
 	 * based on preferences. It disables the toolbar if that is set, it
 	 * sets up in Literacy Mode if needed, etc.
+	 * this function also initializes the class member variables
 	 */
 	FireHawkSetup: function(){
 		try{
@@ -104,7 +117,8 @@ var FireHawk = {
 			this.htbAlert(e.name+" - "+e.message)
 		}
 	},
-	/*
+	
+	/**
 	 * UnScope()
 	 * This function should take care of leaving the toolbar you're in
 	 * so the toolbars you're leaving are hidden appropriately, and
@@ -124,7 +138,8 @@ var FireHawk = {
 
 	//		this.ReLight();
 	},
-	/*
+	
+	/**
 	 * Scope(idstr)
 	 * This function takes care of moving into a subtoolbar, hiding the parent
 	 * toolbar and showing the new one you wish to enter.
@@ -148,20 +163,28 @@ var FireHawk = {
 
 //		this.ReLight();
 	},
-	/* ReLight()
+	
+	/* *
+	 * ReLight()
 	 * This function is called when you switch between toolbar contexts 
 	 * so you can see which button you're currently returned to/entered on
 	 */
-//	ReLight: function (){
-	//	this.htbButtonHover(this.ContextManager.getCurrent());
-	//used to have a "times" parameter
-	//before we had the css highlighting, we
-	//needed to focus on it multiple times
-	//	if(times>5)
-	//		return;
-	//	setTimeout("ReLight("+parseInt(times+1)+")", 100);
-	//},
+	/*
+	ReLight: function () {
+		this.htbButtonHover(this.ContextManager.getCurrent());
+		//used to have a "times" parameter
+		//before we had the css highlighting, we
+		//needed to focus on it multiple times
+		if(times>5)
+			return;
+		setTimeout("ReLight("+parseInt(times+1)+")", 100);
+	},*/
 	
+	/**
+	 * ClickObject(object)
+	 * This function performs the command associated with an object and if it is not found
+	 * the function attemps to click the object.
+	 */
 	ClickObject: function (object){
 		//pass this function the object you want to click
 		if(!object){
@@ -220,7 +243,7 @@ var FireHawk = {
 	
 	/**
 	 * HawkingPageNext()
-	 * 
+	 * This function will move the highlighter to the next link within the page.
 	 */
 	HawkingPageNext: function (){
 		//first check if we have instantiated PageContext or if the PageContext's location
@@ -230,8 +253,9 @@ var FireHawk = {
 			//alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
-		else	
+		else{
 			this.unHighlight(this.PageContext.getCurrent());
+		}
 		this.PageContext.next();
 		this.Highlight(this.PageContext.getCurrent());
 		//alert("looking at "+PageContext.getCurrent().nodeName);
@@ -240,26 +264,34 @@ var FireHawk = {
 	
 	/**
 	 * HawkingPagePrev()
-	 *
+	 * This function moves the highligter to the previous link in the page the user is viewing.
+	 * If on the first link, it treats it as a circular list and moves to the last link
 	 */
 	HawkingPagePrev: function (){
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
 		//to a new page)
 		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=window.content.document.location){
-	//		alert("page reset or new");
+			//alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
-		else
+		else {
 			this.unHighlight(PageContext.getCurrent());
+		}
 		this.PageContext.prev();
-		if(!htbGetPref("soundoff"))
+		if(!htbGetPref("soundoff")) {
 			this.SoundBlaster.playSound("soundPrev");
+		}
 	
 		this.Highlight(this.PageContext.getCurrent());
-	//	alert("looking at "+PageContext.getCurrent().nodeName);
-	//	alert("done");
+		//alert("looking at "+PageContext.getCurrent().nodeName);
+		//alert("done");
 	},
+	
+	/**
+	 * HawkingPageClick()
+	 * this function performs a click on the currently highlighted link within a pagecontext that the user is viewing
+	 */
 	HawkingPageClick: function (){
 		this.ClickObject(this.PageContext.getCurrent());
 		this.PageContext.Old = true;
@@ -270,8 +302,9 @@ var FireHawk = {
 			//from literacy mode every click if the setting is set
 			this.htbToggleLiteracy();
 		}
-		if(!htbGetPref("soundoff"))
+		if(!htbGetPref("soundoff")){
 			this.SoundBlaster.playSound("soundClick");
+		}
 	
 	//moved to the window.onload function htbResetPageContext
 	//	this.PageContext = new ContextList(window.content.document.body);
@@ -279,7 +312,7 @@ var FireHawk = {
 	
 	/**
 	 * htbScrollWindow(horizontal,vertical)
-	 * Function scrolls to a given location in the window
+	 * Function scrolls the window by a given amount
 	 */
 	htbScrollWindow: function (horizontal,vertical){
 		window.content.scrollBy(horizontal,vertical);
@@ -287,8 +320,7 @@ var FireHawk = {
 	
 	/**
 	 * htbScrollDown()
-	 * Function scrolls down by a defined amount when the user moves to the next
-	 * link on a page
+	 * Function scrolls down by a defined amount when activated by the hawking scroll subtoolbar
 	 */
 	htbScrollDown: function (){
 		var amt = htbGetPref('verticalScrollAmt')
@@ -298,6 +330,10 @@ var FireHawk = {
 		this.htbScrollWindow(0,amt);
 	},
 	
+	/**
+	 * htbScrollUp()
+	 * Function scrolls up by a defined amount when activated by the hawking scroll subtoolbar
+	 */
 	htbScrollUp: function (){
 		var amt = htbGetPref('verticalScrollAmt')
 		if(!amt) {
@@ -305,6 +341,11 @@ var FireHawk = {
 		}
 		this.htbScrollWindow(0,(-1*amt));
 	},
+	
+	/**
+	 * htbScrollLeft()
+	 * Function scrolls left by a defined amount when activated by the hawking scroll subtoolbar
+	 */
 	htbScrollLeft: function (){
 		var amt = htbGetPref('horizontalScrollAmt')
 		if(!amt) {
@@ -313,6 +354,10 @@ var FireHawk = {
 		this.htbScrollWindow((-1*amt),0);
 	},
 	
+	/**
+	 * htbScrollRight()
+	 * Function scrolls right by a defined amount when activated by the hawking scroll subtoolbar
+	 */
 	htbScrollRight: function (){
 		var amt = htbGetPref('horizontalScrollAmt')
 		if(!amt) {
@@ -321,6 +366,10 @@ var FireHawk = {
 		this.htbScrollWindow(amt,0);
 	},
 	
+	/**
+	 * htbButtonHover(obj)
+	 * this function is called when a button on a toolbar is selected to perform the hover event
+	 */
 	htbButtonHover: function (obj){
 		if(!obj || !obj.style)
 			return;
@@ -329,15 +378,25 @@ var FireHawk = {
 		obj.className = "over";
 	},
 	
+	/**
+	 * htbButtonBlur(obj)
+	 * this function is called when a toolbar button is deselected and performs is blur() functionality
+	 */
 	htbButtonBlur: function (obj){
 		if(!obj || !obj.style)
 			return;
 		obj.style.color = 'black';
 		obj.className = "";
-	//	if(obj.getAttribute && obj.getAttribute("high"))
-	//		alert("changed to "+obj.getAttribute("high"));
+		/*if(obj.getAttribute && obj.getAttribute("high")) {
+			alert("changed to "+obj.getAttribute("high"));
+		}*/
 	},
 	
+	/**
+	 * htbToggleCapture()
+	 * this function effectively disables or enables the toolbar for usage (not in the sense of disabling a firefox extension)
+	 * by setting the toolbar to capture or not capture events by the mouse, keyboard, or input switch
+	 */
 	htbToggleCapture: function (){
 		var dis = htbGetPref("disabled");
 		var button = document.getElementById("HawkingToggleActivity");
@@ -345,24 +404,28 @@ var FireHawk = {
 			htbSetPref("disabled", false, "Bool");
 			if(button)
 			button.label = "Enable Hawking Toolbar";
-	//		else
-	//		alert("disabled");
+			//else
+			//alert("disabled");
 		}
 		else{
 			htbSetPref("disabled", true, "Bool");
 			if(button)
 			button.label = "Disable Hawking Toolbar";
-	//		else
-	//		alert("activated");
+			//else
+			//alert("activated");
 		}
 	},
 	
-	
+	/**
+	 * htbToggleLiteracy()
+	 * This function toggles simple or literacy mode. In this mode, the user can only iterate throught the links
+	 * on a webpage instead of through a toolbar context
+	 */
 	htbToggleLiteracy: function (){
 		var lbar = htbGetPref("literacybar");
 		var mItem = document.getElementById("htbLiteracyMenuItem");
-//		var tb = document.getElementById("HawkingToolBar");
-//		var literacyTB = document.getElementById("HawkingSBLiteracy");
+		//var tb = document.getElementById("HawkingToolBar");
+		//var literacyTB = document.getElementById("HawkingSBLiteracy");
 		if(lbar){
 			//go back to full feature set
 			htbSetPref("literacybar", false, "Bool");
@@ -379,14 +442,26 @@ var FireHawk = {
 		}
 	},
 	
+	/**
+	 * htbBack()
+	 * This function changes the current window location to the previous page in the browser's history
+	 */
 	htbBack: function (){
 		window.content.history.back();
 	},
 	
+	/**
+	 * htbForward()
+	 * This function changes the current window location to the next page in the browser's history
+	 */
 	htbForward: function (){
 		window.content.history.forward();
 	},
 	
+	/**
+	 * htbReload()
+	 * This function refreshes the current page based on its href property.
+	 */
 	htbReload: function (){
 		window.content.location.href = window.content.location.href;
 	},
@@ -402,11 +477,19 @@ var FireHawk = {
 		this.PageContext = new ContextList(window.content.document.body);
 		//this should also clear the highlighter.
 	},
+	
+	/**
+	 * htbAlert(msg)
+	 * This function is called and is used to alert the user to an error by placing
+	 * a textbox on the toolbar as to avoid using popups which cannot be exited by by the user
+	 * when the user is not using a mouse or a standard keyboard
+	 */
 	htbAlert: function(msg){
 		try{
-			if(!htbGetPref("soundoff"))
+			if(!htbGetPref("soundoff")){
 				this.SoundBlaster.playSound("soundError");
-			if(!this.ErrorBox){//create one and append to the current scope
+			}
+			if(!this.ErrorBox){ //create one and append to the current scope
 				this.ErrorBox = this.htbMakeEbox();
 				this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
 			}
@@ -417,25 +500,41 @@ var FireHawk = {
 			txt.id = tid;
 			this.ErrorBox.appendChild(txt);
 			setTimeout("FireHawk.htbRemoveErrorMessage('"+tid+"');", 60000);//disappear in 1 minute
-			if(this.ErrorBox.childNodes.length>3)
+			if(this.ErrorBox.childNodes.length>3){
 				this.ErrorBox.removeChild(this.ErrorBox.firstChild);
-//			this.ErrorBox.setAttribute("value", msg);
+			}
+			//this.ErrorBox.setAttribute("value", msg);
 		}
 		catch(e){
 			alert(e.name+" - "+e.message);
 		}
 	},
+	
+	/**
+	 * htbMakeEbox()
+	 * this function creates the errorbox used by htbAlert
+	 */
 	htbMakeEbox: function(){
 		var ebox = document.createElement("box");
 		ebox.id = "HawkingErrorMessage";
 		ebox.setAttribute("orient", "vertical");
 		return ebox;
 	},
+	
+	/**
+	 * htbRemoveErrorMessage(tid)
+	 * this function removes an error messgage by id
+	 */
 	htbRemoveErrorMessage: function(tid){
 		if($(tid))
 			this.ErrorBox.removeChild($(tid));
 	},
 
+	/**
+	 * htbToggleAuto
+	 * this function toggles auto mode in which the toolbar automatically moves through the current context
+	 * or through the links on a page in simple/literacy mode
+	 */
 	htbToggleAuto: function(){
 		var mode = htbGetPref("autoMode");
 		if(mode==true){
@@ -446,6 +545,10 @@ var FireHawk = {
 		}
 	},
 
+	/**
+	 * htbEnableAuto
+	 * this function enables automatic mode 
+	 */
 	htbEnableAuto: function(){
 		htbSetPref("autoMode", true, "Bool");
 		var timing = parseFloat(htbGetPref("autoInterval"));
@@ -455,9 +558,13 @@ var FireHawk = {
 		}
 		timing = timing*1000;//from seconds to miliseconds
 		this.autoInterval = setInterval("FireHawk.htbAutoIterate();", timing);
-	//	alert(autoInterval+" set");
+		//alert(autoInterval+" set");
 	},
 
+	/**
+	 * htbDisableAuto()
+	 * this function disables auto mode
+	 */
 	htbDisableAuto: function(){
 		try{
 		htbSetPref("autoMode", false, "Bool");
@@ -465,18 +572,26 @@ var FireHawk = {
 		}catch(e){}
 	},
 
+	/**
+	 * htbAutoIterate()
+	 * this function is called on a time basis by the toolbar and performs the auto iteration function
+	 * by moving to the next object in the context or next link on the webpage
+	 */
 	htbAutoIterate: function(){
 		var simple = htbGetPref("literacybar");
-		if(simple)//we're in literacy mode
+		if(simple) {//we're in literacy mode
 			this.HawkingPageNext();
-		else //we're in normal toolbar mode
-			this.ContextManager.next();		
+		}
+		else {//we're in normal toolbar mode
+			this.ContextManager.next();
+		}
 	}
-	
-	
-	
-}
 
+} //end FireHawk definition
+
+/**
+ *
+ */
 var ContextManager = Class.create();
 ContextManager.prototype = {
 	ContextArray: new Array(),
@@ -525,7 +640,8 @@ ContextManager.prototype = {
 		//this returns the current context pointed to
 		return this.ContextArray[this.ContextArray.length-1];
 	}
-}
+	
+} //end ContextManager definition
 
 function ContextList(root){
 	//this object should store 
@@ -680,7 +796,7 @@ ContextList.prototype = {
 	  return true;
 	},
 
-}
+} //end ContextList definition
 
 	/*
 	 * htbActionTransform(ev)
