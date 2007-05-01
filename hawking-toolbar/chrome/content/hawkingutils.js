@@ -34,24 +34,24 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
- 
- /* 
- * Cross-browser event handling, by Scott Andrew
+ /* addEvent
+  * this function abstracts adding events to objects so if the method changes, it can be changes in a single place
+  * simply adds an "on"+eventType event listener to element which calls the function lamdaFunction when triggered
+  * useCapture specifies the style the event is captured, either bubbling up from the window through all the parents of the node
+  * or capturing it the first moment it appears. For example if you wish to add function CaptureClick() as an onclick event  to node "obj"
+  * call addEvent(obj, "click", CaptureClick, true); Note that you do NOT add parenthesis after CaptureClick because you are passing a
+  * reference to the function, not calling it.
  */
 function addEvent(element, eventType, lamdaFunction, useCapture) {
      if (element.addEventListener) {
         element.addEventListener(eventType, lamdaFunction, useCapture);
         return true;
-    } else if (element.attachEvent) {
-        var r = element.attachEvent('on' + eventType, lamdaFunction);
-        return r;
-    } else {
-        return false;
     }
 }
 
 /* 
- * Kills an event's propagation and default action
+ * Should disable an event from propagating any further through the DOM
+ * to trigger any other event listeners
  */
 function knackerEvent(eventObject) {
     if (eventObject && eventObject.stopPropagation) {
@@ -73,14 +73,12 @@ function knackerEvent(eventObject) {
     	eventObject.preventBubble();
 }
 
-/* 
- * Safari doesn't support canceling events in the standard way, so we must
- * hard-code a return of false for it to work.
- */
-function cancelEventSafari() {
-    return false;        
-}
-
+/*
+ * htbCountRealChildren(parent)
+ * This function returns the number of non-text and nont-comment children it contains
+ * this is necessary for the htbGetRealHighlight function to determine whether it should
+ * pass the highlighter the object or look for a more appropriate object to highlight 
+*/
 function htbCountRealChildren(parent){
 	var count = 0;
 	if(parent && parent.childNodes){
@@ -91,7 +89,11 @@ function htbCountRealChildren(parent){
 	}
 	return count;
 }
-
+/*
+ * htbGetFirstRealChildren(parent)
+ * This function returns the first non-text non-comment node in parent, usually used after
+ * htbCountRealChildren(parent) to assist the htbGetRealHighlight function
+*/
 function htbGetFirstRealChild(parent){
 	if(parent && parent.childNodes){
 		for(var i=0; i<parent.childNodes.length; i++){
