@@ -40,7 +40,12 @@ var htbHighlightCSS = "chrome://hawking-toolbar/skin/highlight.css";
 var htbHighlighter = Class.create();
 
 htbHighlighter.prototype = {
-	maxZ:100000000000,
+	maxZ:100000000000, //set maxZ to be greater than anything people would use in a webpage so that highlighter is on top
+	
+	/**
+	 * initialize()
+	 * function overrides prototype's intitialze constructor and creates the highlight div
+	 */
 	initialize: function(){
 		try{
 			var div = document.createElement("div");
@@ -55,6 +60,13 @@ htbHighlighter.prototype = {
 			alert(e.name+" exception: "+e.message);
 		}
 	},
+	
+	/**
+	 * highlight(obj)
+	 * this function resizes the highlighter div to fit around the object passed as an argument
+	 * and then moves the div to surround the object
+	 * derived from highlighter class of Firebug: http://www.getfirebug.com/
+	 */
 	highlight: function(obj){
 		if(!obj)return;
 		obj = this.findRealHighlight(obj);
@@ -66,7 +78,6 @@ htbHighlighter.prototype = {
 			obj.appendChild(this.highlighter);
 		}
 		{
-		
 			this.body = (obj.ownerDocument.body)?obj.ownerDocument.body:obj.ownerDocument.getElementsByTagName("body")[0];
 			this.body.appendChild(this.highlighter);
 		
@@ -95,15 +106,23 @@ htbHighlighter.prototype = {
 		else{
 			this.highlighter.style.zIndex=this.maxZ;
 		}
-		
-		
+
 		//use scroll to div now inplace of object scroll
 		//this.scrollToObj(obj);
 		this.scrollToDiv(this.highlighter);
 	},
+	/**
+	 * unhighlight()
+	 * for possible future use such as using sounds?
+	 */
 	unhighlight: function (){
 		return;
 	},
+	
+	/**
+	 * findRealHighlight(obj)
+	 * find the real object that we want to highlight for an object based on the html code and return it
+	 */
 	findRealHighlight: function (obj){
 		if(!obj){
 			return null;
@@ -115,22 +134,28 @@ htbHighlighter.prototype = {
 		  			return nobj;
 		  		}
 		  	}
-	//		if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
+			//if(obj.parentNode && htbCountRealChildren(obj.parentNode)==1){
 				/*  if the <a> is in something all by itself, highlight that instead;
 				    this is to counteract the annoying "no-highlight" bug when we find an
 				    <a> tag inside a <div> with an id so it appears as a clickable logo
 				*/
-	//			return obj.parentNode;
-	//		}
+				//return obj.parentNode;
+			//}
 		}
 		return obj;
 	},
 	
-	// function scrolls to a div and centers it.
+	/**
+	 * scrollToDiv(div)
+	 * this function scrolls to a div and centers it on the screen
+	 */
 	scrollToDiv: function(div){
-		// Returns a string with only numbers.
-		// Optionally allows a decimal.
-		// (c) Joe Chrzanowski
+		/**
+		 * numbersOnly(string, allowDecimal)
+		 * Returns a string with only numbers.
+		 *Optionally allows a decimal.
+		 *(c) Joe Chrzanowski
+		 */
 		function numbersOnly(string, allowdecimal) {
 		    validchars = "0123456789";
 		    outstr = "";
@@ -244,7 +269,7 @@ htbHighlighter.prototype = {
 			var scrolledY;
 		
 			if(window.frameElement) {
-	//			alert('frame element');
+				//alert('frame element');
 				scrolledX = window.frameElement.content.pageXOffset;
 				scrolledY = window.frameElement.content.pageYOffset;
 			}
@@ -273,6 +298,12 @@ htbHighlighter.prototype = {
 			}
 		}
 	},
+	
+	/**
+	 * getClientOffset(element)
+	 * get offset of client as coords from window edges
+	 * derived from highlighter class of Firebug: http://www.getfirebug.com/
+	 */
 	getClientOffset: function(elt){
 	    function addOffset(elt, coords, view)
 	    {
@@ -303,6 +334,12 @@ htbHighlighter.prototype = {
 	
 	    return coords;
 	},
+	
+	/**
+	 * getViewOffset(element, singleFrame)
+	 * better version of offsetfinder used to position div maybe used in future for 
+	 * derived from highlighter class of Firebug: http://www.getfirebug.com/	
+	 */
 	getViewOffset: function(elt, singleFrame){
 	    function addOffset(elt, coords, view){
 	        var p = elt.offsetParent;
@@ -376,15 +413,31 @@ htbHighlighter.prototype = {
         	addOffset(elt, coords, elt.ownerDocument.defaultView);
     	return coords;
 	},
+	
+	/**
+	 * getOffsetSize()
+	 * helper function
+	 * derived from highlighter class of Firebug: http://www.getfirebug.com/
+	 */
 	getOffsetSize: function(elt){
     	return {width: elt.offsetWidth, height: elt.offsetHeight};
 	},
 
+	/**
+	 * move(element, x, y)
+	 * move an element to a specified location in the doc window
+	 * derived from highlighter class of Firebug: http://www.getfirebug.com/
+	 */
 	move: function(element, x, y){
     	element.style.left = x + "px";
     	element.style.top = y + "px";
 	},
 
+	/**
+	 * resize(element, w, h)
+	 * resize an element to a particular size
+	 * derived from highlighter class of Firebug: http://www.getfirebug.com/
+	 */
 	resize: function(element, w, h){
 		element.style.width = w + "px";
 		element.style.height = h + "px";
