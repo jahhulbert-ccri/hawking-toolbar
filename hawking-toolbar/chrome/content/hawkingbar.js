@@ -229,7 +229,12 @@ var FireHawk = {
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
 		//to a new page)
-		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=window.content.document.location){
+		var myloc = "";
+		try{
+			myloc = window.content.document.location;
+		}
+		catch(e){}
+		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=myloc){
 			//alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
@@ -251,7 +256,13 @@ var FireHawk = {
 		//first check if we have instantiated PageContext or if the PageContext's location
 		//does not match the current page's location (they have since clicked a link and gone
 		//to a new page)
-		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=window.content.document.location){
+		
+		var myloc = "";
+		try{
+			myloc = window.content.document.location;
+		}
+		catch(e){}
+		if(!this.PageContext || this.PageContext.Old || this.PageContext.WindowLocation!=myloc){
 			//alert("page reset or new");
 			this.PageContext = new ContextList(window.content.document.body);
 		}
@@ -425,7 +436,7 @@ var FireHawk = {
 	/**
 	 * htbBack()
 	 * This function changes the current window location to the previous page in the browser's history
-	 */
+	 
 	htbBack: function (){
 		window.content.history.back();
 	},
@@ -433,7 +444,7 @@ var FireHawk = {
 	/**
 	 * htbForward()
 	 * This function changes the current window location to the next page in the browser's history
-	 */
+	 
 	htbForward: function (){
 		window.content.history.forward();
 	},
@@ -441,11 +452,13 @@ var FireHawk = {
 	/**
 	 * htbReload()
 	 * This function refreshes the current page based on its href property.
-	 */
+	 
 	htbReload: function (){
-		window.content.location.href = window.content.location.href;
+		try{
+			window.content.location.href = window.content.location.href;
+		}catch(e){}
 	},
-	
+	*/
 	/*
 	 * htbResetPageContext()
 	 * this should reset position of the link clicker every time a new page is loaded
@@ -741,7 +754,12 @@ ContextList.prototype = {
 	Setup: function(){
 	  //find all the clickables in this.ContextRoot to this.ContextLinks
 	  //and sets this.ContextPosition = 0
-	  this.WindowLocation=window.content.document.location;
+	  var myloc = "";
+	  try{
+		myloc = window.content.document.location;
+	  }
+	  catch(e){}
+	  this.WindowLocation=myloc;
 	  this.ContextLinks = []; //clears out the old array
 	  this.FindLinks(this.ContextRoot, this.ContextLinks);
 	  this.ContextPosition = 0;
