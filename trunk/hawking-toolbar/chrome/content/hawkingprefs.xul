@@ -50,7 +50,7 @@
 							<caption label="General Configuration" />
 							<hbox align="center">
 								<checkbox id="prefDisabledBox"
-										label="Always Disable Hawking Toolbar on Startup"
+										label="Always Enable Hawking Toolbar on Startup"
 										preference="extensions.hawking.StartAsOn" />
 								<checkbox id="prefDisabledBox"
 										label="Enable Hawking Toolbar"
