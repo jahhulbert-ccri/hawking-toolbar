@@ -35,28 +35,13 @@
  *
  * ***** END LICENSE BLOCK ***** */
  
- 
+ // prefix for hawking toolbar preferences in mozilla pref service
 const htbPrefPrefix = "extensions.hawking.";
 
-
-
-function getContents(aURL){
-  var ioService=Components.classes["@mozilla.org/network/io-service;1"]
-    .getService(Components.interfaces.nsIIOService);
-  var scriptableStream=Components
-    .classes["@mozilla.org/scriptableinputstream;1"]
-    .getService(Components.interfaces.nsIScriptableInputStream);
-
-  var channel=ioService.newChannel(aURL,null,null);
-  var input=channel.open();
-  scriptableStream.init(input);
-  var str=scriptableStream.read(input.available());
-  scriptableStream.close();
-  input.close();
-  return str;
-}
-
-
+/**
+ *
+ *
+ */
 function htbSetPref(name,value,type){
 	if(!this.prefs){
 		this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
@@ -70,6 +55,10 @@ function htbSetPref(name,value,type){
 		this.prefs.setCharPref(htbPrefPrefix+name,value);
 }
 
+/**
+ *
+ *
+ */
 function htbGetPref(name){
 	var prefix = htbPrefPrefix;
 	if(!this.prefs){
@@ -91,13 +80,21 @@ function htbGetPref(name){
 
 //@line 38 "/cygdrive/c/builds/tinderbox/Fx-Mozilla1.8-release/WINNT_5.2_Depend/mozilla/browser/components/preferences/security.js"
 //this contains the functionality of the preferences pane
+/**
+ * classHawkingPane
+ * hawking pane class which is the preferences pane in tools->options in firefox
+ * contains the functionality of the preferences pane
+ */
 var classHawkingPane = {
 	_pane: null,
 	htbCapturing: false,
 	htbCaptureWhich: "",
 	htbCaptureTimeout: -1,
-	//init function called by XUL file upon pane load
-	//this will set up the window
+	
+	/**
+	 * init()
+	 * called by xul file upon pane load, sets up the pane window
+	 */
 	init : function() {
 		try{
 			this._pane = document.getElementById("paneHawking");
@@ -116,6 +113,11 @@ var classHawkingPane = {
 //			alert(e.name+" - "+e.message);
 		}
 	},
+	
+	/**
+	 * htbGetSoundFiles()
+	 * gets sound files from the sounds directory and returns them as an array
+	 */
 	htbGetSoundFiles: function(){
 		try{
 			const id = "HawkingBar@google.com";
@@ -143,6 +145,12 @@ var classHawkingPane = {
 		}
 		catch(e){FireHawk.htbAlert(e);}
 	},
+	
+	/**
+	 * htbWriteSoundOptions(menuListId)
+	 * function writes sound choices from the sound directory
+	 * so that users can choice different sounds for actions
+	 */
 	htbWriteSoundOptions: function(menuListId){
 			var menuList = document.getElementById(menuListId);
 			if(!menuList) {
@@ -163,6 +171,11 @@ var classHawkingPane = {
 			}
 			catch(e){FireHawk.htbAlert(e);}
 	},
+	
+	/**
+	 * htbCaptureEventMove(ev)
+	 * function captures the move event when called by htbCaptureEventPref()
+	 */
 	htbCaptureEventMove: function (ev){
 		knackerEvent(ev);
 		var ebut = document.getElementById("htbEngageButton");
@@ -177,6 +190,12 @@ var classHawkingPane = {
 		htbCaptureTimeout = setTimeout("classHawkingPane.htbNothingCaptured();", 5000);
 		return false;
 	},
+	
+	/**
+	 * htbCaptureEventEngage(ev)
+	 * function captures the event when the user tries to set the engage event
+	 * called by htbCaptureEventPref()
+	 */
 	htbCaptureEventEngage: function (ev){
 		knackerEvent(ev);
 		var ebut = document.getElementById("htbEngageButton");
@@ -191,11 +210,19 @@ var classHawkingPane = {
 		return false;
 	},
 
+	/**
+	 * htbNothingCaptured()
+	 * alerts user if no event was captured while trying to set move or engage events in prefs
+	 */
 	htbNothingCaptured: function (){
 		alert("No event was captured");
 		htbResetCapture();
 	},
 
+	/**
+	 * htbCaptureEventPref(ev)
+	 * function first called when trying to set up an event...called by xul buttons
+	 */
 	htbCaptureEventPref: function (ev){
 		if(!htbCapturing)
 			return true;
@@ -257,12 +284,19 @@ var classHawkingPane = {
 		return true;
 	},
 
+	/**
+	 * htbDoneCapturing()
+	 * called after done capturing events
+	 */
 	htbDoneCapturing: function (){
 		clearTimeout(htbCaptureTimeout);
 		this.htbResetCapture();
 	},
 
-
+	/**
+	 * htbResetCapture()
+	 * resets all fields after capturing including button values and xul layout and stops capturing
+	 */
 	htbResetCapture: function (){
 		htbCapturing = false;//done capturing
 		var isMove = (htbCaptureWhich=="move");
@@ -279,7 +313,12 @@ var classHawkingPane = {
 		document.getElementById("htbMoveButton").label = "Click Here To Set 'Move' Action";
 		document.getElementById("htbEngageButton").label = "Click Here To Set 'Engage' Action";	
 	},
-
+	
+	/**
+	 * htbTranslateAction(isMove)
+	 * translates the preferences into a description of what move and engage currently are
+	 * to fill into the text box in the xul file
+	 */
 	htbTranslateAction: function (isMove){
 		//this function should tranlate the preferences into a 
 		//description of what the move and engage actions are currently set at
@@ -318,6 +357,10 @@ var classHawkingPane = {
 		return translated;
 	},
 
+	/**
+	 * htbFillActions()
+	 * fills the text box with a visual representation of the event captured
+	 */
 	htbFillActions: function (){
 		var trans = this.htbTranslateAction(true);
 		if($("VisualMoveEvent")){
