@@ -19,11 +19,12 @@
   * DONE implement sound chooser option by reading directory structure
   * DONE - Make a delay in auto mode
   * DONE - fix frames problem - have it reload stuff
+  * DONE - Use browser.back() and browser nav functions
 
 == Long term==
+  * Install an auto updater
   * check special cases in test of weird highlighting -> remove from getRealHighlight
   * allow users to add their own sound
-  * Use browser.back() function
   * merge with brett clippingdale's pages - email him
   * switch between tabs
 
