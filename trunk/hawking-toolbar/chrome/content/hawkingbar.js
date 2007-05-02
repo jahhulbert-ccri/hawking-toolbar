@@ -364,9 +364,13 @@ var FireHawk = {
 	htbButtonHover: function (obj){
 		if(!obj || !obj.style)
 			return;
-		obj.focus();
-		obj.style.color = 'red';
-		obj.className = "over";
+		
+		if(!this.htbChangeButtonImage(obj, "s")){
+			alert('used');
+			obj.focus();
+			obj.style.color = 'red';
+			obj.className = "over";
+		}
 	},
 	
 	/**
@@ -376,11 +380,51 @@ var FireHawk = {
 	htbButtonBlur: function (obj){
 		if(!obj || !obj.style)
 			return;
-		obj.style.color = 'black';
-		obj.className = "";
-		/*if(obj.getAttribute && obj.getAttribute("high")) {
-			alert("changed to "+obj.getAttribute("high"));
-		}*/
+		if(!this.htbChangeButtonImage(obj, "n")){
+			//backup
+			alert('used');
+			obj.style.color = 'black';
+			obj.className = "";
+		}
+
+	},
+	
+	/*
+	* htbChangeButtonImage(url, border)
+	* helper function for htbButtonHover and htbButtonBlur
+	* this function is used for toggling the images on the toolbar between 
+	* the selected look and the non-selected look. It changes the image
+	* url based on what the style sheet specified, and edits the _n or _s
+	* ending to be whatever border passes it. The convention right now
+	* is to have 2 images, one is a normal image image_n.png and the 
+	* other is a selected image image_s.png. If you follow this convention,
+	* the ButtonBlur and ButtonHover functions should work for your
+	* buttons also
+	*/
+	htbChangeButtonImage: function(obj, border){
+		try{
+			var cstyle =obj.style.listStyleImage;
+			if(!cstyle || cstyle=="none"){
+				cstyle = window.getComputedStyle(obj, null).getPropertyValue("list-style-image");
+				if(!cstyle){
+				//no style found
+					return false;
+				}
+			}
+			//should match the url of the image given
+			var myregx = /^url\((.+?)_(.)\.(png|jpg|gif|jpeg)\)$/i;
+			var mres = myregx.exec(cstyle);
+			if(!mres){
+				//no match
+				return false;
+			}
+			obj.style.listStyleImage = "url('"+mres[1]+"_"+border+"."+mres[3]+"')";
+			return true;
+		}
+		catch(e){
+			this.htbAlert("error!: "+e);
+			return false;
+		}	
 	},
 	
 	/**
@@ -552,6 +596,9 @@ var FireHawk = {
 		}
 		timing = timing*1000;//from seconds to miliseconds
 		this.autoInterval = setInterval("FireHawk.htbAutoIterate();", timing);
+		//change the image
+		//this will overwrite the image with a new one, but retain the old one when .listStyleImage is set = ""
+		$("HawkingToggleAuto").style.listStyleImage = "url('chrome://hawkingbar/skin/autoModeNo_s.png')";
 		//alert(autoInterval+" set");
 	},
 
@@ -563,6 +610,9 @@ var FireHawk = {
 		try{
 		htbSetPref("autoMode", false, "Bool");
 		clearInterval(this.autoInterval);
+		//restores original style of image
+		var abut = $("HawkingToggleAuto");
+		abut.style.listStyleImage = "url('chrome://hawkingbar/skin/autoMode_s.png')";
 		}catch(e){}
 	},
 
