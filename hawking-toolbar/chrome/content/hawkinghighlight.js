@@ -44,7 +44,9 @@ htbHighlighter.prototype = {
 	
 	/**
 	 * initialize()
-	 * function overrides prototype's intitialze constructor and creates the highlight div
+	 * function implements prototype's intitialze constructor and creates the highlight div
+	 * this div will be staticly positioned over the object available for clicking so it should
+	 * not alter the page content in any way other than the addition of a single div.
 	 */
 	initialize: function(){
 		try{
