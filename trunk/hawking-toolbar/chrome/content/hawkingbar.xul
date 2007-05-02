@@ -12,7 +12,7 @@
 		<preference id="extensions.hawking.disabled" name="extensions.hawking.disabled" type="bool"/>
     </preferences>
 	<menupopup id="menu_ToolsPopup">
-		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Toggle Hawking" accesskey="L" onclick="htbToggleEnableMenuItem('htbLiteracyMenuItem')" />
+		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Toggle Hawking" accesskey="L" onclick="FireHawk.htbToggleCapture()" />
 	</menupopup>
 	<toolbox id="navigator-toolbox">
     	<toolbar id="HawkingToolBar" toolbarname="HawkingToolBar" accesskey="H"

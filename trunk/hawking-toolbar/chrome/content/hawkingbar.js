@@ -76,13 +76,7 @@ var FireHawk = {
 				htbSetPref("disabled", false, "Bool");
 			}
 			var dis = htbGetPref("disabled");
-			var button = document.getElementById("HawkingToggleActivity");
-			if(button){
-				if(dis)
-					button.label = "Disable Hawking Toolbar";
-				else
-					button.label = "Enable Hawking Toolbar";
-			}
+			this.htbSetEnableMenuItemText(!dis,"htbLiteracyMenuItem");
 			//if you were in auto mode or have it set to always be there on startup
 			var mode = (htbGetPref("autoMode") || htbGetPref("StartInAuto"));
 			if(mode){
@@ -385,7 +379,7 @@ var FireHawk = {
 	 */
 	htbToggleCapture: function (){
 		var dis = htbGetPref("disabled");
-		var button = document.getElementById("HawkingToggleActivity");
+		this.htbSetEnableMenuItemText(dis,"htbLiteracyMenuItem");
 		if(dis==true){
 			htbSetPref("disabled", false, "Bool");
 			if(button)
@@ -598,8 +592,21 @@ var FireHawk = {
 			this.ContextManager.next();
 		}
 
+	},
+	
+	htbSetEnableMenuItemText:function(enable,menuId){
+		menuItem = $(menuId);
+		if(!menuItem){
+			htbAlert("menu item not found");
+			return;
+		}
+		if(enable){
+			menuItem.setAttribute("label","Enable Hawking Toolbar");
+		}
+		else{
+			menuItem.setAttribute("label","Disable Hawking Toolbar");
+		}
 	}
-
 } //end FireHawk definition
 
 /**
