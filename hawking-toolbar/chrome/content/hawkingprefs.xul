@@ -58,19 +58,19 @@
 							</hbox>
 						</groupbox>
 						<groupbox id="simplifiedModeBox" align="start">
-				            <caption label="Simplified Mode"/>
+				            <caption label="Surf Mode"/>
 							<hbox align="center">
 					            <checkbox id="useSimplifiedMode"
-					                    label="Use Simplified Mode on Startup"
+					                    label="Use Surf Mode on Startup"
 					                    preference="extensions.hawking.StartAsLiteracy"/>
 					            <checkbox id="canLeaveSimplifiedMode"
-					                    label="Click returns to advanced mode"
+					                    label="Click Returns to Advanced Mode"
 					                    preference="extensions.hawking.literacybarEscape"/> 
 							</hbox>
 						</groupbox>
 						<groupbox>
 							<caption label="Input Switch Configuration" />
-							<label>To set Switch Actions, first Click the Button then press the switch</label>
+							<label>To set Switch Actions, first click the button then press the switch</label>
 							<separator class="thin"/>
 							<grid>
 								<columns>
@@ -84,7 +84,7 @@
 									</column>
 									<column>
 										<hbox align="center">
-											<label>Event: </label>
+											<label>Event Code: </label>
 											<textbox id="VisualMoveEvent" size="6" disabled="disabled" />
 											<!--
 											<label>Set 'Move' Action: </label>
@@ -92,7 +92,7 @@
 											-->
 										</hbox>
 										<hbox align="center">
-											<label>Event: </label>
+											<label>Event Code: </label>
 											<textbox id="VisualEngageEvent" size="6" disabled = "disabled" />
 											<!--
 											<label>Set 'Engage' Action: </label>
