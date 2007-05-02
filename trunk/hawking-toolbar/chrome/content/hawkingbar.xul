@@ -27,8 +27,8 @@
                        onclick="FireHawk.Scope('HawkingSBScroll')" />
         	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
                        onclick="FireHawk.HawkingBarGoHome()" />
-        	<toolbarseparator />
-        	<!-- <toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
+        	<!--<toolbarseparator />
+        	 <toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
                        label="Enable/Disable" onclick="FireHawk.htbToggleCapture()" /> -->
 			<toolbarseparator />
 			<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
