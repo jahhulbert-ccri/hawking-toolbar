@@ -31,11 +31,9 @@
         	 <toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
                        label="Enable/Disable" onclick="FireHawk.htbToggleCapture()" /> -->
 			<toolbarseparator />
-			<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode"
-                       label="Literacy Mode" oncommand="FireHawk.htbToggleLiteracy()" />
+			<toolbarbutton class="hawking" id="HawkingToggleLiteracy" tooltiptext="Toggle Literacy Center Mode" oncommand="FireHawk.htbToggleLiteracy()" />
 			<toolbarseparator />
-			<toolbarbutton class="hawking" id="HawkingToggleAuto" tooltiptext="Toggle Literacy Center Mode"
-                       label="Auto Mode" oncommand="FireHawk.htbToggleAuto()" />
+			<toolbarbutton class="hawking" id="HawkingToggleAuto" tooltiptext="Toggle Literacy Center Mode" oncommand="FireHawk.htbToggleAuto()" />
     	</toolbar>
     	<toolbar id="HawkingSBPageNav" toolbarname="HawkingPageNav" accesskey="N"
                  class="chromeclass-toolbar" context="toolbar-context-menu" hidden="true">
