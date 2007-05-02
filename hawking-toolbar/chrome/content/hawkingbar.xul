@@ -9,7 +9,7 @@
 	<script type="application/x-javascript" src="chrome://hawkingbar/content/hawkingbar.js" />
 	
 	<preferences>
-		<preference id="extensions.hawking.disabled" name="extensions.hawking.disabled" type="bool"/>
+		<preference id="extensions.hawking.hawkingEnabled" name="extensions.hawking.hawkingEnabled" type="bool"/>
     </preferences>
 	<menupopup id="menu_ToolsPopup">
 		<menuitem id="htbLiteracyMenuItem" insertafter="devToolsSeparator" label="Toggle Hawking" accesskey="L" onclick="FireHawk.htbToggleCapture()" />

@@ -18,8 +18,8 @@
 				<preference id="extensions.hawking.literacybar" name="extensions.hawking.literacybar" type="bool"/>
 				<preference id="extensions.hawking.borderHighlightColor" name="extensions.hawking.borderHighlightColor" type="string"/>
 				<preference id="extensions.hawking.borderHighlightWidth" name="extensions.hawking.borderHighlightWidth" type="int"/>
-				<preference id="extensions.hawking.StartAsOff" name="extensions.hawking.StartAsOff" type="bool"/>
-				<preference id="extensions.hawking.disabled" name="extensions.hawking.disabled" type="bool"/>
+				<preference id="extensions.hawking.StartAsOn" name="extensions.hawking.StartAsOn" type="bool"/>
+				<preference id="extensions.hawking.hawkingEnabled" name="extensions.hawking.hawkingEnabled" type="bool"/>
 				<preference id="extensions.hawking.moveEvent" name="extensions.hawking.moveEvent" type="string"/>
 				<preference id="extensions.hawking.engageEvent" name="extensions.hawking.engageEvent" type="string"/>
 				<preference id="extensions.hawking.autoMode" name="extensions.hawking.autoMode" type="bool"/>
@@ -51,10 +51,10 @@
 							<hbox align="center">
 								<checkbox id="prefDisabledBox"
 										label="Always Disable Hawking Toolbar on Startup"
-										preference="extensions.hawking.StartAsOff" />
+										preference="extensions.hawking.StartAsOn" />
 								<checkbox id="prefDisabledBox"
 										label="Enable Hawking Toolbar"
-										preference="extensions.hawking.disabled" />
+										preference="extensions.hawking.hawkingEnabled" />
 							</hbox>
 						</groupbox>
 						<groupbox id="simplifiedModeBox" align="start">
