@@ -4,8 +4,6 @@
 ==Things we have to do==
   * Documentation, tutorial, etc.
   * update toolbar images
-  * Make a delay in auto mode
-  * fix frames problem - have it reload stuff
   * recommend disable tabs
 
 ==Done Stuff==
@@ -19,6 +17,8 @@
   * DONE - move real highlight to highlighter class
   * DONE - change scrolling to scroll to highlight div instead of page element
   * DONE implement sound chooser option by reading directory structure
+  * DONE - Make a delay in auto mode
+  * DONE - fix frames problem - have it reload stuff
 
 == Long term==
   * check special cases in test of weird highlighting -> remove from getRealHighlight
