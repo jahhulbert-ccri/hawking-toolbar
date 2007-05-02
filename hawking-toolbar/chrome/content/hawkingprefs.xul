@@ -70,6 +70,8 @@
 						</groupbox>
 						<groupbox>
 							<caption label="Input Switch Configuration" />
+							<label>To set Switch Actions, first Click the Button then press the switch</label>
+							<separator class="thin"/>
 							<grid>
 								<columns>
 									<column>
