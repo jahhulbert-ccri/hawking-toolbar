@@ -104,7 +104,7 @@
 							</grid>										
 						</groupbox>
 						<groupbox>
-							<caption label="Single Input Mode (Auto Mode)" />
+							<caption label="Single Switch / Auto Scanning Mode" />
 							<vbox>
 								<hbox align="center">
 									<checkbox id="prefAutoModeBox"
@@ -112,7 +112,7 @@
 											preference="extensions.hawking.StartInAuto" />
 								</hbox>
 								<hbox align="center">
-									<label>Scrolling Interval (seconds): </label>
+									<label>Scan speed (seconds): </label>
 									<textbox maxlength="4" preference="extensions.hawking.autoInterval" id="autoIntervalText" size="4" />
 								</hbox>
 							</vbox>
