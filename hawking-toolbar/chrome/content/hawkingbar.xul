@@ -25,8 +25,8 @@
                        onclick="FireHawk.Scope('HawkingSBHistoryNav');" />
         	<toolbarbutton class="hawking" id="HawkingScrollPage" tooltiptext="Scroll Page"
                        onclick="FireHawk.Scope('HawkingSBScroll')" />
-        	<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
-                       onclick="FireHawk.HawkingBarGoHome()" />
+        	<!--<toolbarbutton class="hawking" id="HawkingBarHome" tooltiptext="Hawking Developers Home"
+                       onclick="FireHawk.HawkingBarGoHome()" />-->
         	<!--<toolbarseparator />
         	 <toolbarbutton class="hawking" id="HawkingToggleActivity" tooltiptext="Toggle Toolbar Activity"
                        label="Enable/Disable" onclick="FireHawk.htbToggleCapture()" /> -->
@@ -80,9 +80,10 @@
                  hidden="true">
 			<image src='chrome://hawkingbar/skin/navigation_n.png' />
 			<toolbarseparator />
-			<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="FireHawk.htbBack()" />
-			<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="FireHawk.htbForward()" />
-			<toolbarbutton id="HawkingRefresh" tooltiptext="Reload the page" onclick="FireHawk.htbReload()" />
+			<toolbarbutton id="HawkingBack" tooltiptext="Go back one page" onclick="BrowserBack();" />
+			<toolbarbutton id="HawkingForward" tooltiptext="Go forward one page" onclick="BrowserForward();" />
+			<toolbarbutton id="HawkingRefresh" tooltiptext="Reload the page" onclick="if (event.shiftKey) BrowserReloadSkipCache(); else BrowserReload();" />
+			<toolbarbutton id="HawkingHome" tooltiptext="Go to Browser Homepage" onclick="BrowserHome();" />
 			<toolbarbutton id="HawkingHistoryNavExit" tooltiptext="Exit"
 					   onclick="FireHawk.UnScope()" />
     	</toolbar>
