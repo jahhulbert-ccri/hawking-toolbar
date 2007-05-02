@@ -568,8 +568,27 @@ var FireHawk = {
 		if(dis==false){
 			return true; //toolbar disabled
 		}
-		//in future versions, I'd prefer that this method execute an event on window of the type "move" given in preferences
 		
+		//in future versions, I'd prefer that this method execute an event on window of the type "move" given in preferences
+/*		var moveClick = htbGetPref("moveAct"); //true if click, false if keypress
+		var moveVal = htbGetPref("moveVal"); //value of the action
+		var evObj;
+		if(moveClick){
+			//create a click event with .button = moveVal
+			var evObj = document.createEvent('MouseEvents');
+			evObj.initMouseEvent("click", false, true, window, 1, 0, 0, 0, 0, false, false, false, false, moveVal,null);
+		}
+		else if(!moveClick){
+			//create a keydown event with .which = moveVal
+			var evObj = document.createEvent('KeyboardEvent');
+			evObj.initKeyEvent ("down", "false", "true", null, false, false, false, false, moveVal, 0);
+		}
+		window.dispatchEvent(evObj);
+*/
+
+
+		
+//this way currently works
 		var simple = htbGetPref("literacybar");
 		if(simple) {//we're in literacy mode
 			this.HawkingPageNext();
@@ -577,6 +596,7 @@ var FireHawk = {
 		else {//we're in normal toolbar mode
 			this.ContextManager.next();
 		}
+
 	}
 
 } //end FireHawk definition
