@@ -71,11 +71,11 @@ var FireHawk = {
 			this.htbButtonHover(this.ContextManager.getCurrent());
 			this.ErrorBox = this.htbMakeEbox();
 			this.ContextManager.getContext().ContextRoot.appendChild(this.ErrorBox);
-			if(htbGetPref("StartAsOff")){
-				//if the always start as off setting is on, set disabled
-				htbSetPref("disabled", false, "Bool");
+			if(htbGetPref("StartAsOn")){
+				//if the always start as off setting is on, set enabled
+				htbSetPref("hawkingEnabled", true, "Bool");
 			}
-			var dis = htbGetPref("disabled");
+			var dis = htbGetPref("hawkingEnabled");
 			this.htbSetEnableMenuItemText(!dis,"htbLiteracyMenuItem");
 			//if you were in auto mode or have it set to always be there on startup
 			var mode = (htbGetPref("autoMode") || htbGetPref("StartInAuto"));
@@ -378,17 +378,17 @@ var FireHawk = {
 	 * by setting the toolbar to capture or not capture events by the mouse, keyboard, or input switch
 	 */
 	htbToggleCapture: function (){
-		var dis = htbGetPref("disabled");
+		var dis = htbGetPref("hawkingEnabled");
 		this.htbSetEnableMenuItemText(dis,"htbLiteracyMenuItem");
 		if(dis==true){
-			htbSetPref("disabled", false, "Bool");
+			htbSetPref("hawkingEnabled", false, "Bool");
 			if(button)
 			button.label = "Enable Hawking Toolbar";
 			//else
 			//alert("disabled");
 		}
 		else{
-			htbSetPref("disabled", true, "Bool");
+			htbSetPref("hawkingEnabled", true, "Bool");
 			if(button)
 			button.label = "Disable Hawking Toolbar";
 			//else
@@ -559,7 +559,7 @@ var FireHawk = {
 	 * by moving to the next object in the context or next link on the webpage
 	 */
 	htbAutoIterate: function(){
-		var dis = htbGetPref("disabled");
+		var dis = htbGetPref("hawkingEnabled");
 		if(dis==false){
 			return true; //toolbar disabled
 		}
@@ -919,7 +919,7 @@ ContextList.prototype = {
  */
 function htbActionTransform(ev){
 	try{
-	var dis = htbGetPref("disabled");
+	var dis = htbGetPref("hawkingEnabled");
 	if(dis==false){
 		return true; //toolbar disabled, normal action allowed
 	}
