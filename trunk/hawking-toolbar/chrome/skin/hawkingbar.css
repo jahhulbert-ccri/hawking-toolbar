@@ -55,12 +55,13 @@
 #HawkingBarPrefs.over{
 	list-style-image: url("chrome://hawkingbar/skin/prefs_s.png");
 }
+/*
 #HawkingBarHome{
 	list-style-image: url("chrome://hawkingbar/skin/home_n.png");
 }
 #HawkingBarHome.over{
 	list-style-image: url("chrome://hawkingbar/skin/home_s.png");
-}
+}*/
 #HawkingScrollRight{
 	list-style-image: url("chrome://hawkingbar/skin/forward_n.png");
 }
@@ -116,7 +117,12 @@
 #HawkingRefresh.over{
 	list-style-image: url("chrome://hawkingbar/skin/refresh_s.png");
 }
-
+#HawkingHome{
+	list-style-image: url("chrome://hawkingbar/skin/home_n.png");
+}
+#HawkingHome.over{
+	list-style-image: url("chrome://hawkingbar/skin/home_s.png");
+}
 #HawkingHistoryNavExit{
 	list-style-image: url("chrome://hawkingbar/skin/close_n.png");
 }
