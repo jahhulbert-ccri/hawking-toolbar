@@ -76,9 +76,10 @@ htbHighlighter.prototype = {
 		var dim = this.getOffsetSize(obj);
 		var loc = this.getViewOffset(obj, true);
 		
+		/*
 		if (obj.appendChild){
 			obj.appendChild(this.highlighter);
-		}
+		}*/
 		{
 			this.body = (obj.ownerDocument.body)?obj.ownerDocument.body:obj.ownerDocument.getElementsByTagName("body")[0];
 			this.body.appendChild(this.highlighter);
