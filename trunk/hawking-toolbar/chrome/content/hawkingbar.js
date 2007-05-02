@@ -42,6 +42,7 @@
  * as the main controller of the toolbar code.
  */
 var FireHawk = {
+	//add more defaults to this object. Not sure why these can't be in preferences but for now, here is where they reside
 	defaults: {
 		DEFAULT_VERTICAL_SCROLL: 200,
 		DEFAULT_HORIZONTAL_SCROLL: 200
@@ -54,30 +55,14 @@ var FireHawk = {
 	PageContext: null,
 	
 	/**
-	 * initialize()
-	 * function overrides setup function
-	 * function initializes the toolbar events and calls FireHawkSetup
-	 */
-	initialize: function(){
-		//this will perform all the setting up needed
-		try{
-			addEvent(window, "keydown", htbActionTransform, true);
-			addEvent(window, "click", htbActionTransform, true);
-			addEvent(window, "load", this.htbResetPageContext, true); //reloads the context every time a new page loads
-		}catch(e){
-			this.htbAlert(e.name+" - "+e.message);
-		}
-		this.FireHawkSetup();
-	},
-	
-	/**
 	 * FireHawkSetup()
 	 * this is the setup function which determines how the toolbar starts up
 	 * based on preferences. It disables the toolbar if that is set, it
 	 * sets up in Literacy Mode if needed, etc.
 	 * this function also initializes the class member variables
 	 */
-	FireHawkSetup: function(){
+	initialize: function(){
+		//this will perform all the setting up needed
 		try{
 			//this should only be called once
 			this.ContextManager = new ContextManager($("HawkingToolBar"));
@@ -98,13 +83,14 @@ var FireHawk = {
 				else
 					button.label = "Enable Hawking Toolbar";
 			}
-		
-			var mode = htbGetPref("autoMode");
+			//if you were in auto mode or have it set to always be there on startup
+			var mode = (htbGetPref("autoMode") || htbGetPref("StartInAuto"));
 			if(mode){
 				this.htbEnableAuto();
 			}
 			//transforms window events into move and engage
-			var simple = htbGetPref("literacybar");
+			//if you last were in litercay mode, or you have it set to always start in literacy mode
+			var simple = (htbGetPref("literacybar") || htbGetPref("StartAsLiteracy"));
 			if(simple){
 				//show the subbar for the literacy center simple toolbar
 				this.Scope("HawkingSBLiteracy");
@@ -578,6 +564,12 @@ var FireHawk = {
 	 * by moving to the next object in the context or next link on the webpage
 	 */
 	htbAutoIterate: function(){
+		var dis = htbGetPref("disabled");
+		if(dis==false){
+			return true; //toolbar disabled
+		}
+		//in future versions, I'd prefer that this method execute an event on window of the type "move" given in preferences
+		
 		var simple = htbGetPref("literacybar");
 		if(simple) {//we're in literacy mode
 			this.HawkingPageNext();
@@ -591,7 +583,10 @@ var FireHawk = {
 
 /**
  * Context Manager class and prototype
- * The Context Manager manages a toolbar context and moves between clickable items and clicks on items
+ * The Context Manager manages toolbars and subtoolbars
+ * so when you engage a button which takes you into a sub
+ * toolbar, you can exit that subtoolbare and emerge where
+ * you left off.
  */
 var ContextManager = Class.create();
 ContextManager.prototype = {
@@ -599,7 +594,7 @@ ContextManager.prototype = {
 	
 	/**
 	 * initialize(toolbar)
-	 * overrides prototype function to initialize toolbar
+	 * constructor for this toolbar
 	 */
 	initialize: function(toolbar){
 		if(!toolbar){
@@ -611,7 +606,10 @@ ContextManager.prototype = {
 	
 	/**
 	 * ExitContext()
-	 * this function exits a context and removes it from the context array
+	 * this function "leaves" the current context by blurring the button it is on,
+	 * removing the current context from its context list, and then focusing on
+	 * the button marked as current in the previous context. Essentially, a LIFO
+	 * stack setup.
 	 */
 	ExitContext: function(){
 		//this removes the top context
@@ -627,7 +625,9 @@ ContextManager.prototype = {
 	
 	/**
 	 * EnterContext(ncon)
-	 * This function takes the ncon (next context) argument and moves to it and adds it to the context array
+	 * This function takes the ncon (next context) argument as the new subtoolbar. This is pushed onto
+	 * the top of the stack, making it the current context. The previous current context's current button
+	* is blurred and ncon's first button is highlighted. 
 	 */
 	EnterContext: function(ncon){
 		//this adds a new context 'ncon' to the end of ContextArray
@@ -638,7 +638,7 @@ ContextManager.prototype = {
 	
 	/**
 	 * next()
-	 * This function moves to the next clickable object in the context
+	 * This function moves to the next clickable object in the current context
 	 */
 	next: function(){
 		//moves to next clickable
@@ -649,7 +649,7 @@ ContextManager.prototype = {
 	
 	/**
 	 * prev()
-	 * this function moves to the previous clickable object in the context
+	 * this function moves to the previous clickable object in the current context
 	 */
 	prev: function(){
 		//moves to previous clickable
@@ -660,7 +660,7 @@ ContextManager.prototype = {
 	
 	/**
 	 * getCurrent()
-	 * this function returns the current clickable item in the current context
+	 * this function returns the current clickable item in the current context (what is being highlighted)
 	 */
 	getCurrent: function(){
 		//returns the current clickable in the current scope
@@ -670,7 +670,7 @@ ContextManager.prototype = {
 	
 	/**
 	 * getContext()
-	 * this function returns the current context pointed to.
+	 * this function returns the current context pointed to (a reference to the SubToolbar itself).
 	 */
 	getContext: function(){
 		//this returns the current context pointed to
@@ -680,8 +680,10 @@ ContextManager.prototype = {
 } //end ContextManager definition
 
 /**
- * ContextList function/var
- * this is the context list fuction which stores links and a pointer to them
+ * ContextList
+ * this class is a bonified array which manages all the clickable items within root. It can be passed
+ * either a subtoolbar or a webpage, and it should be able to find the clickable items within that
+ * page. It also provides functionality for moving back and forth in those clickable items.
  */
 function ContextList(root){
 	//this object should store 
@@ -693,15 +695,29 @@ function ContextList(root){
 
 /**
  * ContextList prototype
- * prototype for the context list
+ * contains all the functions this class will do
  */
 ContextList.prototype = {
-	Old: false,
+	Old: false, //simple flag, set as true every time a click is observed so FindLinks is called
+				//again, refreshing any changed content due to the click.
 	
 	/**
 	 * getCurrent()
 	 * This function returns the current clickable item in the context list held by the pointer
 	 */
+	
+	/**
+	 * Setup()
+	 * This function finds all clickable links on the contextRoot and adds them to the context links var
+	 */
+	Setup: function(){
+	  //find all the clickables in this.ContextRoot to this.ContextLinks
+	  //and sets this.ContextPosition = 0
+	  this.WindowLocation=window.content.document.location;
+	  this.ContextLinks = []; //clears out the old array
+	  this.FindLinks(this.ContextRoot, this.ContextLinks);
+	  this.ContextPosition = 0;
+	},
 	getCurrent: function(){
 		//returns the clickable currently pointed to (and highlighted)
 		//	if(this.ContextRoot.hidden)
@@ -713,7 +729,7 @@ ContextList.prototype = {
 	
 	/**
 	 * next()
-	 * This function moves the pointer of the context list to the previous item
+	 * This function moves the pointer of the context list to the next visible item.
 	 */
 	next: function(){
 		//moves pointer to the next clickable and highlights, returns nothing
@@ -738,7 +754,8 @@ ContextList.prototype = {
 	
 	/**
 	 * prev()
-	 * This function moves the pointer of the context list to the next item.
+	 * This function moves the pointer of the context list to the next visible item, as determined by
+	 * the ObjectIsVisible function.
 	 */
 	prev: function(){
 		//move pointer to previous clickable
@@ -759,19 +776,7 @@ ContextList.prototype = {
 	  	//if(!htbGetPref("soundoff"))
 			//FireHawk.SoundBlaster.playSound("soundPrev"); 
 	},
-	
-	/**
-	 * Setup()
-	 * This function finds all clickable links on the contextRoot and adds them to the context links var
-	 */
-	Setup: function(){
-	  //find all the clickables in this.ContextRoot to this.ContextLinks
-	  //and sets this.ContextPosition = 0
-	  this.WindowLocation=window.content.document.location;
-	  this.ContextLinks = []; //clears out the old array
-	  this.FindLinks(this.ContextRoot, this.ContextLinks);
-	  this.ContextPosition = 0;
-	},
+
 	
 	/**
 	 * FindLinks(node, arr)
@@ -871,6 +876,9 @@ ContextList.prototype = {
 	},
 
 } //end ContextList definition
+
+//-------------external even functions
+
 
 /**
  * htbActionTransform(ev)
@@ -983,6 +991,9 @@ function SetUp(){
 		setTimeout("SetUp()", 200); //not ready, wait .2 seconds
 		return;
 	}
+	addEvent(window, "keydown", htbActionTransform, true);
+	addEvent(window, "click", htbActionTransform, true);
+	addEvent(window, "load", FireHawk.htbResetPageContext, true); //reloads the context every time a new page loads
 	FireHawk.initialize();
 }
 

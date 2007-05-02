@@ -24,8 +24,10 @@
 				<preference id="extensions.hawking.engageEvent" name="extensions.hawking.engageEvent" type="string"/>
 				<preference id="extensions.hawking.autoMode" name="extensions.hawking.autoMode" type="bool"/>
 				<preference id="extensions.hawking.autoInterval" name="extensions.hawking.autoInterval" type="string"/>
+				<preference id="extensions.hawking.StartAsLiteracy" name="extensions.hawking.StartAsLiteracy" type="bool" />	
 				<preference id="extensions.hawking.literacybarEscape" name="extensions.hawking.literacybarEscape" type="bool" />
 				<preference id="extensions.hawking.soundoff" name="extensions.hawking.soundoff" type="bool" />
+				<preference id="extensions.hawking.StartInAuto" name="extensions.hawking.StartInAuto" type="bool" />
 				<preference id="extensions.hawking.soundClick" name="extensions.hawking.soundClick" type="string"/>
 				<preference id="extensions.hawking.soundNext" name="extensions.hawking.soundNext" type="string"/>
 				<preference id="extensions.hawking.soundPrev" name="extensions.hawking.soundPrev" type="string"/>
@@ -60,7 +62,7 @@
 							<hbox align="center">
 					            <checkbox id="useSimplifiedMode"
 					                    label="Use Simplified Mode on Startup"
-					                    preference="extensions.hawking.literacybar"/>
+					                    preference="extensions.hawking.StartAsLiteracy"/>
 					            <checkbox id="canLeaveSimplifiedMode"
 					                    label="Click returns to advanced mode"
 					                    preference="extensions.hawking.literacybarEscape"/> 
@@ -105,7 +107,7 @@
 								<hbox align="center">
 									<checkbox id="prefAutoModeBox"
 											label="Enable Single Input Mode Upon Startup"
-											preference="extensions.hawking.autoMode" />
+											preference="extensions.hawking.StartInAuto" />
 								</hbox>
 								<hbox align="center">
 									<label>Scrolling Interval (seconds): </label>
