@@ -34,6 +34,7 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
  /* addEvent
   * this function abstracts adding events to objects so if the method changes, it can be changes in a single place
   * simply adds an "on"+eventType event listener to element which calls the function lamdaFunction when triggered
@@ -104,9 +105,20 @@ function htbGetFirstRealChild(parent){
 	return false;
 }
 
+/**
+ * htbDirectory class
+ * This class serves as a directory class that can be created from a Firefox NsiFile object
+ * to allow developers to get files and other directories with greater ease than the regular method
+ * of enumerating and picking files.
+ */
 var htbDirectory = Class.create();
 htbDirectory.prototype = {
 	_nsiFile:false,
+	
+	/**
+	 * initialize(nsiFile)
+	 * override prototype function to initialize class
+	 */
 	
 	initialize: function(nsiFile){
 		if(nsiFile.isDirectory()){
@@ -115,6 +127,11 @@ htbDirectory.prototype = {
 		//else alert("nsi file is not dir");
 	},
 	
+	/**
+	 * getNsiFile(fileName)
+	 * takes a string filename and tries to find an Nsi File in the directory with the same name and extension provided
+	 * and returns an Nsi File matching that name if it is found
+	 */
 	getNsiFile: function(fileName){
 		if(!this._nsiFile){
 			return false;
@@ -129,6 +146,11 @@ htbDirectory.prototype = {
 		return false;
 	},
 	
+	/**
+	 * getHtbDirectory(dirName)
+	 * searches for an NsiFile which is a directory with the same name as the inbound string and then creates a new instance
+	 * of an HtbDirectory and returns it if it finds the nsi file with the same name
+	 */
 	getHtbDirectory: function(dirName){
 		if(!this._nsiFile) return false;
 		var file_enum=this._nsiFile.directoryEntries;
@@ -141,11 +163,19 @@ htbDirectory.prototype = {
 		return false;
 	},
 
+	/**
+	 * getName()
+	 * returns the name of this htbDirectory
+	 */
 	getName: function(){
 		if(!this._nsiFile) return false;
 		return this._nsiFile.leafName;
 	},
 	
+	/**
+	 * getArrayOfFilesAsNsi()
+	 * returns an array of Nsi Files that are files, not directories in the current htb directory
+	 */
 	getArrayOfFilesAsNsi: function(){
 		if(!this._nsiFile) return false;
 		var ret_array = new Array();
@@ -159,6 +189,10 @@ htbDirectory.prototype = {
 		return ret_array;
 	},
 	
+	/**
+	 * getArrayOfDirsAsNsi()
+	 * returns an array of directories as nsi files that are found in the current htb directory
+	 */
 	getArrayOfDirsAsNsi: function(){
 		if(!this._nsiFile) return false;
 		var ret_array = new Array();
@@ -172,6 +206,10 @@ htbDirectory.prototype = {
 		return ret_array;
 	},
 	
+	/**
+	 * getArrayOfNsiFiles()
+	 * returns all Nsi files (files and directories) found in the current htb directory
+	 */
 	getArrayOfNsiFiles: function(){
 		if(!this._nsiFile) return false;
 		var ret_array = new Array();
