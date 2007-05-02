@@ -137,6 +137,21 @@
 	color: #f00;
 }
 
+#HawkingToggleAuto{
+	list-style-image: url("chrome://hawkingbar/skin/autoMode_n.png");
+}
+#HawkingToggleAuto.over{
+	list-style-image: url("chrome://hawkingbar/skin/autoMode_s.png");
+}
+
+#HawkingToggleLiteracy{
+	list-style-image: url("chrome://hawkingbar/skin/surfingMode_n.png");
+}
+#HawkingToggleLiteracy.over{
+	list-style-image: url("chrome://hawkingbar/skin/surfingMode_s.png");
+}
+
+
 toolbarbutton{
 	padding-top: 0px;
 	padding-bottom: 0px;
