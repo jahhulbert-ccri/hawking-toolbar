@@ -37,10 +37,19 @@
  
 //http://www.webreference.com/programming/javascript/mozillaapps/chap5/3/2.html
 
+/**
+ * htbSoundManager
+ * class provided to play sounds from the hawking toolbars sound directory
+ */
 var htbSoundManager = Class.create();
 htbSoundManager.prototype = {
 	sound: null,
 	initialize: function(){},
+	
+	/**
+	 * playSound(prefName)
+	 * plays a sound based on the string stored in the prefname passed to the function
+	 */
 	playSound: function(prefName) {
         try {
         	// Get the filename stored in the preferences:
@@ -58,6 +67,11 @@ htbSoundManager.prototype = {
 			//FireHawk.htbAlert(ex.name+": "+ex.message);
 		}
 	},
+	
+	/**
+	 * getSound()
+	 * gets the mozilla sound service component
+	 */
 	getSound: function() {
 		if(this.sound == null)
 			this.sound = Components.classes['@mozilla.org/sound;1'].createInstance(Components.interfaces.nsISound);
