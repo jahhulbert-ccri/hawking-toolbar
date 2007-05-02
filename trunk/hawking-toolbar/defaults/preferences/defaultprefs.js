@@ -1,3 +1,5 @@
+//enable the toolbar on startup
+pref('extensions.hawking.hawkingEnabled',true);
 
 //move preferences default to: A for move, L for click
 pref('extensions.hawking.moveVal',65);
