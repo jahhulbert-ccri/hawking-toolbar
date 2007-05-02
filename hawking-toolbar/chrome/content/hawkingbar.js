@@ -482,6 +482,7 @@ var FireHawk = {
 			var txt = document.createElement("textbox");
 			txt.setAttribute("value", msg);
 			txt.className = "plain";
+			txt.setAttribute("size", "25");
 			var tid = "ErrorText"+parseInt(this.ErrorBox.childNodes.length);
 			txt.id = tid;
 			this.ErrorBox.appendChild(txt);
