@@ -150,6 +150,10 @@
 #HawkingToggleLiteracy.over{
 	list-style-image: url("chrome://hawkingbar/skin/surfingMode_s.png");
 }
+#HawkingLiteracyReturn{
+	list-style-image: url("chrome://hawkingbar/skin/close_n.png");
+}
+
 
 
 toolbarbutton{
@@ -162,3 +166,5 @@ toolbarbutton{
 	margin-left: 0px;
 	margin-right: 0px;
 }
+
+
