@@ -366,7 +366,7 @@ var FireHawk = {
 			return;
 		
 		if(!this.htbChangeButtonImage(obj, "s")){
-			alert('used');
+			//alert('used');
 			obj.focus();
 			obj.style.color = 'red';
 			obj.className = "over";
@@ -382,7 +382,7 @@ var FireHawk = {
 			return;
 		if(!this.htbChangeButtonImage(obj, "n")){
 			//backup
-			alert('used');
+			//alert('used');
 			obj.style.color = 'black';
 			obj.className = "";
 		}
