@@ -68,9 +68,9 @@
 		<toolbar id="HawkingSBLiteracy" toolbarname="Literacy" accesskey="S"
                  class="chromeclass-toolbar" context="toolbar-context-menu" 
                  hidden="true">
-			<label tooltiptext="Literacy Center Simplified Toolbar">Literacy Center Toolbar</label>
+			<label tooltiptext="SURF MODE">Literacy Center Toolbar</label>
 			<toolbarseparator />
-			<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Standard Hawking Toolbar" 
+			<toolbarbutton id="HawkingLiteracyReturn" tooltiptext="Return to Main Toolbar" 
 					label="Return to Standard Hawking Toolbar" onclick="FireHawk.htbToggleLiteracy()" />
     	</toolbar>
     	<toolbar id="HawkingSBHistoryNav" toolbarname="HawkingHistory" accesskey="H"
