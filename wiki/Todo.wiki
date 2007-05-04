@@ -1,5 +1,4 @@
 #summary Todo List for Comp 523 Development Team
-#labels Featured
 
 ==Things we have to do==
   * Documentation, tutorial, etc.
